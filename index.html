@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#FBFAF8">
-<title>Lodge to-do</title>
+<title>Wayne's to-do</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Lodge to-do">
+<meta name="apple-mobile-web-app-title" content="Wayne's to-do">
 <style>
   :root{
     --bg:#FBFAF8; --row:#FBFAF8; --divider:#EEECE7;
@@ -97,7 +97,7 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">Lodge</div>
-    <div class="titlerow"><h1>To-do</h1><div class="counts" id="counts"></div></div>
+    <div class="titlerow"><h1>Wayne's to-do</h1><div class="counts" id="counts"></div></div>
     <div class="toggle">
       <button id="t-area" class="on">Area</button>
       <button id="t-prio">Priority</button>
@@ -133,10 +133,10 @@ const KEY = "lodge-todo-v1";
 const SEED = [
   {id:1, task:"Run MVHR duct to bedroom 2 terminal", area:"MVHR", status:"In progress", priority:"High", added_by:"Neil/AI", notes:"", photo:""},
   {id:2, task:"Seal AVCL penetration at plant room", area:"MVHR", status:"Open", priority:"Med", added_by:"Neil/AI", notes:"", photo:"x"},
-  {id:3, task:"Order more duct clips - running short", area:"MVHR", status:"Open", priority:"Low", added_by:"Worker", notes:"", photo:""},
+  {id:3, task:"Order more duct clips - running short", area:"MVHR", status:"Open", priority:"Low", added_by:"Wayne", notes:"", photo:""},
   {id:4, task:"Torque-check goal-post base bolts", area:"Foundations", status:"Open", priority:"High", added_by:"Neil/AI", notes:"", photo:""},
   {id:5, task:"Confirm CLT delivery slot with Schilliger", area:"CLT", status:"Done", priority:"Med", added_by:"Neil/AI", notes:"", photo:""},
-  {id:6, task:"Photo of column baseplates for Neil", area:"Foundations", status:"Done", priority:"Low", added_by:"Worker", notes:"", photo:""}
+  {id:6, task:"Photo of column baseplates for Neil", area:"Foundations", status:"Done", priority:"Low", added_by:"Wayne", notes:"", photo:""}
 ];
 const Data = {
   all(){ try{ return JSON.parse(localStorage.getItem(KEY)) || structuredClone(SEED); }catch(e){ return structuredClone(SEED); } },
@@ -156,7 +156,7 @@ const $ = s => document.querySelector(s);
 const list = $("#list");
 
 function persist(){ Data.save(tasks); }
-function save(t){ persist(); if(REMOTE() && t){ api({action:"upsert", task:t, who:"Worker"}).catch(e=>console.warn("sync failed", e)); } }
+function save(t){ persist(); if(REMOTE() && t){ api({action:"upsert", task:t, who:"Wayne"}).catch(e=>console.warn("sync failed", e)); } }
 async function uploadPhoto(t, file){
   const dataUrl = await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
   if(!REMOTE()) return dataUrl;                              // local preview only, pre-deploy
@@ -212,7 +212,7 @@ function rowHTML(t){
     if(t.status==="In progress") meta += `<span class="pill">In progress</span>`;
     meta += `<span class="chip"><span class="pdot ${t.priority}"></span>${t.priority}</span>`;
     if(t.photo) meta += `<span class="chip">${ico('photo')}1</span>`;
-    if(t.added_by==="Worker") meta += `<span class="chip">${ico('user')}Added by Sam</span>`;
+    if(t.added_by==="Wayne") meta += `<span class="chip">${ico('user')}Added by Wayne</span>`;
     if(t.notes) meta += `<span class="chip">${ico('note')}</span>`;
   }
   return `<div class="rowwrap" data-id="${t.id}">
@@ -336,7 +336,7 @@ function openAdd(){
   $("#f-add").onclick = ()=>{
     const text = $("#f-task").value.trim(); if(!text) return;
     const t = {id:Data.nextId(tasks), task:text, area:draft.area, status:"Open",
-      priority:draft.priority, added_by:"Worker", notes:"", photo:""};
+      priority:draft.priority, added_by:"Wayne", notes:"", photo:""};
     stamp(t,"create"); tasks.push(t); save(t); render(); closeSheet();
   };
   show();
@@ -360,8 +360,8 @@ $("#fab").onclick = openAdd;
 function stamp(t, kind){
   const now = new Date().toISOString().slice(0,10);
   if(kind==="create"){ t.created = now; }
-  if(kind==="done"){ if(t.status==="Done"){ t.done_by="Worker"; t.done_at=now; } }
-  t.last_edited_by="Worker"; t.last_edited=now;
+  if(kind==="done"){ if(t.status==="Done"){ t.done_by="Wayne"; t.done_at=now; } }
+  t.last_edited_by="Wayne"; t.last_edited=now;
 }
 
 render();
@@ -371,7 +371,7 @@ render();
     catch(e){ console.warn("bridge load failed, using local cache", e); }
   }
 })();
-if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+if("serviceWayne" in navigator){ navigator.serviceWayne.register("sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>

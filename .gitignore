@@ -1,5 +1,7 @@
-# Deploy-only / secrets — never publish to GitHub Pages
+# Deploy-only / secrets / dev tools — never publish to GitHub Pages
 bridge.gs
+waynes.mjs
+waynes.cmd
 *.local
 .DS_Store
 Thumbs.db
