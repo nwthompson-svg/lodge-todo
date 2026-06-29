@@ -115,7 +115,7 @@
 // ---------- bridge config ----------
 // BRIDGE_URL is filled in once the Apps Script bridge is deployed. While it is empty the
 // app runs on local demo data, so it works before the backend exists.
-const CONFIG = { BRIDGE_URL: "" };
+const CONFIG = { BRIDGE_URL: "https://script.google.com/macros/s/AKfycbym-yhDIHUJRkupD4ateHDgqnN9PNYWYlr3p0RlH-kUa8K48s_heoBrJC_ungIt2Z4x/exec" };
 // The capability TOKEN is NOT stored in this (public) page. It arrives in the worker's link
 // as #t=... on first open, is cached to localStorage, then stripped from the address bar.
 let TOKEN = localStorage.getItem("lodge-token") || "";
