@@ -1,0 +1,5 @@
+# Deploy-only / secrets — never publish to GitHub Pages
+bridge.gs
+*.local
+.DS_Store
+Thumbs.db

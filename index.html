@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#FBFAF8">
+<title>Lodge to-do</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Lodge to-do">
+<style>
+  :root{
+    --bg:#FBFAF8; --row:#FBFAF8; --divider:#EEECE7;
+    --ink:#20211F; --sec:#9A9A95; --muted:#A8A6A0;
+    --accent:#2E6FE0; --accent-soft:#E9F1FC;
+    --hi:#E5564B; --med:#E0A52E; --lo:#C2BFB7;
+    --done:#34A853; --done-soft:#E7F4EA;
+    --sheet:#FFFFFF;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  body{padding-bottom:96px;}
+  .wrap{max-width:520px; margin:0 auto; min-height:100vh; position:relative;}
+
+  header{padding:max(22px,env(safe-area-inset-top)) 20px 8px;}
+  .eyebrow{font-size:13px; color:var(--muted); font-weight:500;}
+  .titlerow{display:flex; align-items:flex-end; justify-content:space-between; margin-top:2px;}
+  h1{font-size:30px; font-weight:600; letter-spacing:-0.4px; margin:0;}
+  .counts{font-size:13px; color:var(--muted); padding-bottom:6px;}
+
+  .toggle{margin-top:15px; display:inline-flex; background:#EFEDE8; border-radius:9px; padding:3px;}
+  .toggle button{border:0; background:transparent; font:inherit; font-size:13px; color:var(--sec);
+    padding:6px 18px; border-radius:7px; cursor:pointer;}
+  .toggle button.on{background:#fff; border:0.5px solid #E4E1DB; color:var(--ink); font-weight:500;}
+
+  .group{font-size:13px; font-weight:500; color:var(--muted); padding:16px 20px 4px;}
+  .group.done-h{display:flex; align-items:center; gap:6px; cursor:pointer;}
+  .group.done-h .chev{transition:transform .18s ease;}
+  .group.done-h.open .chev{transform:rotate(0deg);}
+  .group.done-h:not(.open) .chev{transform:rotate(-90deg);}
+
+  .rowwrap{position:relative; overflow:hidden; border-top:0.5px solid var(--divider);}
+  .actions{position:absolute; inset:0 0 0 auto; display:flex;}
+  .actions button{border:0; font:inherit; color:#fff; font-size:13px; font-weight:500;
+    width:84px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer;}
+  .actions .a-done{background:var(--done);}
+  .actions .a-del{background:#C8584F;}
+  .actions i{font-style:normal;}
+
+  .row{position:relative; background:var(--row); display:flex; align-items:flex-start; gap:13px;
+    padding:11px 20px; touch-action:pan-y; transition:transform .22s cubic-bezier(.22,.61,.36,1);}
+  .circle{width:22px; height:22px; border-radius:50%; flex-shrink:0; margin-top:2px; cursor:pointer;
+    border:2px solid #D6D3CC; display:flex; align-items:center; justify-content:center;}
+  .circle.inprog{border-color:var(--accent);}
+  .circle.inprog .dot{width:9px; height:9px; border-radius:50%; background:var(--accent);}
+  .circle.done{border:0; background:var(--done); color:#fff;}
+  .body{flex:1; min-width:0; cursor:pointer;}
+  .task{font-size:15.5px; line-height:1.35;}
+  .row.is-done .task{color:#B7B5AE; text-decoration:line-through;}
+  .meta{display:flex; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;}
+  .pill{font-size:11px; font-weight:500; color:var(--accent); background:var(--accent-soft); padding:2px 8px; border-radius:5px;}
+  .chip{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--sec);}
+  .pdot{width:7px; height:7px; border-radius:50%;}
+  .pdot.High{background:var(--hi);} .pdot.Med{background:var(--med);} .pdot.Low{background:var(--lo);}
+
+  .fab{position:fixed; right:max(18px,env(safe-area-inset-right)); bottom:max(22px,env(safe-area-inset-bottom));
+    width:56px; height:56px; border-radius:50%; border:0; background:var(--accent); color:#fff;
+    font-size:30px; line-height:1; cursor:pointer; box-shadow:0 3px 10px rgba(46,111,224,.4);}
+
+  .scrim{position:fixed; inset:0; background:rgba(20,20,18,.35); opacity:0; pointer-events:none; transition:opacity .2s; z-index:20;}
+  .scrim.show{opacity:1; pointer-events:auto;}
+  .sheet{position:fixed; left:0; right:0; bottom:0; z-index:21; background:var(--sheet);
+    border-radius:18px 18px 0 0; padding:18px 20px max(22px,env(safe-area-inset-bottom)); max-width:520px; margin:0 auto;
+    transform:translateY(110%); transition:transform .26s cubic-bezier(.22,.61,.36,1);}
+  .sheet.show{transform:translateY(0);}
+  .sheet h2{font-size:17px; font-weight:600; margin:2px 0 14px;}
+  .sheet label{display:block; font-size:12px; color:var(--sec); margin:12px 0 5px;}
+  .sheet input[type=text], .sheet textarea{width:100%; font:inherit; font-size:15px; color:var(--ink);
+    border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff; resize:none;}
+  .seg{display:flex; gap:8px; flex-wrap:wrap;}
+  .seg button{border:0.5px solid #DDDAD3; background:#fff; font:inherit; font-size:13px; color:var(--sec);
+    padding:8px 14px; border-radius:9px; cursor:pointer;}
+  .seg button.on{border-color:var(--accent); color:var(--accent); background:var(--accent-soft); font-weight:500;}
+  .sheet .primary{width:100%; margin-top:18px; border:0; background:var(--accent); color:#fff; font:inherit;
+    font-size:15px; font-weight:500; padding:13px; border-radius:11px; cursor:pointer;}
+  .sheet .danger{width:100%; margin-top:10px; border:0; background:transparent; color:#C8584F; font:inherit;
+    font-size:14px; padding:10px; cursor:pointer;}
+  .hint{font-size:12px; color:var(--muted); margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Lodge</div>
+    <div class="titlerow"><h1>To-do</h1><div class="counts" id="counts"></div></div>
+    <div class="toggle">
+      <button id="t-area" class="on">Area</button>
+      <button id="t-prio">Priority</button>
+    </div>
+  </header>
+  <main id="list"></main>
+</div>
+
+<button class="fab" id="fab" aria-label="Add task">+</button>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet"></div>
+
+<script>
+// ---------- bridge config ----------
+// BRIDGE_URL is filled in once the Apps Script bridge is deployed. While it is empty the
+// app runs on local demo data, so it works before the backend exists.
+const CONFIG = { BRIDGE_URL: "" };
+// The capability TOKEN is NOT stored in this (public) page. It arrives in the worker's link
+// as #t=... on first open, is cached to localStorage, then stripped from the address bar.
+let TOKEN = localStorage.getItem("lodge-token") || "";
+(() => {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get("t")) { TOKEN = h.get("t"); localStorage.setItem("lodge-token", TOKEN); history.replaceState(null, "", location.pathname + location.search); }
+})();
+const REMOTE = () => !!CONFIG.BRIDGE_URL;
+function api(body) {
+  return fetch(CONFIG.BRIDGE_URL, { method: "POST", body: JSON.stringify({ token: TOKEN, ...body }) }).then(r => r.json());
+}
+
+// ---------- local cache + seed (offline fallback / pre-deploy demo) ----------
+const KEY = "lodge-todo-v1";
+const SEED = [
+  {id:1, task:"Run MVHR duct to bedroom 2 terminal", area:"MVHR", status:"In progress", priority:"High", added_by:"Neil/AI", notes:"", photo:""},
+  {id:2, task:"Seal AVCL penetration at plant room", area:"MVHR", status:"Open", priority:"Med", added_by:"Neil/AI", notes:"", photo:"x"},
+  {id:3, task:"Order more duct clips - running short", area:"MVHR", status:"Open", priority:"Low", added_by:"Worker", notes:"", photo:""},
+  {id:4, task:"Torque-check goal-post base bolts", area:"Foundations", status:"Open", priority:"High", added_by:"Neil/AI", notes:"", photo:""},
+  {id:5, task:"Confirm CLT delivery slot with Schilliger", area:"CLT", status:"Done", priority:"Med", added_by:"Neil/AI", notes:"", photo:""},
+  {id:6, task:"Photo of column baseplates for Neil", area:"Foundations", status:"Done", priority:"Low", added_by:"Worker", notes:"", photo:""}
+];
+const Data = {
+  all(){ try{ return JSON.parse(localStorage.getItem(KEY)) || structuredClone(SEED); }catch(e){ return structuredClone(SEED); } },
+  save(t){ localStorage.setItem(KEY, JSON.stringify(t)); },
+  nextId(t){ return t.reduce((m,x)=>Math.max(m,x.id||0),0)+1; }
+};
+
+// ---------- state ----------
+let tasks = Data.all();
+let view = "area";
+let doneOpen = false;
+const PRI = {High:0, Med:1, Low:2};
+const ACTIVE = s => s==="Open" || s==="In progress";
+
+// ---------- render ----------
+const $ = s => document.querySelector(s);
+const list = $("#list");
+
+function persist(){ Data.save(tasks); }
+function save(t){ persist(); if(REMOTE() && t){ api({action:"upsert", task:t, who:"Worker"}).catch(e=>console.warn("sync failed", e)); } }
+async function uploadPhoto(t, file){
+  const dataUrl = await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
+  if(!REMOTE()) return dataUrl;                              // local preview only, pre-deploy
+  const r = await api({action:"photo", taskId:t.id, dataUrl, filename:"photo-"+t.id+".jpg"});
+  if(!r.ok) throw new Error(r.error||"upload failed");
+  return r.url;
+}
+
+function render(){
+  const open = tasks.filter(t=>ACTIVE(t.status)).length;
+  const done = tasks.filter(t=>t.status==="Done").length;
+  $("#counts").textContent = `${open} open · ${done} done`;
+  $("#t-area").classList.toggle("on", view==="area");
+  $("#t-prio").classList.toggle("on", view==="priority");
+
+  const active = tasks.filter(t=>ACTIVE(t.status));
+  const groups = {};
+  for(const t of active){
+    const k = view==="area" ? (t.area||"Other") : t.priority;
+    (groups[k] = groups[k] || []).push(t);
+  }
+  let keys = Object.keys(groups);
+  keys.sort(view==="priority" ? (a,b)=>PRI[a]-PRI[b] : (a,b)=>a.localeCompare(b));
+
+  let html = "";
+  for(const k of keys){
+    const items = groups[k].sort((a,b)=>{
+      const ap=(a.status==="In progress")?0:1, bp=(b.status==="In progress")?0:1;
+      return ap-bp || PRI[a.priority]-PRI[b.priority];
+    });
+    html += `<div class="group">${esc(k)}</div>` + items.map(rowHTML).join("");
+  }
+
+  const doneTasks = tasks.filter(t=>t.status==="Done");
+  if(doneTasks.length){
+    html += `<div class="group done-h ${doneOpen?'open':''}" id="doneh">
+      <span class="chev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+      Done · ${doneTasks.length}</div>`;
+    if(doneOpen) html += doneTasks.map(rowHTML).join("");
+  }
+  list.innerHTML = html;
+}
+
+function rowHTML(t){
+  const done = t.status==="Done";
+  const circle = done
+    ? `<div class="circle done" data-act="toggle" data-id="${t.id}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>`
+    : (t.status==="In progress"
+        ? `<div class="circle inprog" data-act="toggle" data-id="${t.id}"><span class="dot"></span></div>`
+        : `<div class="circle" data-act="toggle" data-id="${t.id}"></div>`);
+  let meta = "";
+  if(!done){
+    if(t.status==="In progress") meta += `<span class="pill">In progress</span>`;
+    meta += `<span class="chip"><span class="pdot ${t.priority}"></span>${t.priority}</span>`;
+    if(t.photo) meta += `<span class="chip">${ico('photo')}1</span>`;
+    if(t.added_by==="Worker") meta += `<span class="chip">${ico('user')}Added by Sam</span>`;
+    if(t.notes) meta += `<span class="chip">${ico('note')}</span>`;
+  }
+  return `<div class="rowwrap" data-id="${t.id}">
+    <div class="actions">
+      ${done?'':`<button class="a-done" data-act="done" data-id="${t.id}"><i>${ico('check')}</i>Done</button>`}
+      <button class="a-del" data-act="del" data-id="${t.id}"><i>${ico('trash')}</i>Delete</button>
+    </div>
+    <div class="row ${done?'is-done':''}" data-id="${t.id}">
+      ${circle}
+      <div class="body" data-act="edit" data-id="${t.id}">
+        <div class="task">${esc(t.task)}</div>
+        ${meta?`<div class="meta">${meta}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function ico(n){
+  const p = {
+    photo:'<circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/>',
+    user:'<circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0113 0"/>',
+    note:'<path d="M5 4h14v16H5z"/><path d="M8 9h8M8 13h6"/>',
+    check:'<path d="M5 12l5 5L20 7"/>',
+    trash:'<path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/>'
+  }[n];
+  return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+}
+const esc = s => (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---------- interactions ----------
+function find(id){ return tasks.find(t=>t.id==id); }
+
+list.addEventListener("click", e=>{
+  if(e.target.closest("#doneh")){ doneOpen=!doneOpen; render(); return; }
+  const el = e.target.closest("[data-act]");
+  if(!el) return;
+  const id = el.dataset.id, act = el.dataset.act;
+  if(act==="toggle"){ const t=find(id); t.status = t.status==="Done" ? "Open" : "Done"; stamp(t,"done"); save(t); render(); }
+  else if(act==="done"){ const t=find(id); t.status="Done"; stamp(t,"done"); save(t); render(); }
+  else if(act==="del"){ const t=find(id); t.status="Removed"; stamp(t,"edit"); save(t); render(); }
+  else if(act==="edit"){ openEdit(id); }
+});
+
+$("#t-area").onclick = ()=>{ view="area"; render(); };
+$("#t-prio").onclick = ()=>{ view="priority"; render(); };
+
+// swipe to reveal (pointer = works with touch + mouse)
+let sw = null;
+list.addEventListener("pointerdown", e=>{
+  const row = e.target.closest(".row"); if(!row || e.target.closest(".circle")) return;
+  sw = {row, x:e.clientX, open: row.style.transform.includes("-")};
+});
+list.addEventListener("pointermove", e=>{
+  if(!sw) return;
+  let dx = e.clientX - sw.x + (sw.open?-168:0);
+  dx = Math.max(-168, Math.min(0, dx));
+  sw.row.style.transition="none"; sw.row.style.transform=`translateX(${dx}px)`;
+});
+list.addEventListener("pointerup", e=>{
+  if(!sw) return;
+  const dx = e.clientX - sw.x + (sw.open?-168:0);
+  sw.row.style.transition="";
+  sw.row.style.transform = dx < -56 ? "translateX(-168px)" : "translateX(0)";
+  sw = null;
+});
+
+// ---------- bottom sheets ----------
+const scrim = $("#scrim"), sheet = $("#sheet");
+function closeSheet(){ scrim.classList.remove("show"); sheet.classList.remove("show"); }
+scrim.onclick = closeSheet;
+
+const AREAS = ["MVHR","Foundations","CLT","Building fabric","Windows","Services","Site","Other"];
+const PRIOS = ["High","Med","Low"];
+const STAT  = ["Open","In progress","Done"];
+
+function segGroup(opts, cur, name){
+  return `<div class="seg" data-seg="${name}">` +
+    opts.map(o=>`<button data-val="${o}" class="${o===cur?'on':''}">${o}</button>`).join("") + `</div>`;
+}
+
+function openEdit(id){
+  const t = find(id);
+  const draft = {status:t.status, priority:t.priority, area:t.area};
+  sheet.innerHTML = `
+    <h2>Edit task</h2>
+    <label>Task</label>
+    <textarea id="f-task" rows="2">${esc(t.task)}</textarea>
+    <label>Status</label>${segGroup(STAT, t.status, "status")}
+    <label>Priority</label>${segGroup(PRIOS, t.priority, "priority")}
+    <label>Area</label>${segGroup(AREAS, t.area, "area")}
+    <label>Notes</label>
+    <textarea id="f-notes" rows="2" placeholder="Add a note">${esc(t.notes)}</textarea>
+    <label>Photo</label>
+    <input type="file" id="f-photo" accept="image/*" capture="environment">
+    <div class="hint">Uploads go to your Drive once wired up.</div>
+    <button class="primary" id="f-save">Save</button>
+    <button class="danger" id="f-del">Delete (kept in sheet for Neil)</button>`;
+  wireSeg(draft);
+  $("#f-save").onclick = async ()=>{
+    t.task = $("#f-task").value.trim() || t.task;
+    t.notes = $("#f-notes").value.trim();
+    t.status = draft.status; t.priority = draft.priority; t.area = draft.area;
+    const f = $("#f-photo").files[0];
+    if(f){ try{ t.photo = await uploadPhoto(t, f); }catch(err){ console.warn(err); } }
+    stamp(t,"edit"); save(t); render(); closeSheet();
+  };
+  $("#f-del").onclick = ()=>{ t.status="Removed"; stamp(t,"edit"); save(t); render(); closeSheet(); };
+  show();
+}
+
+function openAdd(){
+  const draft = {status:"Open", priority:"Med", area:"MVHR"};
+  sheet.innerHTML = `
+    <h2>New task</h2>
+    <label>Task</label>
+    <textarea id="f-task" rows="2" placeholder="What needs doing?"></textarea>
+    <label>Priority</label>${segGroup(PRIOS, draft.priority, "priority")}
+    <label>Area</label>${segGroup(AREAS, draft.area, "area")}
+    <button class="primary" id="f-add">Add task</button>`;
+  wireSeg(draft);
+  $("#f-add").onclick = ()=>{
+    const text = $("#f-task").value.trim(); if(!text) return;
+    const t = {id:Data.nextId(tasks), task:text, area:draft.area, status:"Open",
+      priority:draft.priority, added_by:"Worker", notes:"", photo:""};
+    stamp(t,"create"); tasks.push(t); save(t); render(); closeSheet();
+  };
+  show();
+}
+
+function wireSeg(draft){
+  sheet.querySelectorAll("[data-seg]").forEach(g=>{
+    g.querySelectorAll("button").forEach(b=>{
+      b.onclick = ()=>{
+        g.querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+        b.classList.add("on");
+        draft[g.dataset.seg] = b.dataset.val;
+      };
+    });
+  });
+}
+function show(){ scrim.classList.add("show"); sheet.classList.add("show"); }
+
+$("#fab").onclick = openAdd;
+
+function stamp(t, kind){
+  const now = new Date().toISOString().slice(0,10);
+  if(kind==="create"){ t.created = now; }
+  if(kind==="done"){ if(t.status==="Done"){ t.done_by="Worker"; t.done_at=now; } }
+  t.last_edited_by="Worker"; t.last_edited=now;
+}
+
+render();
+(async function init(){
+  if(REMOTE()){
+    try{ const r = await api({action:"list"}); if(r.ok){ tasks = r.tasks; Data.save(tasks); render(); } }
+    catch(e){ console.warn("bridge load failed, using local cache", e); }
+  }
+})();
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+</script>
+</body>
+</html>
