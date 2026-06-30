@@ -5,3 +5,12 @@ waynes.cmd
 *.local
 .DS_Store
 Thumbs.db
+
+# clasp (Apps Script CLI) — local-only tooling for deploying the bridge
+appsscript.json
+.clasp.json
+.claspignore
+.clasprc.json
+# pulled Apps Script code holds the token — never commit
+Code.gs
+Code.js
