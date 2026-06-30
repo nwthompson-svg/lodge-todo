@@ -124,6 +124,7 @@ let TOKEN = localStorage.getItem("lodge-token") || "";
   if (h.get("t")) { TOKEN = h.get("t"); localStorage.setItem("lodge-token", TOKEN); history.replaceState(null, "", location.pathname + location.search); }
 })();
 const REMOTE = () => !!CONFIG.BRIDGE_URL;
+const CONNECTED = () => !REMOTE() || !!TOKEN;
 function api(body) {
   return fetch(CONFIG.BRIDGE_URL, { method: "POST", body: JSON.stringify({ token: TOKEN, ...body }) }).then(r => r.json());
 }
@@ -166,6 +167,16 @@ async function uploadPhoto(t, file){
 }
 
 function render(){
+  if(!CONNECTED()){
+    $("#counts").textContent = "";
+    document.querySelector(".fab").style.display = "none";
+    list.innerHTML = `<div style="padding:64px 30px; text-align:center;">
+      <div style="font-size:17px; font-weight:600; color:#20211F; margin-bottom:8px;">Not connected</div>
+      <div style="font-size:14px; line-height:1.55; color:#8A8A85;">Open your personal invite link to connect to the live list.<br>Ask Neil for it.</div>
+    </div>`;
+    return;
+  }
+  document.querySelector(".fab").style.display = "";
   const open = tasks.filter(t=>ACTIVE(t.status)).length;
   const done = tasks.filter(t=>t.status==="Done").length;
   $("#counts").textContent = `${open} open · ${done} done`;
@@ -324,6 +335,7 @@ function openEdit(id){
 }
 
 function openAdd(){
+  if(!CONNECTED()) return;
   const draft = {status:"Open", priority:"Med", area:"MVHR"};
   sheet.innerHTML = `
     <h2>New task</h2>
@@ -366,9 +378,10 @@ function stamp(t, kind){
 
 render();
 (async function init(){
-  if(REMOTE()){
-    try{ const r = await api({action:"list"}); if(r.ok){ tasks = r.tasks; Data.save(tasks); render(); } }
+  if(REMOTE() && TOKEN){
+    try{ const r = await api({action:"list"}); if(r.ok){ tasks = r.tasks; Data.save(tasks); } else { console.warn("bridge:", r.error); } }
     catch(e){ console.warn("bridge load failed, using local cache", e); }
+    render();
   }
 })();
 if("serviceWayne" in navigator){ navigator.serviceWayne.register("sw.js").catch(()=>{}); }
