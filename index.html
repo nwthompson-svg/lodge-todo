@@ -84,8 +84,17 @@
   .sheet.show{transform:translateY(0);}
   .sheet h2{font-size:17px; font-weight:600; margin:2px 0 14px;}
   .sheet label{display:block; font-size:12px; color:var(--sec); margin:12px 0 5px;}
-  .sheet input[type=text], .sheet input[type=date], .sheet textarea{width:100%; font:inherit; font-size:15px; color:var(--ink);
+  .sheet input[type=text], .sheet input[type=date], .sheet input[type=time], .sheet textarea{width:100%; font:inherit; font-size:15px; color:var(--ink);
     border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff; resize:none;}
+  .times{display:flex; gap:10px;}
+  .times > div{flex:1;}
+  .netout{margin-top:14px; font-size:15px; color:var(--ink); font-weight:600;}
+  .netout span{color:var(--accent);}
+  .netout.bad span{color:var(--hi);}
+  .clk{width:22px; height:22px; flex-shrink:0; margin-top:1px; color:var(--sec); display:flex; align-items:center; justify-content:center;}
+  .hh{font-size:15.5px; font-weight:600; color:var(--accent); white-space:nowrap; padding-left:10px;}
+  .group.week{display:flex; align-items:baseline; justify-content:space-between; padding-right:20px;}
+  .group.week .wtot{color:var(--ink); font-weight:600; font-size:14px;}
   .seg{display:flex; gap:8px; flex-wrap:wrap;}
   .seg button{border:0.5px solid #DDDAD3; background:#fff; font:inherit; font-size:13px; color:var(--sec);
     padding:8px 14px; border-radius:9px; cursor:pointer;}
@@ -101,8 +110,12 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">Lodge</div>
-    <div class="titlerow"><h1>Wayne's to-do</h1><div class="counts" id="counts"></div></div>
-    <div class="toggle">
+    <div class="titlerow"><h1 id="title">Wayne's to-do</h1><div class="counts" id="counts"></div></div>
+    <div class="toggle" id="pageswitch">
+      <button id="p-tasks" class="on">To-do</button>
+      <button id="p-hours">Hours</button>
+    </div>
+    <div class="toggle" id="viewtoggle">
       <button id="t-prio" class="on">Priority</button>
       <button id="t-area">Area</button>
       <button id="t-deadline">Deadline</button>
@@ -156,11 +169,26 @@ const Data = {
   nextId(t){ return t.reduce((m,x)=>Math.max(m,x.id||0),0)+1; }
 };
 
+// ---------- hours: cache + seed (offline fallback / pre-deploy demo) ----------
+const HKEY = "lodge-hours-v1";
+const HOURS_SEED = [
+  {id:1, date:"2026-06-29", start:"08:00", finish:"16:30", break_min:30, hours:8,    note:"",            added_by:"Wayne", status:"Logged"},
+  {id:2, date:"2026-06-30", start:"07:45", finish:"16:00", break_min:30, hours:7.75, note:"Foundations", added_by:"Wayne", status:"Logged"}
+];
+const HData = {
+  all(){ try{ return JSON.parse(localStorage.getItem(HKEY)) || structuredClone(HOURS_SEED); }catch(e){ return structuredClone(HOURS_SEED); } },
+  save(t){ localStorage.setItem(HKEY, JSON.stringify(t)); },
+  nextId(t){ return t.reduce((m,x)=>Math.max(m,x.id||0),0)+1; }
+};
+
 // ---------- state ----------
 let tasks = Data.all();
+let hours = HData.all();
+let page = "tasks";        // "tasks" | "hours"
 let view = "priority";
 let doneOpen = false;
 let removedOpen = false;
+let hoursRemovedOpen = false;
 const PRI = {High:0, Med:1, Low:2};
 const ACTIVE = s => s==="Open" || s==="In progress";
 const DL_ORDER = {"Overdue":0,"Today":1,"This week":2,"Later":3,"No date":4};
@@ -169,12 +197,31 @@ function bucket(t){ const n=dlDays(t); if(n===null) return "No date"; if(n<0) re
 function fmtDate(s){ if(!s) return ""; return new Date(s+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}); }
 function areas(){ return [...new Set(tasks.map(t=>t.area).filter(Boolean))].sort((a,b)=>a.localeCompare(b)); }
 
+// ---------- hours helpers ----------
+const HLOGGED = h => h.status!=="Removed";
+function hmToMin(s){ if(!s) return null; const [h,m]=String(s).split(":").map(Number); return h*60+(m||0); }
+function netHours(start, finish, brk){ const a=hmToMin(start), b=hmToMin(finish); if(a==null||b==null) return null; const n=(b-a)-(Number(brk)||0); return n/60; }
+function fmtHours(h){ if(h==null||isNaN(h)) return "—"; return (Math.round(h*100)/100).toString()+" h"; }
+function fmtDay(s){ if(!s) return ""; return new Date(s+"T00:00:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}); }
+function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function mondayOf(s){ const d=new Date(s+"T00:00:00"); if(isNaN(d)) return null; const off=(d.getDay()+6)%7; d.setDate(d.getDate()-off); return ymd(d); }
+function weekLabel(monday){ return "Week of "+new Date(monday+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}); }
+function sumHours(list){ return list.reduce((s,h)=>s+(Number(h.hours)||0),0); }
+function thisWeekTotal(){ const m=mondayOf(ymd(new Date())); return sumHours(hours.filter(h=>HLOGGED(h)&&!!h.date&&mondayOf(h.date)===m)); }
+// Guard: if a Sheet date/time cell got coerced to a Date type, normalise back to plain strings.
+function normHour(h){
+  if(h.date!=null) h.date = String(h.date).slice(0,10);
+  ["start","finish"].forEach(k=>{ if(h[k]!=null){ const m=String(h[k]).match(/(\d{2}:\d{2})/); if(m) h[k]=m[1]; } });
+  return h;
+}
+
 // ---------- render ----------
 const $ = s => document.querySelector(s);
 const list = $("#list");
 
 function persist(){ Data.save(tasks); }
 function save(t){ persist(); if(REMOTE() && t){ api({action:"upsert", task:t, who:ACTOR}).catch(e=>console.warn("sync failed", e)); } }
+function saveHours(h){ HData.save(hours); if(REMOTE() && h){ api({action:"upsert", task:h, who:ACTOR, tab:"Hours"}).catch(e=>console.warn("sync failed", e)); } }
 async function uploadPhoto(t, file){
   const dataUrl = await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
   if(!REMOTE()) return dataUrl;                              // local preview only, pre-deploy
@@ -184,6 +231,10 @@ async function uploadPhoto(t, file){
 }
 
 function render(){
+  $("#title").textContent = page==="hours" ? "Wayne's hours" : "Wayne's to-do";
+  $("#p-tasks").classList.toggle("on", page==="tasks");
+  $("#p-hours").classList.toggle("on", page==="hours");
+  $("#viewtoggle").style.display = page==="tasks" ? "" : "none";
   if(!CONNECTED()){
     $("#counts").textContent = "";
     document.querySelector(".fab").style.display = "none";
@@ -193,7 +244,14 @@ function render(){
     </div>`;
     return;
   }
-  document.querySelector(".fab").style.display = "";
+  const fab = document.querySelector(".fab");
+  fab.style.display = "";
+  fab.setAttribute("aria-label", page==="hours" ? "Log hours" : "Add task");
+  if(page==="hours"){ renderHours(); return; }
+  renderTasks();
+}
+
+function renderTasks(){
   const open = tasks.filter(t=>ACTIVE(t.status)).length;
   const done = tasks.filter(t=>t.status==="Done").length;
   $("#counts").textContent = `${open} open · ${done} done`;
@@ -240,6 +298,50 @@ function render(){
     if(removedOpen) html += removedTasks.map(rowHTML).join("");
   }
   list.innerHTML = html;
+}
+
+function renderHours(){
+  $("#counts").textContent = `${fmtHours(thisWeekTotal())} this week`;
+  const logged = hours.filter(h=>HLOGGED(h) && mondayOf(h.date)).slice()
+    .sort((a,b)=> (b.date||"").localeCompare(a.date||"") || (hmToMin(b.start)||0)-(hmToMin(a.start)||0));
+  let html = "";
+  if(!logged.length){
+    html += `<div style="padding:48px 30px; text-align:center; color:#9A9A95; font-size:14px; line-height:1.55;">No hours logged yet.<br>Tap ＋ to add a shift.</div>`;
+  }
+  const groups = {};
+  for(const h of logged){ const k=mondayOf(h.date); (groups[k]=groups[k]||[]).push(h); }
+  const weeks = Object.keys(groups).sort((a,b)=> b.localeCompare(a));
+  for(const wk of weeks){
+    html += `<div class="group week">${weekLabel(wk)}<span class="wtot">${fmtHours(sumHours(groups[wk]))}</span></div>`
+      + groups[wk].map(hoursRowHTML).join("");
+  }
+  const removed = hours.filter(h=>h.status==="Removed");
+  if(removed.length){
+    html += `<div class="group done-h ${hoursRemovedOpen?'open':''}" id="hremovedh">
+      <span class="chev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+      Deleted · ${removed.length}</div>`;
+    if(hoursRemovedOpen) html += removed.map(hoursRowHTML).join("");
+  }
+  list.innerHTML = html;
+}
+
+function hoursRowHTML(h){
+  const removed = h.status==="Removed";
+  const brk = Number(h.break_min)||0;
+  let meta = `${esc(h.start||"")}–${esc(h.finish||"")}`;
+  if(brk) meta += ` · break ${brk}m`;
+  if(h.note) meta += ` · ${esc(h.note)}`;
+  if(h.added_by && h.added_by!=="Claude" && h.added_by!=="Neil/AI") meta += ` · ${esc(h.added_by)}`;
+  return `<div class="rowwrap" data-id="${h.id}">
+    <div class="row ${removed?'is-done':''}" data-act="hedit" data-id="${h.id}">
+      <div class="clk">${ico('clock')}</div>
+      <div class="body">
+        <div class="task">${fmtDay(h.date)}</div>
+        <div class="meta"><span class="chip">${meta}</span></div>
+      </div>
+      <div class="hh">${fmtHours(h.hours)}</div>
+    </div>
+  </div>`;
 }
 
 function rowHTML(t){
@@ -291,10 +393,12 @@ const esc = s => (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt
 
 // ---------- interactions ----------
 function find(id){ return tasks.find(t=>t.id==id); }
+function findHour(id){ return hours.find(h=>h.id==id); }
 
 list.addEventListener("click", e=>{
   if(e.target.closest("#doneh")){ doneOpen=!doneOpen; render(); return; }
   if(e.target.closest("#removedh")){ removedOpen=!removedOpen; render(); return; }
+  if(e.target.closest("#hremovedh")){ hoursRemovedOpen=!hoursRemovedOpen; render(); return; }
   const el = e.target.closest("[data-act]");
   if(!el) return;
   const id = el.dataset.id, act = el.dataset.act;
@@ -306,11 +410,14 @@ list.addEventListener("click", e=>{
     else { el.dataset.confirm="1"; el.classList.add("confirm"); const lbl=el.querySelector(".albl"); if(lbl) lbl.textContent="Confirm?"; }
   }
   else if(act==="edit"){ openEdit(id); }
+  else if(act==="hedit"){ openHoursEdit(id); }
 });
 
 $("#t-area").onclick = ()=>{ view="area"; render(); };
 $("#t-prio").onclick = ()=>{ view="priority"; render(); };
 $("#t-deadline").onclick = ()=>{ view="deadline"; render(); };
+$("#p-tasks").onclick = ()=>{ page="tasks"; render(); };
+$("#p-hours").onclick = ()=>{ page="hours"; render(); };
 
 // swipe to reveal — left reveals In progress/Done (right panel), right reveals Delete (left panel)
 let sw = null;
@@ -342,6 +449,8 @@ scrim.onclick = closeSheet;
 
 const PRIOS = ["High","Med","Low"];
 const STAT  = ["Open","In progress","Done"];
+const BREAKS = ["None","15","30","45","60"];
+function todayStr(){ return ymd(new Date()); }
 
 function segGroup(opts, cur, name){
   return `<div class="seg" data-seg="${name}">` +
@@ -428,9 +537,93 @@ function wireSeg(draft){
     if(seg){ seg.outerHTML = areaSeg(name); wireSeg(draft); }
   };
 }
+// ---------- hours entry sheets ----------
+function breakSeg(cur){
+  return `<div class="seg" data-seg="break">` +
+    BREAKS.map(o=>`<button data-val="${o}" class="${o===cur?'on':''}">${o==="None"?o:o+"m"}</button>`).join("") + `</div>`;
+}
+function wireHours(draft){
+  const upd = ()=>{
+    const s=$("#h-start").value, f=$("#h-finish").value;
+    const brk = draft.break==="None" ? 0 : Number(draft.break);
+    const net = netHours(s, f, brk);
+    const el = $("#h-net");
+    if(s===""||f===""){ el.classList.remove("bad"); el.innerHTML="= <span>— h</span>"; return; }
+    if(net==null||net<=0){ el.classList.add("bad"); el.innerHTML="= <span>finish after start</span>"; return; }
+    el.classList.remove("bad"); el.innerHTML="= <span>"+fmtHours(net)+"</span>";
+  };
+  const seg = sheet.querySelector('[data-seg="break"]');
+  seg.querySelectorAll("button[data-val]").forEach(b=>{
+    b.onclick = ()=>{ seg.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); draft.break=b.dataset.val; upd(); };
+  });
+  const st=$("#h-start"), fi=$("#h-finish");
+  st.onchange = ()=>{ upd(); if(fi.value===""){ try{ fi.showPicker(); }catch(e){ fi.focus(); } } };
+  fi.onchange = upd;
+  upd();
+}
+function readHours(draft){
+  const date=$("#h-date").value, start=$("#h-start").value, finish=$("#h-finish").value;
+  const brk = draft.break==="None" ? 0 : Number(draft.break);
+  const net = netHours(start, finish, brk);
+  if(!date || start==="" || finish==="" || net==null || net<=0){
+    const el=$("#h-net"); el.classList.add("bad"); el.innerHTML="= <span>check date, start &amp; finish</span>"; return null;
+  }
+  return { date, start, finish, break_min:brk, hours:Math.round(net*100)/100, note:$("#h-note").value.trim() };
+}
+function openHoursAdd(){
+  if(!CONNECTED()) return;
+  const draft = {break:"30"};
+  sheet.innerHTML = `
+    <h2>Log hours</h2>
+    <label>Date</label>
+    <input type="date" id="h-date" value="${todayStr()}">
+    <div class="times">
+      <div><label>Start</label><input type="time" id="h-start" step="900"></div>
+      <div><label>Finish</label><input type="time" id="h-finish" step="900"></div>
+    </div>
+    <label>Break</label>${breakSeg(draft.break)}
+    <div class="netout" id="h-net">= <span>— h</span></div>
+    <label>Note</label>
+    <textarea id="h-note" rows="2" placeholder="What was done (optional)"></textarea>
+    <button class="primary" id="h-add">Log hours</button>`;
+  wireHours(draft);
+  $("#h-add").onclick = ()=>{
+    const v = readHours(draft); if(!v) return;
+    const h = {id:HData.nextId(hours), ...v, added_by:ACTOR, status:"Logged"};
+    stamp(h,"create"); hours.push(h); saveHours(h); render(); closeSheet();
+  };
+  show();
+}
+function openHoursEdit(id){
+  const h = findHour(id);
+  const draft = {break: (Number(h.break_min)||0)===0 ? "None" : String(h.break_min)};
+  const removed = h.status==="Removed";
+  sheet.innerHTML = `
+    <h2>Edit hours</h2>
+    <label>Date</label>
+    <input type="date" id="h-date" value="${h.date||''}">
+    <div class="times">
+      <div><label>Start</label><input type="time" id="h-start" step="900" value="${h.start||''}"></div>
+      <div><label>Finish</label><input type="time" id="h-finish" step="900" value="${h.finish||''}"></div>
+    </div>
+    <label>Break</label>${breakSeg(draft.break)}
+    <div class="netout" id="h-net">= <span>— h</span></div>
+    <label>Note</label>
+    <textarea id="h-note" rows="2" placeholder="What was done (optional)">${esc(h.note||'')}</textarea>
+    <button class="primary" id="h-save">Save</button>
+    <button class="danger" id="h-del">${removed ? "Restore this entry" : "Delete (kept in sheet for Neil)"}</button>`;
+  wireHours(draft);
+  $("#h-save").onclick = ()=>{
+    const v = readHours(draft); if(!v) return;
+    Object.assign(h, v); stamp(h,"edit"); saveHours(h); render(); closeSheet();
+  };
+  $("#h-del").onclick = ()=>{ h.status = removed ? "Logged" : "Removed"; stamp(h,"edit"); saveHours(h); render(); closeSheet(); };
+  show();
+}
+
 function show(){ scrim.classList.add("show"); sheet.classList.add("show"); }
 
-$("#fab").onclick = openAdd;
+$("#fab").onclick = ()=> page==="hours" ? openHoursAdd() : openAdd();
 
 function stamp(t, kind){
   const now = new Date().toISOString().slice(0,10);
@@ -442,12 +635,16 @@ function stamp(t, kind){
 render();
 (async function init(){
   if(REMOTE() && TOKEN){
-    try{ const r = await api({action:"list"}); if(r.ok){ tasks = r.tasks; Data.save(tasks); } else { console.warn("bridge:", r.error); } }
+    try{
+      const [rt, rh] = await Promise.all([ api({action:"list"}), api({action:"list", tab:"Hours"}) ]);
+      if(rt.ok){ tasks = rt.tasks; Data.save(tasks); } else { console.warn("bridge tasks:", rt.error); }
+      if(rh.ok){ hours = rh.tasks.map(normHour).filter(h=>h && h.date); HData.save(hours); } else { console.warn("bridge hours:", rh.error); }
+    }
     catch(e){ console.warn("bridge load failed, using local cache", e); }
     render();
   }
 })();
-if("serviceWayne" in navigator){ navigator.serviceWayne.register("sw.js").catch(()=>{}); }
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>
