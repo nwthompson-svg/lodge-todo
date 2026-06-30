@@ -99,8 +99,8 @@
     <div class="eyebrow">Lodge</div>
     <div class="titlerow"><h1>Wayne's to-do</h1><div class="counts" id="counts"></div></div>
     <div class="toggle">
-      <button id="t-area" class="on">Area</button>
-      <button id="t-prio">Priority</button>
+      <button id="t-prio" class="on">Priority</button>
+      <button id="t-area">Area</button>
     </div>
   </header>
   <main id="list"></main>
@@ -153,8 +153,9 @@ const Data = {
 
 // ---------- state ----------
 let tasks = Data.all();
-let view = "area";
+let view = "priority";
 let doneOpen = false;
+let removedOpen = false;
 const PRI = {High:0, Med:1, Low:2};
 const ACTIVE = s => s==="Open" || s==="In progress";
 
@@ -214,18 +215,30 @@ function render(){
       Done · ${doneTasks.length}</div>`;
     if(doneOpen) html += doneTasks.map(rowHTML).join("");
   }
+
+  const removedTasks = tasks.filter(t=>t.status==="Removed");
+  if(removedTasks.length){
+    html += `<div class="group done-h ${removedOpen?'open':''}" id="removedh">
+      <span class="chev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+      Deleted · ${removedTasks.length}</div>`;
+    if(removedOpen) html += removedTasks.map(rowHTML).join("");
+  }
   list.innerHTML = html;
 }
 
 function rowHTML(t){
   const done = t.status==="Done";
+  const removed = t.status==="Removed";
+  const inactive = done || removed;
   const circle = done
     ? `<div class="circle done" data-act="toggle" data-id="${t.id}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>`
+    : removed
+    ? `<div class="circle" data-act="toggle" data-id="${t.id}" style="opacity:.45"></div>`
     : (t.status==="In progress"
         ? `<div class="circle inprog" data-act="toggle" data-id="${t.id}"><span class="dot"></span></div>`
         : `<div class="circle" data-act="toggle" data-id="${t.id}"></div>`);
   let meta = "";
-  if(!done){
+  if(!inactive){
     if(t.status==="In progress") meta += `<span class="pill">In progress</span>`;
     meta += `<span class="chip"><span class="pdot ${t.priority}"></span>${t.priority}</span>`;
     if(t.photo) meta += `<span class="chip">${ico('photo')}1</span>`;
@@ -235,9 +248,9 @@ function rowHTML(t){
   return `<div class="rowwrap" data-id="${t.id}">
     <div class="actions">
       ${done?'':`<button class="a-done" data-act="done" data-id="${t.id}"><i>${ico('check')}</i>Done</button>`}
-      <button class="a-del" data-act="del" data-id="${t.id}"><i>${ico('trash')}</i>Delete</button>
+      ${removed?'':`<button class="a-del" data-act="del" data-id="${t.id}"><i>${ico('trash')}</i>Delete</button>`}
     </div>
-    <div class="row ${done?'is-done':''}" data-id="${t.id}">
+    <div class="row ${inactive?'is-done':''}" data-id="${t.id}">
       ${circle}
       <div class="body" data-act="edit" data-id="${t.id}">
         <div class="task">${esc(t.task)}</div>
@@ -264,10 +277,11 @@ function find(id){ return tasks.find(t=>t.id==id); }
 
 list.addEventListener("click", e=>{
   if(e.target.closest("#doneh")){ doneOpen=!doneOpen; render(); return; }
+  if(e.target.closest("#removedh")){ removedOpen=!removedOpen; render(); return; }
   const el = e.target.closest("[data-act]");
   if(!el) return;
   const id = el.dataset.id, act = el.dataset.act;
-  if(act==="toggle"){ const t=find(id); t.status = t.status==="Done" ? "Open" : "Done"; stamp(t,"done"); save(t); render(); }
+  if(act==="toggle"){ const t=find(id); t.status = (t.status==="Done"||t.status==="Removed") ? "Open" : "Done"; stamp(t,"done"); save(t); render(); }
   else if(act==="done"){ const t=find(id); t.status="Done"; stamp(t,"done"); save(t); render(); }
   else if(act==="del"){ const t=find(id); t.status="Removed"; stamp(t,"edit"); save(t); render(); }
   else if(act==="edit"){ openEdit(id); }
