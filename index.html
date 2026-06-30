@@ -45,12 +45,15 @@
   .group.done-h:not(.open) .chev{transform:rotate(-90deg);}
 
   .rowwrap{position:relative; overflow:hidden; border-top:0.5px solid var(--divider);}
-  .actions{position:absolute; inset:0 0 0 auto; display:flex;}
-  .actions button{border:0; font:inherit; color:#fff; font-size:13px; font-weight:500;
+  .act-left{position:absolute; top:0; left:0; bottom:0; display:flex;}
+  .act-right{position:absolute; top:0; right:0; bottom:0; display:flex;}
+  .act-left button,.act-right button{border:0; color:#fff; font:inherit; font-size:11px; font-weight:500;
     width:84px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer;}
-  .actions .a-done{background:var(--done);}
-  .actions .a-del{background:#C8584F;}
-  .actions i{font-style:normal;}
+  .a-prog{background:var(--accent);}
+  .a-done{background:var(--done);}
+  .a-del{background:#C8584F;}
+  .a-del.confirm{background:#8E241D;}
+  .act-left i,.act-right i{font-style:normal;}
 
   .row{position:relative; background:var(--row); display:flex; align-items:flex-start; gap:13px;
     padding:11px 20px; touch-action:pan-y; transition:transform .22s cubic-bezier(.22,.61,.36,1);}
@@ -65,6 +68,7 @@
   .meta{display:flex; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;}
   .pill{font-size:11px; font-weight:500; color:var(--accent); background:var(--accent-soft); padding:2px 8px; border-radius:5px;}
   .chip{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--sec);}
+  .chip.od{color:var(--hi);}
   .pdot{width:7px; height:7px; border-radius:50%;}
   .pdot.High{background:var(--hi);} .pdot.Med{background:var(--med);} .pdot.Low{background:var(--lo);}
 
@@ -80,7 +84,7 @@
   .sheet.show{transform:translateY(0);}
   .sheet h2{font-size:17px; font-weight:600; margin:2px 0 14px;}
   .sheet label{display:block; font-size:12px; color:var(--sec); margin:12px 0 5px;}
-  .sheet input[type=text], .sheet textarea{width:100%; font:inherit; font-size:15px; color:var(--ink);
+  .sheet input[type=text], .sheet input[type=date], .sheet textarea{width:100%; font:inherit; font-size:15px; color:var(--ink);
     border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff; resize:none;}
   .seg{display:flex; gap:8px; flex-wrap:wrap;}
   .seg button{border:0.5px solid #DDDAD3; background:#fff; font:inherit; font-size:13px; color:var(--sec);
@@ -101,6 +105,7 @@
     <div class="toggle">
       <button id="t-prio" class="on">Priority</button>
       <button id="t-area">Area</button>
+      <button id="t-deadline">Deadline</button>
     </div>
   </header>
   <main id="list"></main>
@@ -138,10 +143,10 @@ function api(body) {
 // ---------- local cache + seed (offline fallback / pre-deploy demo) ----------
 const KEY = "lodge-todo-v1";
 const SEED = [
-  {id:1, task:"Run MVHR duct to bedroom 2 terminal", area:"MVHR", status:"In progress", priority:"High", added_by:"Neil/AI", notes:"", photo:""},
+  {id:1, task:"Run MVHR duct to bedroom 2 terminal", area:"MVHR", status:"In progress", priority:"High", added_by:"Neil/AI", notes:"", photo:"", deadline:"2026-07-03"},
   {id:2, task:"Seal AVCL penetration at plant room", area:"MVHR", status:"Open", priority:"Med", added_by:"Neil/AI", notes:"", photo:"x"},
   {id:3, task:"Order more duct clips - running short", area:"MVHR", status:"Open", priority:"Low", added_by:"Wayne", notes:"", photo:""},
-  {id:4, task:"Torque-check goal-post base bolts", area:"Foundations", status:"Open", priority:"High", added_by:"Neil/AI", notes:"", photo:""},
+  {id:4, task:"Torque-check goal-post base bolts", area:"Foundations", status:"Open", priority:"High", added_by:"Neil/AI", notes:"", photo:"", deadline:"2026-06-28"},
   {id:5, task:"Confirm CLT delivery slot with Schilliger", area:"CLT", status:"Done", priority:"Med", added_by:"Neil/AI", notes:"", photo:""},
   {id:6, task:"Photo of column baseplates for Neil", area:"Foundations", status:"Done", priority:"Low", added_by:"Wayne", notes:"", photo:""}
 ];
@@ -158,6 +163,11 @@ let doneOpen = false;
 let removedOpen = false;
 const PRI = {High:0, Med:1, Low:2};
 const ACTIVE = s => s==="Open" || s==="In progress";
+const DL_ORDER = {"Overdue":0,"Today":1,"This week":2,"Later":3,"No date":4};
+function dlDays(t){ if(!t.deadline) return null; const d=new Date(t.deadline+"T00:00:00"), td=new Date(); td.setHours(0,0,0,0); return Math.round((d-td)/86400000); }
+function bucket(t){ const n=dlDays(t); if(n===null) return "No date"; if(n<0) return "Overdue"; if(n===0) return "Today"; if(n<=7) return "This week"; return "Later"; }
+function fmtDate(s){ if(!s) return ""; return new Date(s+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}); }
+function areas(){ return [...new Set(tasks.map(t=>t.area).filter(Boolean))].sort((a,b)=>a.localeCompare(b)); }
 
 // ---------- render ----------
 const $ = s => document.querySelector(s);
@@ -187,23 +197,29 @@ function render(){
   const open = tasks.filter(t=>ACTIVE(t.status)).length;
   const done = tasks.filter(t=>t.status==="Done").length;
   $("#counts").textContent = `${open} open · ${done} done`;
-  $("#t-area").classList.toggle("on", view==="area");
   $("#t-prio").classList.toggle("on", view==="priority");
+  $("#t-area").classList.toggle("on", view==="area");
+  $("#t-deadline").classList.toggle("on", view==="deadline");
 
   const active = tasks.filter(t=>ACTIVE(t.status));
   const groups = {};
   for(const t of active){
-    const k = view==="area" ? (t.area||"Other") : t.priority;
+    const k = view==="area" ? (t.area||"Other") : view==="deadline" ? bucket(t) : t.priority;
     (groups[k] = groups[k] || []).push(t);
   }
   let keys = Object.keys(groups);
-  keys.sort(view==="priority" ? (a,b)=>PRI[a]-PRI[b] : (a,b)=>a.localeCompare(b));
+  keys.sort(
+    view==="priority" ? (a,b)=>PRI[a]-PRI[b]
+    : view==="deadline" ? (a,b)=>DL_ORDER[a]-DL_ORDER[b]
+    : (a,b)=>a.localeCompare(b)
+  );
 
+  const dnum = t => { const n=dlDays(t); return n===null ? 1e9 : n; };
   let html = "";
   for(const k of keys){
     const items = groups[k].sort((a,b)=>{
       const ap=(a.status==="In progress")?0:1, bp=(b.status==="In progress")?0:1;
-      return ap-bp || PRI[a.priority]-PRI[b.priority];
+      return ap-bp || dnum(a)-dnum(b) || PRI[a.priority]-PRI[b.priority];
     });
     html += `<div class="group">${esc(k)}</div>` + items.map(rowHTML).join("");
   }
@@ -241,15 +257,14 @@ function rowHTML(t){
   if(!inactive){
     if(t.status==="In progress") meta += `<span class="pill">In progress</span>`;
     meta += `<span class="chip"><span class="pdot ${t.priority}"></span>${t.priority}</span>`;
+    if(t.deadline) meta += `<span class="chip${dlDays(t)<0?' od':''}">${ico('cal')} ${fmtDate(t.deadline)}</span>`;
     if(t.photo) meta += `<span class="chip">${ico('photo')}1</span>`;
     if(t.added_by && t.added_by!=="Claude" && t.added_by!=="Neil/AI") meta += `<span class="chip">${ico('user')}Added by ${esc(t.added_by)}</span>`;
     if(t.notes) meta += `<span class="chip">${ico('note')}</span>`;
   }
-  return `<div class="rowwrap" data-id="${t.id}">
-    <div class="actions">
-      ${done?'':`<button class="a-done" data-act="done" data-id="${t.id}"><i>${ico('check')}</i>Done</button>`}
-      ${removed?'':`<button class="a-del" data-act="del" data-id="${t.id}"><i>${ico('trash')}</i>Delete</button>`}
-    </div>
+  const acts = inactive ? '' : `<div class="act-left"><button class="a-del" data-act="del" data-id="${t.id}"><i>${ico('trash')}</i><span class="albl">Delete</span></button></div>
+    <div class="act-right"><button class="a-prog" data-act="prog" data-id="${t.id}"><i>${ico('clock')}</i>In progress</button><button class="a-done" data-act="done" data-id="${t.id}"><i>${ico('check')}</i>Done</button></div>`;
+  return `<div class="rowwrap" data-id="${t.id}">${acts}
     <div class="row ${inactive?'is-done':''}" data-id="${t.id}">
       ${circle}
       <div class="body" data-act="edit" data-id="${t.id}">
@@ -266,7 +281,9 @@ function ico(n){
     user:'<circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0113 0"/>',
     note:'<path d="M5 4h14v16H5z"/><path d="M8 9h8M8 13h6"/>',
     check:'<path d="M5 12l5 5L20 7"/>',
-    trash:'<path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/>'
+    trash:'<path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/>',
+    cal:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/>',
+    clock:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>'
   }[n];
   return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 }
@@ -283,30 +300,38 @@ list.addEventListener("click", e=>{
   const id = el.dataset.id, act = el.dataset.act;
   if(act==="toggle"){ const t=find(id); t.status = (t.status==="Done"||t.status==="Removed") ? "Open" : "Done"; stamp(t,"done"); save(t); render(); }
   else if(act==="done"){ const t=find(id); t.status="Done"; stamp(t,"done"); save(t); render(); }
-  else if(act==="del"){ const t=find(id); t.status="Removed"; stamp(t,"edit"); save(t); render(); }
+  else if(act==="prog"){ const t=find(id); t.status="In progress"; stamp(t,"edit"); save(t); render(); }
+  else if(act==="del"){
+    if(el.dataset.confirm){ const t=find(id); t.status="Removed"; stamp(t,"edit"); save(t); render(); }
+    else { el.dataset.confirm="1"; el.classList.add("confirm"); const lbl=el.querySelector(".albl"); if(lbl) lbl.textContent="Confirm?"; }
+  }
   else if(act==="edit"){ openEdit(id); }
 });
 
 $("#t-area").onclick = ()=>{ view="area"; render(); };
 $("#t-prio").onclick = ()=>{ view="priority"; render(); };
+$("#t-deadline").onclick = ()=>{ view="deadline"; render(); };
 
-// swipe to reveal (pointer = works with touch + mouse)
+// swipe to reveal — left reveals In progress/Done (right panel), right reveals Delete (left panel)
 let sw = null;
 list.addEventListener("pointerdown", e=>{
   const row = e.target.closest(".row"); if(!row || e.target.closest(".circle")) return;
-  sw = {row, x:e.clientX, open: row.style.transform.includes("-")};
+  const wrap = row.closest(".rowwrap");
+  if(!wrap || !wrap.querySelector(".act-left, .act-right")) return;   // inactive rows don't slide
+  sw = {row, x:e.clientX, cur: parseFloat(row.dataset.x||"0"), dx:0};
 });
 list.addEventListener("pointermove", e=>{
   if(!sw) return;
-  let dx = e.clientX - sw.x + (sw.open?-168:0);
-  dx = Math.max(-168, Math.min(0, dx));
-  sw.row.style.transition="none"; sw.row.style.transform=`translateX(${dx}px)`;
+  let dx = e.clientX - sw.x + sw.cur;
+  dx = Math.max(-168, Math.min(84, dx));
+  sw.dx = dx; sw.row.style.transition="none"; sw.row.style.transform=`translateX(${dx}px)`;
 });
 list.addEventListener("pointerup", e=>{
   if(!sw) return;
-  const dx = e.clientX - sw.x + (sw.open?-168:0);
-  sw.row.style.transition="";
-  sw.row.style.transform = dx < -56 ? "translateX(-168px)" : "translateX(0)";
+  let target = 0;
+  if(sw.dx < -56) target = -168;
+  else if(sw.dx > 42) target = 84;
+  sw.row.style.transition=""; sw.row.style.transform=`translateX(${target}px)`; sw.row.dataset.x = target;
   sw = null;
 });
 
@@ -315,13 +340,19 @@ const scrim = $("#scrim"), sheet = $("#sheet");
 function closeSheet(){ scrim.classList.remove("show"); sheet.classList.remove("show"); }
 scrim.onclick = closeSheet;
 
-const AREAS = ["MVHR","Foundations","CLT","Building fabric","Windows","Services","Site","Other"];
 const PRIOS = ["High","Med","Low"];
 const STAT  = ["Open","In progress","Done"];
 
 function segGroup(opts, cur, name){
   return `<div class="seg" data-seg="${name}">` +
-    opts.map(o=>`<button data-val="${o}" class="${o===cur?'on':''}">${o}</button>`).join("") + `</div>`;
+    opts.map(o=>`<button data-val="${esc(o)}" class="${o===cur?'on':''}">${esc(o)}</button>`).join("") + `</div>`;
+}
+function areaSeg(cur){
+  const opts = areas();
+  if(cur && !opts.includes(cur)) opts.unshift(cur);
+  return `<div class="seg" data-seg="area">` +
+    opts.map(o=>`<button data-val="${esc(o)}" class="${o===cur?'on':''}">${esc(o)}</button>`).join("") +
+    `<button data-newarea type="button">+ New</button></div>`;
 }
 
 function openEdit(id){
@@ -333,7 +364,9 @@ function openEdit(id){
     <textarea id="f-task" rows="2">${esc(t.task)}</textarea>
     <label>Status</label>${segGroup(STAT, t.status, "status")}
     <label>Priority</label>${segGroup(PRIOS, t.priority, "priority")}
-    <label>Area</label>${segGroup(AREAS, t.area, "area")}
+    <label>Deadline</label>
+    <input type="date" id="f-deadline" value="${t.deadline||''}">
+    <label>Area</label>${areaSeg(t.area)}
     <label>Notes</label>
     <textarea id="f-notes" rows="2" placeholder="Add a note">${esc(t.notes)}</textarea>
     <label>Photo</label>
@@ -345,6 +378,7 @@ function openEdit(id){
   $("#f-save").onclick = async ()=>{
     t.task = $("#f-task").value.trim() || t.task;
     t.notes = $("#f-notes").value.trim();
+    t.deadline = $("#f-deadline").value || "";
     t.status = draft.status; t.priority = draft.priority; t.area = draft.area;
     const f = $("#f-photo").files[0];
     if(f){ try{ t.photo = await uploadPhoto(t, f); }catch(err){ console.warn(err); } }
@@ -356,19 +390,21 @@ function openEdit(id){
 
 function openAdd(){
   if(!CONNECTED()) return;
-  const draft = {status:"Open", priority:"Med", area:"MVHR"};
+  const draft = {status:"Open", priority:"Med", area:(areas()[0]||"Site")};
   sheet.innerHTML = `
     <h2>New task</h2>
     <label>Task</label>
     <textarea id="f-task" rows="2" placeholder="What needs doing?"></textarea>
     <label>Priority</label>${segGroup(PRIOS, draft.priority, "priority")}
-    <label>Area</label>${segGroup(AREAS, draft.area, "area")}
+    <label>Deadline</label>
+    <input type="date" id="f-deadline" value="">
+    <label>Area</label>${areaSeg(draft.area)}
     <button class="primary" id="f-add">Add task</button>`;
   wireSeg(draft);
   $("#f-add").onclick = ()=>{
     const text = $("#f-task").value.trim(); if(!text) return;
     const t = {id:Data.nextId(tasks), task:text, area:draft.area, status:"Open",
-      priority:draft.priority, added_by:ACTOR, notes:"", photo:""};
+      priority:draft.priority, added_by:ACTOR, notes:"", photo:"", deadline:$("#f-deadline").value||""};
     stamp(t,"create"); tasks.push(t); save(t); render(); closeSheet();
   };
   show();
@@ -376,7 +412,7 @@ function openAdd(){
 
 function wireSeg(draft){
   sheet.querySelectorAll("[data-seg]").forEach(g=>{
-    g.querySelectorAll("button").forEach(b=>{
+    g.querySelectorAll("button[data-val]").forEach(b=>{
       b.onclick = ()=>{
         g.querySelectorAll("button").forEach(x=>x.classList.remove("on"));
         b.classList.add("on");
@@ -384,6 +420,13 @@ function wireSeg(draft){
       };
     });
   });
+  const nb = sheet.querySelector("[data-newarea]");
+  if(nb) nb.onclick = ()=>{
+    const name=(prompt("New area")||"").trim(); if(!name) return;
+    draft.area = name;
+    const seg = sheet.querySelector('[data-seg="area"]');
+    if(seg){ seg.outerHTML = areaSeg(name); wireSeg(draft); }
+  };
 }
 function show(){ scrim.classList.add("show"); sheet.classList.add("show"); }
 
