@@ -119,9 +119,15 @@ const CONFIG = { BRIDGE_URL: "https://script.google.com/macros/s/AKfycbym-yhDIHU
 // The capability TOKEN is NOT stored in this (public) page. It arrives in the worker's link
 // as #t=... on first open, is cached to localStorage, then stripped from the address bar.
 let TOKEN = localStorage.getItem("lodge-token") || "";
+// ACTOR identifies who is using THIS device (Wayne, Neil, ...). It arrives in the link as
+// &u=Name alongside the token, is cached, and stamps every change this device makes.
+let ACTOR = localStorage.getItem("lodge-actor") || "Wayne";
 (() => {
   const h = new URLSearchParams(location.hash.slice(1));
-  if (h.get("t")) { TOKEN = h.get("t"); localStorage.setItem("lodge-token", TOKEN); history.replaceState(null, "", location.pathname + location.search); }
+  let changed = false;
+  if (h.get("t")) { TOKEN = h.get("t"); localStorage.setItem("lodge-token", TOKEN); changed = true; }
+  if (h.get("u")) { ACTOR = h.get("u"); localStorage.setItem("lodge-actor", ACTOR); changed = true; }
+  if (changed) history.replaceState(null, "", location.pathname + location.search);
 })();
 const REMOTE = () => !!CONFIG.BRIDGE_URL;
 const CONNECTED = () => !REMOTE() || !!TOKEN;
@@ -157,7 +163,7 @@ const $ = s => document.querySelector(s);
 const list = $("#list");
 
 function persist(){ Data.save(tasks); }
-function save(t){ persist(); if(REMOTE() && t){ api({action:"upsert", task:t, who:"Wayne"}).catch(e=>console.warn("sync failed", e)); } }
+function save(t){ persist(); if(REMOTE() && t){ api({action:"upsert", task:t, who:ACTOR}).catch(e=>console.warn("sync failed", e)); } }
 async function uploadPhoto(t, file){
   const dataUrl = await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
   if(!REMOTE()) return dataUrl;                              // local preview only, pre-deploy
@@ -223,7 +229,7 @@ function rowHTML(t){
     if(t.status==="In progress") meta += `<span class="pill">In progress</span>`;
     meta += `<span class="chip"><span class="pdot ${t.priority}"></span>${t.priority}</span>`;
     if(t.photo) meta += `<span class="chip">${ico('photo')}1</span>`;
-    if(t.added_by==="Wayne") meta += `<span class="chip">${ico('user')}Added by Wayne</span>`;
+    if(t.added_by && t.added_by!=="Claude" && t.added_by!=="Neil/AI") meta += `<span class="chip">${ico('user')}Added by ${esc(t.added_by)}</span>`;
     if(t.notes) meta += `<span class="chip">${ico('note')}</span>`;
   }
   return `<div class="rowwrap" data-id="${t.id}">
@@ -348,7 +354,7 @@ function openAdd(){
   $("#f-add").onclick = ()=>{
     const text = $("#f-task").value.trim(); if(!text) return;
     const t = {id:Data.nextId(tasks), task:text, area:draft.area, status:"Open",
-      priority:draft.priority, added_by:"Wayne", notes:"", photo:""};
+      priority:draft.priority, added_by:ACTOR, notes:"", photo:""};
     stamp(t,"create"); tasks.push(t); save(t); render(); closeSheet();
   };
   show();
@@ -372,8 +378,8 @@ $("#fab").onclick = openAdd;
 function stamp(t, kind){
   const now = new Date().toISOString().slice(0,10);
   if(kind==="create"){ t.created = now; }
-  if(kind==="done"){ if(t.status==="Done"){ t.done_by="Wayne"; t.done_at=now; } }
-  t.last_edited_by="Wayne"; t.last_edited=now;
+  if(kind==="done"){ if(t.status==="Done"){ t.done_by=ACTOR; t.done_at=now; } }
+  t.last_edited_by=ACTOR; t.last_edited=now;
 }
 
 render();
