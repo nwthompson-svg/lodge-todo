@@ -28,17 +28,17 @@
   .wrap{max-width:520px; margin:0 auto; min-height:100vh; position:relative;}
 
   header{padding:max(22px,env(safe-area-inset-top)) 20px 8px;}
-  .eyebrow{font-size:13px; color:var(--muted); font-weight:500;}
+  .eyebrow{font-size:15px; color:var(--muted); font-weight:500;}
   .titlerow{display:flex; align-items:flex-end; justify-content:space-between; margin-top:2px;}
   h1{font-size:30px; font-weight:600; letter-spacing:-0.4px; margin:0;}
-  .counts{font-size:13px; color:var(--muted); padding-bottom:6px;}
+  .counts{font-size:15px; color:var(--muted); padding-bottom:6px;}
 
   .toggle{margin-top:15px; display:inline-flex; background:#EFEDE8; border-radius:9px; padding:3px;}
-  .toggle button{border:0; background:transparent; font:inherit; font-size:13px; color:var(--sec);
+  .toggle button{border:0; background:transparent; font:inherit; font-size:15px; color:var(--sec);
     padding:6px 18px; border-radius:7px; cursor:pointer;}
   .toggle button.on{background:#fff; border:0.5px solid #E4E1DB; color:var(--ink); font-weight:500;}
 
-  .group{font-size:13px; font-weight:500; color:var(--muted); padding:16px 20px 4px;}
+  .group{font-size:15px; font-weight:500; color:var(--muted); padding:16px 20px 4px;}
   .group.done-h{display:flex; align-items:center; gap:6px; cursor:pointer;}
   .group.done-h .chev{transition:transform .18s ease;}
   .group.done-h.open .chev{transform:rotate(0deg);}
@@ -47,7 +47,7 @@
   .rowwrap{position:relative; overflow:hidden; border-top:0.5px solid var(--divider);}
   .act-left{position:absolute; top:0; left:0; bottom:0; display:flex;}
   .act-right{position:absolute; top:0; right:0; bottom:0; display:flex;}
-  .act-left button,.act-right button{border:0; color:#fff; font:inherit; font-size:11px; font-weight:500;
+  .act-left button,.act-right button{border:0; color:#fff; font:inherit; font-size:13px; font-weight:500;
     width:84px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer;}
   .a-prog{background:var(--accent);}
   .a-done{background:var(--done);}
@@ -63,11 +63,11 @@
   .circle.inprog .dot{width:9px; height:9px; border-radius:50%; background:var(--accent);}
   .circle.done{border:0; background:var(--done); color:#fff;}
   .body{flex:1; min-width:0; cursor:pointer;}
-  .task{font-size:15.5px; line-height:1.35;}
+  .task{font-size:17px; line-height:1.35;}
   .row.is-done .task{color:#B7B5AE; text-decoration:line-through;}
   .meta{display:flex; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;}
-  .pill{font-size:11px; font-weight:500; color:var(--accent); background:var(--accent-soft); padding:2px 8px; border-radius:5px;}
-  .chip{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--sec);}
+  .pill{font-size:13px; font-weight:500; color:var(--accent); background:var(--accent-soft); padding:2px 8px; border-radius:5px;}
+  .chip{display:inline-flex; align-items:center; gap:5px; font-size:14px; color:var(--sec);}
   .chip.od{color:var(--hi);}
   .pdot{width:7px; height:7px; border-radius:50%;}
   .pdot.High{background:var(--hi);} .pdot.Med{background:var(--med);} .pdot.Low{background:var(--lo);}
@@ -82,28 +82,28 @@
     border-radius:18px 18px 0 0; padding:18px 20px max(22px,env(safe-area-inset-bottom)); max-width:520px; margin:0 auto;
     transform:translateY(110%); transition:transform .26s cubic-bezier(.22,.61,.36,1);}
   .sheet.show{transform:translateY(0);}
-  .sheet h2{font-size:17px; font-weight:600; margin:2px 0 14px;}
-  .sheet label{display:block; font-size:12px; color:var(--sec); margin:12px 0 5px;}
-  .sheet input[type=text], .sheet input[type=date], .sheet input[type=time], .sheet textarea{width:100%; font:inherit; font-size:15px; color:var(--ink);
+  .sheet h2{font-size:19px; font-weight:600; margin:2px 0 14px;}
+  .sheet label{display:block; font-size:14px; color:var(--sec); margin:12px 0 5px;}
+  .sheet input[type=text], .sheet input[type=date], .sheet input[type=time], .sheet textarea{width:100%; font:inherit; font-size:17px; color:var(--ink);
     border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff; resize:none;}
   .times{display:flex; gap:10px;}
   .times > div{flex:1;}
-  .netout{margin-top:14px; font-size:15px; color:var(--ink); font-weight:600;}
+  .netout{margin-top:14px; font-size:17px; color:var(--ink); font-weight:600;}
   .netout span{color:var(--accent);}
   .netout.bad span{color:var(--hi);}
   .clk{width:22px; height:22px; flex-shrink:0; margin-top:1px; color:var(--sec); display:flex; align-items:center; justify-content:center;}
-  .hh{font-size:15.5px; font-weight:600; color:var(--accent); white-space:nowrap; padding-left:10px;}
+  .hh{font-size:17px; font-weight:600; color:var(--accent); white-space:nowrap; padding-left:10px;}
   .group.week{display:flex; align-items:baseline; justify-content:space-between; padding-right:20px;}
-  .group.week .wtot{color:var(--ink); font-weight:600; font-size:14px;}
+  .group.week .wtot{color:var(--ink); font-weight:600; font-size:16px;}
   .seg{display:flex; gap:8px; flex-wrap:wrap;}
-  .seg button{border:0.5px solid #DDDAD3; background:#fff; font:inherit; font-size:13px; color:var(--sec);
+  .seg button{border:0.5px solid #DDDAD3; background:#fff; font:inherit; font-size:15px; color:var(--sec);
     padding:8px 14px; border-radius:9px; cursor:pointer;}
   .seg button.on{border-color:var(--accent); color:var(--accent); background:var(--accent-soft); font-weight:500;}
   .sheet .primary{width:100%; margin-top:18px; border:0; background:var(--accent); color:#fff; font:inherit;
-    font-size:15px; font-weight:500; padding:13px; border-radius:11px; cursor:pointer;}
+    font-size:17px; font-weight:500; padding:13px; border-radius:11px; cursor:pointer;}
   .sheet .danger{width:100%; margin-top:10px; border:0; background:transparent; color:#C8584F; font:inherit;
-    font-size:14px; padding:10px; cursor:pointer;}
-  .hint{font-size:12px; color:var(--muted); margin-top:6px;}
+    font-size:16px; padding:10px; cursor:pointer;}
+  .hint{font-size:14px; color:var(--muted); margin-top:6px;}
 </style>
 </head>
 <body>
@@ -254,14 +254,14 @@ function render(){
     $("#counts").textContent = "";
     document.querySelector(".fab").style.display = "none";
     list.innerHTML = `<div style="padding:48px 28px 0; text-align:center;">
-      <div style="font-size:17px; font-weight:600; color:#20211F; margin-bottom:8px;">Not connected</div>
-      <div style="font-size:14px; line-height:1.55; color:#8A8A85; margin-bottom:18px;">Paste your personal invite link below to connect this device. You only need to do this once.</div>
+      <div style="font-size:19px; font-weight:600; color:#20211F; margin-bottom:8px;">Not connected</div>
+      <div style="font-size:16px; line-height:1.55; color:#8A8A85; margin-bottom:18px;">Paste your personal invite link below to connect this device. You only need to do this once.</div>
       <input id="connect-link" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Paste your invite link"
-        style="width:100%; font:inherit; font-size:15px; color:var(--ink); border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff;">
+        style="width:100%; font:inherit; font-size:17px; color:var(--ink); border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff;">
       <button id="connect-btn"
-        style="width:100%; margin-top:12px; border:0; background:var(--accent); color:#fff; font:inherit; font-size:15px; font-weight:500; padding:13px; border-radius:11px; cursor:pointer;">Connect</button>
-      <div id="connect-err" style="font-size:12px; color:var(--hi); margin-top:10px; min-height:15px;"></div>
-      <div style="font-size:12px; color:var(--muted); margin-top:18px; line-height:1.5;">Ask Neil for your link if you don't have it.</div>
+        style="width:100%; margin-top:12px; border:0; background:var(--accent); color:#fff; font:inherit; font-size:17px; font-weight:500; padding:13px; border-radius:11px; cursor:pointer;">Connect</button>
+      <div id="connect-err" style="font-size:14px; color:var(--hi); margin-top:10px; min-height:15px;"></div>
+      <div style="font-size:14px; color:var(--muted); margin-top:18px; line-height:1.5;">Ask Neil for your link if you don't have it.</div>
     </div>`;
     $("#connect-btn").onclick = ()=>{
       if(connectFromText($("#connect-link").value)) location.reload();
@@ -331,7 +331,7 @@ function renderHours(){
     .sort((a,b)=> (b.date||"").localeCompare(a.date||"") || (hmToMin(b.start)||0)-(hmToMin(a.start)||0));
   let html = "";
   if(!logged.length){
-    html += `<div style="padding:48px 30px; text-align:center; color:#9A9A95; font-size:14px; line-height:1.55;">No hours logged yet.<br>Tap ＋ to add a shift.</div>`;
+    html += `<div style="padding:48px 30px; text-align:center; color:#9A9A95; font-size:16px; line-height:1.55;">No hours logged yet.<br>Tap ＋ to add a shift.</div>`;
   }
   const groups = {};
   for(const h of logged){ const k=mondayOf(h.date); (groups[k]=groups[k]||[]).push(h); }
