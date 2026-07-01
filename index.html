@@ -142,11 +142,26 @@ let TOKEN = localStorage.getItem("lodge-token") || "";
 let ACTOR = localStorage.getItem("lodge-actor") || "Wayne";
 (() => {
   const h = new URLSearchParams(location.hash.slice(1));
-  let changed = false;
-  if (h.get("t")) { TOKEN = h.get("t"); localStorage.setItem("lodge-token", TOKEN); changed = true; }
-  if (h.get("u")) { ACTOR = h.get("u"); localStorage.setItem("lodge-actor", ACTOR); changed = true; }
-  if (changed) history.replaceState(null, "", location.pathname + location.search);
+  if (h.get("t")) { TOKEN = h.get("t"); localStorage.setItem("lodge-token", TOKEN); }
+  if (h.get("u")) { ACTOR = h.get("u"); localStorage.setItem("lodge-actor", ACTOR); }
+  // NB: we deliberately KEEP the token in the URL (no history strip). iOS/Android capture the
+  // CURRENT url when you "Add to Home Screen"; stripping it first is why the installed app
+  // launched with no token. The Not-connected screen below also lets you paste the link in.
 })();
+// Connect this device from a pasted invite link (or a bare token). Used by the Not-connected screen
+// — the reliable path on installed PWAs, whose storage is isolated from the browser's.
+function connectFromText(str){
+  str = (str || "").trim();
+  if (!str) return false;
+  let token = "", actor = "";
+  const hi = str.indexOf("#");
+  if (hi >= 0) { const p = new URLSearchParams(str.slice(hi + 1)); token = p.get("t") || ""; actor = p.get("u") || ""; }
+  else if (!/^https?:/i.test(str)) { token = str; }   // a bare token was pasted
+  if (!token) return false;
+  TOKEN = token; localStorage.setItem("lodge-token", TOKEN);
+  if (actor) { ACTOR = actor; localStorage.setItem("lodge-actor", ACTOR); }
+  return true;
+}
 const REMOTE = () => !!CONFIG.BRIDGE_URL;
 const CONNECTED = () => !REMOTE() || !!TOKEN;
 function api(body) {
@@ -238,10 +253,20 @@ function render(){
   if(!CONNECTED()){
     $("#counts").textContent = "";
     document.querySelector(".fab").style.display = "none";
-    list.innerHTML = `<div style="padding:64px 30px; text-align:center;">
+    list.innerHTML = `<div style="padding:48px 28px 0; text-align:center;">
       <div style="font-size:17px; font-weight:600; color:#20211F; margin-bottom:8px;">Not connected</div>
-      <div style="font-size:14px; line-height:1.55; color:#8A8A85;">Open your personal invite link to connect to the live list.<br>Ask Neil for it.</div>
+      <div style="font-size:14px; line-height:1.55; color:#8A8A85; margin-bottom:18px;">Paste your personal invite link below to connect this device. You only need to do this once.</div>
+      <input id="connect-link" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Paste your invite link"
+        style="width:100%; font:inherit; font-size:15px; color:var(--ink); border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff;">
+      <button id="connect-btn"
+        style="width:100%; margin-top:12px; border:0; background:var(--accent); color:#fff; font:inherit; font-size:15px; font-weight:500; padding:13px; border-radius:11px; cursor:pointer;">Connect</button>
+      <div id="connect-err" style="font-size:12px; color:var(--hi); margin-top:10px; min-height:15px;"></div>
+      <div style="font-size:12px; color:var(--muted); margin-top:18px; line-height:1.5;">Ask Neil for your link if you don't have it.</div>
     </div>`;
+    $("#connect-btn").onclick = ()=>{
+      if(connectFromText($("#connect-link").value)) location.reload();
+      else $("#connect-err").textContent = "That link has no token — copy the whole link Neil sent you.";
+    };
     return;
   }
   const fab = document.querySelector(".fab");
