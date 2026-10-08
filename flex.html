@@ -11,11 +11,9 @@
   :root{
     --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
     --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
-    --accent:#2E6FE0;
     --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
     --amber:#D98A1F; --amber-soft:#FBEEDC;
-    --grey:#B8B5AE; --grey-soft:#EFEDE8;
-    --band:#E9F5EE;
+    --grey:#B8B5AE; --grey-soft:#EFEDE8; --grey-bar:#C9C6BF;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -23,8 +21,7 @@
       --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
       --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
       --amber:#E8A24A; --amber-soft:#3C2E18;
-      --grey:#6E6D68; --grey-soft:#2C2E31;
-      --band:#1C2F24;
+      --grey:#6E6D68; --grey-soft:#2C2E31; --grey-bar:#5E5D58;
     }
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -53,14 +50,25 @@
   .tile .l{font-size:16px; color:var(--sec); margin-top:4px; line-height:1.25;}
   .tile .s{font-size:14px; color:var(--muted); margin-top:6px; line-height:1.3;}
 
+  /* hero: hours for the money */
+  .hero{background:var(--green-soft); border-color:var(--green-line);}
+  .hero .money{font-size:44px; font-weight:800; letter-spacing:-1px; line-height:1; color:var(--green);}
+  .hero .money small{font-size:18px; font-weight:600; color:var(--sec); letter-spacing:0; margin-left:8px;}
+  .hb{margin-top:16px;}
+  .hb .lab{display:flex; justify-content:space-between; align-items:baseline; font-size:16px; color:var(--sec);}
+  .hb .lab b{font-size:26px; font-weight:800; color:var(--ink); letter-spacing:-0.5px;}
+  .hb .bar{height:22px; border-radius:7px; background:var(--grey-bar); margin-top:4px; transform-origin:left; width:100%;}
+  .hb.deal .bar{background:var(--green);}
+  .hb.deal .lab b{color:var(--green);}
+  .js .hb .bar{transform:scaleX(0); transition:transform 1.1s cubic-bezier(.22,.61,.36,1);}
+  .js .in .hb .bar{transform:scaleX(var(--w));}
+  .hero .punch{margin-top:16px; font-size:19px;}
+  .hero .punch b{font-weight:700;}
+
   .legend{display:flex; flex-wrap:wrap; gap:8px 16px; font-size:15px; color:var(--sec); margin:6px 0 10px;}
   .legend i{display:inline-block; width:14px; height:14px; border-radius:4px; vertical-align:-2px; margin-right:6px;}
-  .sw-g{background:var(--green);} .sw-a{background:var(--amber);} .sw-x{background:var(--grey);} .sw-b{background:var(--band); border:1px solid var(--green-line);}
-
-  svg{display:block; width:100%; height:auto; touch-action:manipulation;}
-  .axis{font-size:12px; fill:var(--muted);}
-  .bar{cursor:pointer;}
-  .wk-cap{font-size:11px; fill:var(--sec);}
+  .sw-g{background:var(--green);} .sw-a{background:var(--amber);} .sw-x{background:var(--grey-bar);}
+  .sw-h{background:repeating-linear-gradient(135deg, var(--grey-bar) 0 3px, transparent 3px 6px);}
 
   .switch{display:flex; align-items:center; gap:12px; margin:12px 0 4px; cursor:pointer; user-select:none; min-height:44px;}
   .switch .track{width:52px; height:31px; border-radius:16px; background:var(--grey); position:relative; flex-shrink:0; transition:background .2s;}
@@ -69,24 +77,43 @@
   .switch.on .track::after{transform:translateX(21px);}
   .switch span{font-size:17px; color:var(--ink);}
 
-  .info{background:var(--grey-soft); border-radius:12px; padding:12px 14px; margin-top:10px; font-size:17px; display:none;}
-  .info.show{display:block;}
-  .info b{font-weight:600;}
+  /* weeks as rows */
+  .wk{border-top:0.5px solid var(--divider); padding:12px 0 10px; cursor:pointer;}
+  .wk .top{display:flex; justify-content:space-between; align-items:baseline; font-size:16px; color:var(--sec);}
+  .wk .top b{font-size:18px; font-weight:600; color:var(--ink);}
+  .wk .top .cap{color:var(--amber); font-weight:500;}
+  .wk .hrs{position:relative; height:26px; margin-top:8px; background:var(--grey-soft); border-radius:7px; overflow:hidden;}
+  .wk .hrs .fill{position:absolute; left:0; top:0; bottom:0; background:var(--grey-bar); border-radius:7px; transform-origin:left;}
+  .wk .hrs .tick{position:absolute; top:0; bottom:0; width:2px; background:var(--ink); opacity:.55;}
+  .wk .hrs .tick.deal{background:var(--green); opacity:1;}
+  .wk .hrs .hv{position:absolute; right:8px; top:0; line-height:26px; font-size:14px; font-weight:600; color:var(--ink);}
+  .wk .money{margin-top:7px;}
+  .wk .money .m{display:flex; align-items:center; gap:8px; font-size:15px; color:var(--sec); margin-top:4px;}
+  .wk .money .m span{white-space:nowrap;}
+  .wk .money .m .mb{height:14px; border-radius:5px; background:var(--green); flex:0 0 auto; max-width:42%;}
+  .wk .money .m.last .mb{background:var(--grey-bar);}
+  .wk .money .m b{color:var(--ink); font-weight:600; white-space:nowrap;}
+  .wk .money .m.last{display:none;}
+  .showlast .wk .money .m.last{display:flex;}
+  .wk.part .hrs .fill{opacity:.6;}
+  .wk .more{display:none; margin-top:8px; font-size:16px; color:var(--sec); background:var(--grey-soft); border-radius:10px; padding:8px 12px;}
+  .wk.open .more{display:block;}
+  .ticks{display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin:2px 0 0;}
 
-  .rows{margin-top:6px;}
+  /* days on a clock */
   .hdr{position:relative; height:22px; margin-left:76px; font-size:12px; color:var(--muted);}
   .hdr span{position:absolute; transform:translateX(-50%);}
   .day{position:relative; display:flex; align-items:center; min-height:44px; cursor:pointer; border-top:0.5px solid var(--divider);}
   .day .lab{width:76px; flex-shrink:0; font-size:15px; color:var(--sec); line-height:1.2; padding-right:6px;}
   .day .lab b{display:block; font-weight:600; color:var(--ink); font-size:15px;}
   .day .track{position:relative; flex:1; height:30px; background-image:linear-gradient(to right, var(--divider) 0.5px, transparent 0.5px); background-size:20% 100%;}
-  .day .b{position:absolute; top:5px; height:20px; border-radius:6px; background:var(--grey);}
-  .day .b.g{background:var(--green);} .day .b.a{background:var(--amber);}
-  .day .b .cap{position:absolute; left:0; top:0; bottom:0; width:9px; border-radius:6px 0 0 6px; background:var(--green);}
-  .day .off{position:absolute; inset:5px 0; border-radius:6px; font-size:14px; display:flex; align-items:center; padding-left:10px; color:var(--sec);}
-  .day .off.g{background:var(--green-soft); color:var(--green); font-weight:500;}
-  .day .off.x{background:repeating-linear-gradient(135deg, var(--grey-soft) 0 6px, transparent 6px 12px);}
-  .day .detail{display:none;}
+  .seg{position:absolute; top:5px; height:20px;}
+  .seg.x{background:var(--grey-bar);} .seg.g{background:var(--green);} .seg.a{background:var(--amber);}
+  .seg.h{background:repeating-linear-gradient(135deg, var(--grey-bar) 0 4px, transparent 4px 8px);}
+  .seg.first{border-radius:6px 0 0 6px;} .seg.last{border-radius:0 6px 6px 0;} .seg.only{border-radius:6px;}
+  .seg .t{position:absolute; left:10px; top:0; line-height:20px; font-size:13px; font-weight:600; color:#fff; white-space:nowrap;}
+  .seg.h .t{color:var(--sec);}
+  .detail{display:none;}
   .dcard{background:var(--grey-soft); border-radius:12px; padding:10px 14px; margin:0 0 8px 76px; font-size:16px;}
   .dcard.a{background:var(--amber-soft);} .dcard.g{background:var(--green-soft);}
   .dcard b{font-weight:600;}
@@ -97,6 +124,7 @@
   ul.list li.g b{color:var(--green);} ul.list li.a b{color:var(--amber);}
   .fine{font-size:16px; color:var(--sec);}
   .sig{margin-top:14px; font-size:19px;}
+  .sig small{display:block; font-size:16px; color:var(--sec);}
 </style>
 </head>
 <body>
@@ -108,60 +136,63 @@
   </header>
 
   <section class="card">
-    <h2>From Neil</h2>
-    <p>Wayne, I got my mate to go through your hours from the app. It's an estimate, built from what you've logged, so if a day's wrong tell me and I'll fix it.</p>
+    <h2>From Lord Claude</h2>
+    <p>Wayne, Neil asked me to go through your hours from the app and see how the deal has treated you. Everything here is built from what you logged, so it's an estimate. If a day's wrong, tell Neil and he'll have me fix it.</p>
   </section>
 
   <section class="card">
     <h2>The flexibility you and Ruth mentioned</h2>
-    <p>When we first talked about you coming over from Matt's, two things came up that can actually be measured.</p>
+    <p>When Neil first talked to you and Ruth about coming over from your last job, two things came up that can actually be measured.</p>
     <p><b>Same money as before.</b></p>
     <p><b>No losing a day's pay when life gets in the way.</b> School runs, a kid in A&amp;E, leaving early some days, later others.</p>
-    <p>The rest is yours to judge. This page is just the numbers.</p>
+    <p>The rest is for you two to judge. I've just done the numbers.</p>
   </section>
 
   <section class="card">
     <h2>The deal in one line</h2>
-    <p class="big">£700 a week, fixed. Same as five days at £140.</p>
+    <p class="big">£700 a week, fixed. The same as five days at £140.</p>
   </section>
 
   <section class="card" id="tiles">
     <div class="tiles">
-      <div class="tile g"><div class="n">£17.50 → £20</div><div class="l">an hour</div><div class="s">Matt's: 8 hours for £140. The deal: 35 hours for £700.</div></div>
+      <div class="tile g"><div class="n">£17.50 → £20</div><div class="l">an hour</div><div class="s">Last job: 8 hours for £140. This deal: 35 hours for £700.</div></div>
       <div class="tile g"><div class="n">40 → 35</div><div class="l">hours a week</div></div>
-      <div class="tile g"><div class="n" data-count="5">0</div><div class="l">days off, paid</div></div>
-      <div class="tile"><div class="n" data-count="4">0</div><div class="l">days the site had no work, paid</div></div>
-      <div class="tile g"><div class="n" data-count="9">0</div><div class="l">early finishes, paid</div></div>
-      <div class="tile g"><div class="n" data-count="12">0</div><div class="l">later starts, paid</div></div>
+      <div class="tile g"><div class="n" data-count="5">0</div><div class="l">days off, effectively paid</div></div>
+      <div class="tile"><div class="n" data-count="4">0</div><div class="l">days the site had no work, effectively paid</div></div>
+      <div class="tile g"><div class="n" data-count="9">0</div><div class="l">early finishes, effectively paid</div></div>
+      <div class="tile g"><div class="n" data-count="12">0</div><div class="l">later starts, effectively paid</div></div>
     </div>
   </section>
 
-  <section class="card">
+  <section class="card hero">
     <h2>Hours for the money</h2>
-    <p class="big">£8,120 so far. At the deal's £20 that is 406 hours. On regular hours at Matt's the same money is 464 hours.</p>
+    <div class="money">£8,120<small>so far</small></div>
+    <div class="hb last" style="--w:1"><div class="lab"><span>Last job, at £17.50 an hour</span><b>464 h</b></div><div class="bar"></div></div>
+    <div class="hb deal" style="--w:0.875"><div class="lab"><span>This deal, at £20 an hour</span><b>406 h</b></div><div class="bar"></div></div>
+    <p class="punch">The same money for <b>58 fewer hours</b>. That's a week and a half of your last job.</p>
   </section>
 
   <section class="card">
     <h2>Week by week</h2>
-    <div class="legend"><span><i class="sw-b"></i>£700 paid</span><span><i class="sw-x"></i>hours on site</span></div>
-    <div id="weekly"></div>
-    <div class="switch" id="mattSwitch" role="switch" aria-checked="false" tabindex="0"><div class="track"></div><span>What Matt's regular hours might have paid</span></div>
-    <div class="info" id="weekInfo"></div>
-    <p class="fine" style="margin-top:10px">Tap a week.</p>
+    <p class="fine">Hours on site each week, against the deal's 35 and your last job's 40. Underneath, the money: £700 every week, whatever happened.</p>
+    <div class="switch" id="lastSwitch" role="switch" aria-checked="false" tabindex="0"><div class="track"></div><span>Show what your last job might have paid, assuming each missed day was unpaid</span></div>
+    <div id="weeks"></div>
+    <p class="fine" style="margin-top:10px">Tap a week for the detail.</p>
   </section>
 
   <section class="card">
     <h2>Every day on a clock</h2>
-    <div class="legend"><span><i class="sw-g"></i>your time</span><span><i class="sw-a"></i>the site's late ones</span><span><i class="sw-x"></i>ordinary day</span></div>
+    <p class="fine">A normal day taken as 08:00 to 18:00. Green is the part of that day that was yours. Amber is the part after six that the site took.</p>
+    <div class="legend"><span><i class="sw-g"></i>your time</span><span><i class="sw-x"></i>working</span><span><i class="sw-a"></i>working late for the site</span><span><i class="sw-h"></i>site had no work</span></div>
     <div class="hdr" id="clockHdr"></div>
     <div class="rows" id="clock"></div>
     <p class="fine" style="margin-top:10px">Tap a day.</p>
   </section>
 
   <section class="card">
-    <h2>What Matt's regular hours might have cost</h2>
-    <p>Days you weren't on site: 9. Five were yours, four were the site's. On regular hours at Matt's that might have been £1,260.</p>
-    <p>Nine early finishes. On Matt's rules that is a day gone each, so maybe another £1,260.</p>
+    <h2>What your last job might have cost</h2>
+    <p>Days you weren't on site: 9. Five were yours, four were the site's. At your last job, assuming each one was a missed day, that might have been £1,260.</p>
+    <p>Nine early finishes. Assuming each of those counted as a missed day too, maybe another £1,260.</p>
     <p><b>Here, none of it cost you anything.</b></p>
     <p>The later starts I haven't counted.</p>
     <ul class="list" id="offList"></ul>
@@ -170,21 +201,21 @@
 
   <section class="card">
     <h2>The honest cost</h2>
-    <p>15 finishes at 19:00 or after. Six past half seven, the latest 20:15. Every one of those was the site: the stone run, the goalposts, the bridge beams, the roof before the rain, the concrete pour. Tap an amber day and it tells you which.</p>
+    <p>Anything after six shows amber. Fifteen days ran to 19:00 or later. Six past half seven, the latest 20:15. Every one of those was the site: the stone run, the goalposts, the bridge beams, the roof before the rain, the concrete pour. Tap an amber day and it tells you which.</p>
     <p>Five of the fifteen were later starts too, so a normal day pushed later rather than a long one. Ten days went over ten hours.</p>
-    <p>That's the bit Ruth will feel and I'm not going to dress it up.</p>
+    <p>That's the bit Ruth will feel, and I'm not going to dress it up.</p>
     <ul class="list" id="lateList"></ul>
   </section>
 
   <section class="card">
     <h2>How it balances</h2>
-    <p>Your early finishes and days off on one side. The site's late nights on the other. Money the same every week either way, including the two-day week after the storm and the three-day week with the elbow.</p>
+    <p>Your early finishes and days off on one side. The site's late nights on the other. The money the same every week either way, including the two-day week after the storm and the three-day week with the elbow.</p>
   </section>
 
   <section class="card">
     <h2>Small print</h2>
-    <p class="fine">Worked out from your own entries in the app, 21 July to 8 October. Old job taken as 8 hours a day for £140, fixed start and finish, a day lost if you weren't there. The deal: £9,100 over 13 weeks. All estimates. Shout if a day's wrong.</p>
-    <p class="sig">Cheers mate,<br>Neil</p>
+    <p class="fine">Worked out from your own entries in the app, 21 July to 8 October. Last job taken as 8 hours a day for £140, fixed start and finish, a day lost if you weren't there. The deal: £9,100 over 13 weeks. All estimates. Shout if a day's wrong.</p>
+    <p class="sig">Lord Claude<small>Neil's mate</small></p>
   </section>
 </div>
 
@@ -266,8 +297,7 @@ const WEEK_CAP = {'2026-08-17':'the elbow week','2026-08-31':'bank holiday and t
 const mins = t => +t.slice(0,2)*60 + +t.slice(3);
 const DAYS = RAW.trim().split('\n').map(l=>{const [d,s,f,b,h]=l.split(' ');
   const o={d,s,f,b:+b,h:+h,sm:mins(s),fm:mins(f)};
-  o.late=o.fm>=19*60; o.ls=o.sm>=10*60; o.ef=o.fm<=15*60+30;
-  o.cls=o.late?'a':(o.ls||o.ef?'g':'x'); return o;});
+  o.late=o.fm>=19*60; o.ls=o.sm>=10*60; o.ef=o.fm<=15*60+30; return o;});
 const BY = Object.fromEntries(DAYS.map(o=>[o.d,o]));
 
 // sanity (console only)
@@ -279,6 +309,7 @@ console.assert(n(o=>o.h>=10)===10,'10 ten-hour days'); console.assert(n(o=>o.fm>
 
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const fmt=d=>{const x=new Date(d+'T12:00:00'); return DOW[x.getDay()]+' '+x.getDate().toString().padStart(2,'0')+'/'+(x.getMonth()+1).toString().padStart(2,'0');};
+const ddmm=d=>d.slice(8,10)+'/'+d.slice(5,7);
 const gbp=v=>'£'+v.toLocaleString('en-GB');
 
 // every weekday 21/07 .. 08/10
@@ -297,69 +328,64 @@ WEEKS[WEEKS.length-1].part=true;
 console.assert(WEEKS.length===12,'12 weeks');
 console.assert(Math.abs(WEEKS[4].h-23.25)<1e-9 && WEEKS[4].days===3,'elbow week'); console.assert(WEEKS[6].h===12&&WEEKS[6].days===2,'storm week');
 
-// ---- chart 1: weekly ----
-let matt=false, openWeek=null;
-function drawWeekly(){
-  const W=520,H=260,L=34,R=matt?44:12,T=14,B=42, max=50; const cw=W-L-R, ch=H-T-B, sw=cw/WEEKS.length;
-  const y=v=>T+ch-(v/max)*ch;
-  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Hours per week against the £700 paid every week">`;
-  [0,10,20,30,40,50].forEach(v=>{s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--divider)" stroke-width="0.5"/><text class="axis" x="${L-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`;});
-  if(matt) [0,200,400,600,800,1000].forEach(v=>{s+=`<text class="axis" x="${W-R+6}" y="${y(v/20)+4}">£${v}</text>`;});
-  WEEKS.forEach((w,i)=>{const x=L+i*sw+sw*0.12, bw=sw*0.76;
-    s+=`<rect x="${x-sw*0.06}" y="${y(35)}" width="${bw+sw*0.12}" height="${ch-(y(35)-T)}" fill="var(--band)" stroke="var(--green-line)" stroke-width="1"${w.part?' stroke-dasharray="4 3"':''}/>`;
-    s+=`<rect class="bar" data-i="${i}" x="${x}" y="${y(w.h)}" width="${bw}" height="${y(0)-y(w.h)}" rx="4" fill="${openWeek===i?'var(--ink)':'var(--grey)'}"/>`;
-    const lab=w.k.slice(8,10)+'/'+w.k.slice(5,7);
-    s+=`<text class="axis" x="${x+bw/2}" y="${H-B+14}" text-anchor="middle">${lab}</text>`;
-    if(WEEK_CAP[w.k]) s+=`<text class="wk-cap" x="${x+bw/2}" y="${H-B+27}" text-anchor="middle">${WEEK_CAP[w.k].split(' ')[0]}${WEEK_CAP[w.k].includes('elbow')?' wk':''}</text>`;
-    if(w.off.length) s+=`<circle cx="${x+bw/2}" cy="${H-B+34}" r="3" fill="${w.off.some(o=>o.his)?'var(--green)':'var(--grey)'}"/>`;
-  });
-  s+=`<line x1="${L}" x2="${W-R}" y1="${y(35)}" y2="${y(35)}" stroke="var(--green)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="axis" x="${L+4}" y="${y(35)-5}" fill="var(--green)">35 the deal</text>`;
-  s+=`<line x1="${L}" x2="${W-R}" y1="${y(40)}" y2="${y(40)}" stroke="var(--sec)" stroke-width="1" stroke-dasharray="2 4"/><text class="axis" x="${L+4}" y="${y(40)-5}">40 Matt's</text>`;
-  s+=`<text class="axis" x="${L+4}" y="${y(0)-6}" fill="var(--green)">£700 paid, every week</text>`;
-  if(matt){let pts=WEEKS.map((w,i)=>`${L+i*sw+sw/2},${y(w.days*7)}`).join(' ');
-    s+=`<polyline points="${pts}" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/>`;
-    WEEKS.forEach((w,i)=>{s+=`<circle cx="${L+i*sw+sw/2}" cy="${y(w.days*7)}" r="4.5" fill="var(--ink)"/>`;});}
-  s+='</svg>';
-  const el=document.getElementById('weekly'); el.innerHTML=s;
-  el.querySelectorAll('.bar').forEach(b=>b.addEventListener('click',()=>{openWeek=openWeek===+b.dataset.i?null:+b.dataset.i; drawWeekly(); showWeek();}));
-}
-function showWeek(){const box=document.getElementById('weekInfo'); if(openWeek===null){box.className='info';return;}
-  const w=WEEKS[openWeek]; const cap=WEEK_CAP[w.k]?` (${WEEK_CAP[w.k]})`:'';
-  let t=`<b>Week of ${w.k.slice(8,10)}/${w.k.slice(5,7)}</b>${cap}${w.part?', so far':''}<br>${w.days} day${w.days===1?'':'s'} on site, ${w.h} hours. <b>£700 paid.</b>`;
-  if(w.off.length) t+=`<br>Not on site: ${w.off.map(o=>fmt(o.d)+(o.site?' ('+o.site+')':'')).join(', ')}.`;
-  if(matt) t+=`<br>On Matt's regular hours that week might have paid <b>${gbp(w.days*140)}</b>.`;
-  box.innerHTML=t; box.className='info show';}
-const sw=document.getElementById('mattSwitch');
-const flip=()=>{matt=!matt; sw.classList.toggle('on',matt); sw.setAttribute('aria-checked',matt); drawWeekly(); showWeek();};
-sw.addEventListener('click',flip); sw.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip();}});
-drawWeekly();
+// ---- weeks as rows ----
+const weeksEl=document.getElementById('weeks'); const MAXH=50;
+WEEKS.forEach(w=>{
+  const row=document.createElement('div'); row.className='wk'+(w.part?' part':'');
+  const cap=WEEK_CAP[w.k]?`<span class="cap">${WEEK_CAP[w.k]}</span>`:'';
+  const last=w.days*140;
+  row.innerHTML=`<div class="top"><b>w/c ${ddmm(w.k)}</b>${cap}<span>${w.days} day${w.days===1?'':'s'}${w.part?' so far':''}</span></div>
+    <div class="hrs"><div class="fill" style="width:${w.h/MAXH*100}%"></div><div class="tick deal" style="left:${35/MAXH*100}%"></div><div class="tick" style="left:${40/MAXH*100}%"></div><div class="hv">${w.h} h</div></div>
+    <div class="ticks"><span>0</span><span style="margin-left:auto;color:var(--green);font-weight:600">35 the deal</span><span style="margin-left:6px">40 last job</span></div>
+    <div class="money">
+      <div class="m deal"><div class="mb" style="width:42%"></div><b>£700</b><span>effectively paid${w.part?', so far':''}</span></div>
+      <div class="m last"><div class="mb" style="width:${last/700*42}%"></div><b>${gbp(last)}</b><span>last job, missed days unpaid</span></div>
+    </div>
+    <div class="more">${w.h} hours on site over ${w.days} day${w.days===1?'':'s'}.${w.off.length?' Not on site: '+w.off.map(o=>fmt(o.d)+(o.site?' ('+o.site+')':', day off')).join(', ')+'.':''} ${w.part?'Week still running when this was taken.':''}</div>`;
+  row.addEventListener('click',()=>{const was=row.classList.contains('open'); weeksEl.querySelectorAll('.wk.open').forEach(x=>x.classList.remove('open')); if(!was) row.classList.add('open');});
+  weeksEl.appendChild(row);
+});
+const lsw=document.getElementById('lastSwitch');
+const flip=()=>{const on=!weeksEl.classList.contains('showlast'); weeksEl.classList.toggle('showlast',on); lsw.classList.toggle('on',on); lsw.setAttribute('aria-checked',on);};
+lsw.addEventListener('click',flip); lsw.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip();}});
 
-// ---- chart 2: every day on a clock ----
-const X0=6*60, X1=21*60; const pct=m=>((m-X0)/(X1-X0)*100);
+// ---- every day on a clock ----
+const X0=6*60, X1=21*60, D0=8*60, D1=18*60; const pct=m=>((m-X0)/(X1-X0)*100);
 document.getElementById('clockHdr').innerHTML=[6,9,12,15,18,21].map(h=>`<span style="left:${pct(h*60)}%">${h}:00</span>`).join('');
-const clock=document.getElementById('clock'); let openDay=null;
+const clock=document.getElementById('clock');
+const seg=(cls,a,b,txt='')=>`<div class="seg ${cls}" style="left:${pct(a)}%;width:${pct(b)-pct(a)}%">${txt?`<span class="t">${txt}</span>`:''}</div>`;
 ALL.forEach(r=>{
   const row=document.createElement('div'); row.className='day'; const [dw,dd]=fmt(r.d).split(' ');
   let inner=`<div class="lab"><b>${dd}</b>${dw}</div><div class="track">`;
-  if(r.e){const e=r.e; inner+=`<div class="b ${e.cls}" style="left:${pct(e.sm)}%;width:${pct(e.fm)-pct(e.sm)}%">${e.late&&e.ls?'<i class="cap"></i>':''}</div>`;}
-  else if(r.his) inner+=`<div class="off g">day off, paid</div>`;
-  else inner+=`<div class="off x">${r.site}, paid</div>`;
+  if(r.e){const e=r.e; const parts=[];
+    if(e.sm>D0) parts.push(['g',D0,e.sm]);
+    parts.push(['x',e.sm,Math.min(e.fm,D1)]);
+    if(e.fm<D1) parts.push(['g',e.fm,D1]);
+    if(e.fm>D1) parts.push(['a',D1,e.fm]);
+    parts.sort((p,q)=>p[1]-q[1]);
+    parts.forEach((p,i)=>{const pos=parts.length===1?'only':(i===0?'first':(i===parts.length-1?'last':'')); inner+=seg(p[0]+' '+pos,p[1],p[2]);});
+  }
+  else if(r.his) inner+=seg('g only',D0,D1,'day off, effectively paid');
+  else inner+=seg('h only',D0,D1,r.site+', effectively paid');
   inner+='</div>'; row.innerHTML=inner;
   const det=document.createElement('div'); det.className='detail';
   row.addEventListener('click',()=>{const was=det.style.display==='block'; clock.querySelectorAll('.detail').forEach(x=>x.style.display='none');
     if(was) return; let t='';
-    if(r.e){const e=r.e; t=`<div class="dcard ${e.cls}"><b>${fmt(r.d)}</b> ${e.s} to ${e.f}, ${e.b?e.b+' min break':'no break'}, ${e.h} h.`;
-      if(e.late) t+=`<br>The site: ${LATE_WHY[r.d]||''}.`; if(e.late&&e.ls) t+=' Started later too.'; t+='</div>';}
-    else if(r.his) t=`<div class="dcard g"><b>${fmt(r.d)}</b> Day off. £140 paid all the same.</div>`;
-    else t=`<div class="dcard"><b>${fmt(r.d)}</b> ${r.site[0].toUpperCase()+r.site.slice(1)}. £140 paid all the same.</div>`;
+    if(r.e){const e=r.e; const cls=e.fm>D1?'a':(e.sm>D0||e.fm<D1?'g':'');
+      t=`<div class="dcard ${cls}"><b>${fmt(r.d)}</b> ${e.s} to ${e.f}, ${e.b?e.b+' min break':'no break'}, ${e.h} h.`;
+      if(LATE_WHY[r.d]) t+=`<br>The site: ${LATE_WHY[r.d]}.`+(e.ls?' Started later too.':'');
+      else if(e.fm>D1) t+=' Ran past six for the site.';
+      t+='</div>';}
+    else if(r.his) t=`<div class="dcard g"><b>${fmt(r.d)}</b> Day off. £140 effectively paid all the same.</div>`;
+    else t=`<div class="dcard"><b>${fmt(r.d)}</b> ${r.site[0].toUpperCase()+r.site.slice(1)}. £140 effectively paid all the same.</div>`;
     det.innerHTML=t; det.style.display='block';});
   clock.appendChild(row); clock.appendChild(det);
 });
 
 // ---- lists ----
 const li=(cls,a,b)=>`<li class="${cls}"><b>${a}</b><span>${b}</span></li>`;
-document.getElementById('offList').innerHTML='<li style="border:0;color:var(--muted)">Days not on site</li>'+ALL.filter(r=>!r.e).map(r=>r.his?li('g',fmt(r.d),'day off, paid'):li('',fmt(r.d),r.site+', paid')).join('');
-document.getElementById('earlyList').innerHTML='<li style="border:0;color:var(--muted)">Early finishes</li>'+DAYS.filter(o=>o.ef).map(o=>li('g',fmt(o.d),`${o.s} to ${o.f}, paid`)).join('');
+document.getElementById('offList').innerHTML='<li style="border:0;color:var(--muted)">Days not on site</li>'+ALL.filter(r=>!r.e).map(r=>r.his?li('g',fmt(r.d),'day off, effectively paid'):li('',fmt(r.d),r.site+', effectively paid')).join('');
+document.getElementById('earlyList').innerHTML='<li style="border:0;color:var(--muted)">Early finishes</li>'+DAYS.filter(o=>o.ef).map(o=>li('g',fmt(o.d),`${o.s} to ${o.f}, effectively paid`)).join('');
 document.getElementById('lateList').innerHTML=DAYS.filter(o=>o.late).map(o=>li('a',fmt(o.d),`${o.s} to ${o.f}. ${LATE_WHY[o.d]}${o.ls?' (started later too)':''}`)).join('');
 
 // ---- reveal + count-up ----
