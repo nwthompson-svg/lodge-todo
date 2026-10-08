@@ -14,3 +14,5 @@ appsscript.json
 # pulled Apps Script code holds the token — never commit
 Code.gs
 Code.js
+# local backups of the bridge + Sheet exports + one-off test scripts (hold the token / live data) — never publish
+backup/
