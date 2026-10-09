@@ -80,7 +80,12 @@
   .scrim.show{opacity:1; pointer-events:auto;}
   .sheet{position:fixed; left:0; right:0; bottom:0; z-index:21; background:var(--sheet);
     border-radius:18px 18px 0 0; padding:18px 20px max(22px,env(safe-area-inset-bottom)); max-width:520px; margin:0 auto;
-    transform:translateY(110%); transition:transform .26s cubic-bezier(.22,.61,.36,1);}
+    transform:translateY(110%); transition:transform .26s cubic-bezier(.22,.61,.36,1);
+    max-height:92vh; max-height:92dvh; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;}
+  .sheet:has(.sheet-foot){padding-bottom:0;}
+  .sheet-foot{position:sticky; bottom:0; background:var(--sheet); margin:0 -20px; padding:4px 20px max(16px,env(safe-area-inset-bottom));
+    box-shadow:0 -8px 12px -10px rgba(20,20,18,.25);}
+  .sheet textarea.grow{overflow:hidden;}
   .sheet.show{transform:translateY(0);}
   .sheet h2{font-size:21px; font-weight:600; margin:2px 0 14px;}
   .sheet label{display:block; font-size:16px; color:var(--sec); margin:12px 0 5px;}
@@ -499,19 +504,21 @@ function openEdit(id){
   sheet.innerHTML = `
     <h2>Edit task</h2>
     <label>Task</label>
-    <textarea id="f-task" rows="2">${esc(t.task)}</textarea>
+    <textarea id="f-task" class="grow" rows="2">${esc(t.task)}</textarea>
     <label>Status</label>${segGroup(STAT, t.status, "status")}
     <label>Priority</label>${segGroup(PRIOS, t.priority, "priority")}
     <label>Deadline</label>
     <input type="date" id="f-deadline" value="${t.deadline||''}">
     <label>Area</label>${areaSeg(t.area)}
     <label>Notes</label>
-    <textarea id="f-notes" rows="2" placeholder="Add a note">${esc(t.notes)}</textarea>
+    <textarea id="f-notes" class="grow" rows="4" placeholder="Add a note">${esc(t.notes)}</textarea>
     <label>Photo</label>
     <input type="file" id="f-photo" accept="image/*" capture="environment">
     <div class="hint">Uploads go to your Drive once wired up.</div>
-    <button class="primary" id="f-save">Save</button>
-    <button class="danger" id="f-del">Delete (kept in sheet for Neil)</button>`;
+    <div class="sheet-foot">
+      <button class="primary" id="f-save">Save</button>
+      <button class="danger" id="f-del">Delete (kept in sheet for Neil)</button>
+    </div>`;
   wireSeg(draft);
   $("#f-save").onclick = async ()=>{
     t.task = $("#f-task").value.trim() || t.task;
@@ -650,7 +657,13 @@ function openHoursEdit(id){
   show();
 }
 
-function show(){ scrim.classList.add("show"); sheet.classList.add("show"); }
+// Grow-to-fit textareas: the whole note shows; the sheet scrolls, the Save bar stays pinned.
+function grow(el){ el.style.height = "auto"; el.style.height = (el.scrollHeight + el.offsetHeight - el.clientHeight) + "px"; }
+function show(){
+  sheet.scrollTop = 0;
+  scrim.classList.add("show"); sheet.classList.add("show");
+  sheet.querySelectorAll("textarea.grow").forEach(el=>{ grow(el); el.addEventListener("input", ()=>grow(el)); });
+}
 
 $("#fab").onclick = ()=> page==="hours" ? openHoursAdd() : openAdd();
 
