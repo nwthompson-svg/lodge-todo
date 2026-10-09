@@ -86,6 +86,20 @@
   .sheet-foot{position:sticky; bottom:0; background:var(--sheet); margin:0 -20px; padding:4px 20px max(16px,env(safe-area-inset-bottom));
     box-shadow:0 -8px 12px -10px rgba(20,20,18,.25);}
   .sheet textarea.grow{overflow:hidden;}
+  .sheet input[type=url]{width:100%; font:inherit; font-size:19px; color:var(--ink);
+    border:0.5px solid #DDDAD3; border-radius:10px; padding:11px 12px; background:#fff;}
+  .lnk{display:flex; align-items:center; gap:6px; margin-bottom:8px;}
+  .lnk a{flex:1; min-width:0; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--accent);
+    background:var(--accent-soft); border-radius:10px; padding:13px 12px; font-size:18px; font-weight:500;}
+  .lnk a svg{flex-shrink:0;}
+  .lnk .lw{min-width:0; display:flex; flex-direction:column;}
+  .lnk .lt, .lnk .lh{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .lnk .lh{font-size:14px; font-weight:400; color:var(--sec);}
+  .lnk button{border:0; background:transparent; color:var(--muted); font-size:26px; line-height:1; padding:6px 8px; cursor:pointer;}
+  .addlink{border:0.5px solid #DDDAD3; background:#fff; font:inherit; font-size:17px; color:var(--accent);
+    padding:8px 14px; border-radius:9px; cursor:pointer;}
+  .linkform{display:flex; flex-direction:column; gap:8px; align-items:flex-start;}
+  .linkform[hidden], .addlink[hidden]{display:none;}
   .sheet.show{transform:translateY(0);}
   .sheet h2{font-size:21px; font-weight:600; margin:2px 0 14px;}
   .sheet label{display:block; font-size:16px; color:var(--sec); margin:12px 0 5px;}
@@ -396,6 +410,7 @@ function rowHTML(t){
     if(t.deadline) meta += `<span class="chip${dlDays(t)<0?' od':''}">${ico('cal')} ${fmtDate(t.deadline)}</span>`;
     if(t.photo) meta += `<span class="chip">${ico('photo')}1</span>`;
     if(t.added_by && t.added_by!=="Claude" && t.added_by!=="Neil/AI") meta += `<span class="chip">${ico('user')}Added by ${esc(t.added_by)}</span>`;
+    if(t.links){ const n = parseLinks(t.links).length; if(n) meta += `<span class="chip">${ico('link')}${n}</span>`; }
     if(t.notes) meta += `<span class="chip">${ico('note')}</span>`;
   }
   const acts = inactive ? '' : `<div class="act-left"><button class="a-del" data-act="del" data-id="${t.id}"><i>${ico('trash')}</i><span class="albl">Delete</span></button></div>
@@ -416,6 +431,7 @@ function ico(n){
     photo:'<circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/>',
     user:'<circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0113 0"/>',
     note:'<path d="M5 4h14v16H5z"/><path d="M8 9h8M8 13h6"/>',
+    link:'<path d="M10 14a4 4 0 005.66 0l3-3a4 4 0 00-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 00-5.66 0l-3 3a4 4 0 005.66 5.66l1-1"/>',
     check:'<path d="M5 12l5 5L20 7"/>',
     trash:'<path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/>',
     cal:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/>',
@@ -424,6 +440,72 @@ function ico(n){
   return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 }
 const esc = s => (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---------- links ----------
+// Sheet column `links`: one link per line, "Label | https://…" (label optional — a bare URL gets a
+// name from its site). Only http(s) links are kept; anything else is given https:// in front.
+function normUrl(u){
+  u = String(u||"").trim(); if(!u) return "";
+  if(!/^https?:\/\//i.test(u)) u = "https://" + u.replace(/^[a-z]+:\/*/i,"").replace(/^\/+/,"");
+  return u;
+}
+function parseLinks(s){
+  return String(s||"").split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(l=>{
+    const i = l.lastIndexOf("|");
+    const label = i>=0 ? l.slice(0,i).trim() : "";
+    return {label, url: normUrl(i>=0 ? l.slice(i+1) : l)};
+  }).filter(x=>x.url);
+}
+function serialiseLinks(arr){ return arr.map(x=>x.label ? `${x.label} | ${x.url}` : x.url).join("\n"); }
+function linkHost(url){
+  try{ const h = new URL(url).hostname.replace(/^www\./,""); return h==="nwthompson-svg.github.io" ? "Site page" : h; }catch(e){ return ""; }
+}
+function linkName(x){
+  if(x.label) return x.label;
+  try{
+    const u = new URL(x.url), h = u.hostname.replace(/^www\./,"");
+    if(h==="docs.google.com") return /\/spreadsheets\//.test(u.pathname) ? "Google Sheet" : /\/presentation\//.test(u.pathname) ? "Google Slides" : "Google Doc";
+    if(h==="drive.google.com") return "Google Drive";
+    if(h.endsWith("github.io")){
+      const p = u.pathname.split("/").filter(Boolean).pop() || "";
+      const name = p.replace(/\.html?$/i,"").replace(/[-_]+/g," ");
+      return name ? name[0].toUpperCase() + name.slice(1) + " page" + (u.hash ? " – " + u.hash.slice(1) : "") : h;
+    }
+    return h;
+  }catch(e){ return x.url; }
+}
+function drawLinks(box, links){
+  box.innerHTML = links.length ? links.map((x,i)=>`
+    <div class="lnk">
+      <a href="${esc(x.url)}" target="_blank" rel="noopener">${ico('link')}<span class="lw"><span class="lt">${esc(linkName(x))}</span>${linkName(x)!==linkHost(x.url)?`<span class="lh">${esc(linkHost(x.url))}</span>`:""}</span></a>
+      <button type="button" data-rm="${i}" aria-label="Remove link">×</button>
+    </div>`).join("") : `<div class="hint">No links yet.</div>`;
+  box.querySelectorAll("[data-rm]").forEach(b=> b.onclick = ()=>{ links.splice(Number(b.dataset.rm),1); drawLinks(box, links); });
+}
+// Links block for a sheet: tappable links, × to remove, "+ Add link" opens a URL + name form.
+// Returns a function that yields the links to save (including a URL typed but not yet added).
+function wireLinks(links){
+  const box = $("#f-links"), form = $("#f-linkform"), addBtn = $("#f-addlink");
+  drawLinks(box, links);
+  addBtn.onclick = ()=>{ form.hidden = false; addBtn.hidden = true; $("#f-lurl").focus(); };
+  const take = ()=>{
+    const url = normUrl($("#f-lurl").value); if(!url) return false;
+    links.push({label: $("#f-lname").value.trim().replace(/\|/g,"/"), url});
+    $("#f-lurl").value = ""; $("#f-lname").value = "";
+    return true;
+  };
+  $("#f-ladd").onclick = ()=>{ if(take()){ drawLinks(box, links); form.hidden = true; addBtn.hidden = false; } };
+  return ()=>{ take(); return serialiseLinks(links); };
+}
+const LINKS_HTML = `
+    <label>Links</label>
+    <div id="f-links"></div>
+    <button type="button" class="addlink" id="f-addlink">+ Add link</button>
+    <div class="linkform" id="f-linkform" hidden>
+      <input type="url" id="f-lurl" inputmode="url" autocomplete="off" placeholder="Paste a link">
+      <input type="text" id="f-lname" placeholder="Name it (optional)">
+      <button type="button" class="addlink" id="f-ladd">Add</button>
+    </div>`;
 
 // ---------- interactions ----------
 function find(id){ return tasks.find(t=>t.id==id); }
@@ -510,6 +592,7 @@ function openEdit(id){
     <label>Deadline</label>
     <input type="date" id="f-deadline" value="${t.deadline||''}">
     <label>Area</label>${areaSeg(t.area)}
+    ${LINKS_HTML}
     <label>Notes</label>
     <textarea id="f-notes" class="grow" rows="4" placeholder="Add a note">${esc(t.notes)}</textarea>
     <label>Photo</label>
@@ -520,8 +603,10 @@ function openEdit(id){
       <button class="danger" id="f-del">Delete (kept in sheet for Neil)</button>
     </div>`;
   wireSeg(draft);
+  const linksOut = wireLinks(parseLinks(t.links));
   $("#f-save").onclick = async ()=>{
     t.task = $("#f-task").value.trim() || t.task;
+    t.links = linksOut();
     t.notes = $("#f-notes").value.trim();
     t.deadline = $("#f-deadline").value || "";
     t.status = draft.status; t.priority = draft.priority; t.area = draft.area;
@@ -544,12 +629,14 @@ function openAdd(){
     <label>Deadline</label>
     <input type="date" id="f-deadline" value="">
     <label>Area</label>${areaSeg(draft.area)}
+    ${LINKS_HTML}
     <button class="primary" id="f-add">Add task</button>`;
   wireSeg(draft);
+  const linksOut = wireLinks([]);
   $("#f-add").onclick = ()=>{
     const text = $("#f-task").value.trim(); if(!text) return;
     const t = {id:Data.nextId(tasks), task:text, area:draft.area, status:"Open",
-      priority:draft.priority, added_by:ACTOR, notes:"", photo:"", deadline:$("#f-deadline").value||""};
+      priority:draft.priority, added_by:ACTOR, links:linksOut(), notes:"", photo:"", deadline:$("#f-deadline").value||""};
     stamp(t,"create"); tasks.push(t); save(t); render(); closeSheet();
   };
   show();
