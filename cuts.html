@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Batten cut lists</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey-soft:#EFEDE8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey-soft:#2C2E31;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:18px; line-height:1.4;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .jump{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .jump a{font-size:16px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border-radius:20px; padding:7px 14px; text-decoration:none;}
+  .part{font-size:26px; font-weight:700; letter-spacing:-0.3px; margin:34px 4px 4px;}
+  .partsub{font-size:17px; color:var(--sec); margin:0 4px 6px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 14px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
+  .card ul{margin:0 0 10px; padding-left:22px;} .card li{margin:3px 0;}
+  .rules{background:var(--amber-soft); border-color:transparent;}
+  .rules h2{color:var(--amber);}
+  b.n{font-variant-numeric:tabular-nums;}
+  .num{font-variant-numeric:tabular-nums; font-weight:700;}
+
+  /* tick rows */
+  .row{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:0.5px solid var(--divider); cursor:pointer;}
+  .row:first-of-type{border-top:0;}
+  .tick{width:26px; height:26px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    border:2px solid var(--muted); display:flex; align-items:center; justify-content:center;}
+  .tick svg{width:14px; height:14px; opacity:0;}
+  .row.done .tick{background:var(--green); border-color:var(--green);}
+  .row.done .tick svg{opacity:1;}
+  .row.done .what{color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px;}
+  .what{flex:1; min-width:0;}
+  .what .hd{font-weight:700;}
+  .what .cut{margin-top:2px;}
+  .what .gets{color:var(--sec); font-size:16px; margin-top:3px;}
+  .tag{display:inline-block; font-size:13px; font-weight:700; border-radius:6px; padding:1px 7px; margin-left:4px; vertical-align:2px;}
+  .rip{background:var(--green-soft); color:var(--green);}
+  .norip{background:var(--grey-soft); color:var(--sec);}
+
+  /* piece list */
+  .pl{width:100%; border-collapse:collapse; font-size:16px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:7px 6px 7px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right; padding-right:0;}
+  .pl td.l{font-weight:700; white-space:nowrap;}
+  .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
+  .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
+  .sig small{display:block; font-size:14px; color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Batten cut lists</h1>
+  <div class="sub">Lodge backers, then the plant room</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 09/10/2026.</div>
+  <div class="jump"><a href="#lodge">Lodge backers</a><a href="#plant">Plant room</a></div>
+</header>
+
+<!-- ================= LODGE ================= -->
+<div class="part" id="lodge">1. Lodge inside backers</div>
+<p class="partsub">2×2 treated. These go on the inside face of the insulation at the bottom of the wall (under the floor), opposite the low battens, so the screws clamp the insulation between them. They hold the insulation up under the doors.</p>
+
+<div class="card rules">
+  <h2>Before you cut</h2>
+  <ul>
+    <li><b>Every length:</b> cut <b>50 off one end</b> first (the bad end), then measure from that cut.</li>
+    <li><b>Treat every cut end.</b></li>
+    <li>Measure the <b>real thickness</b> of the 2×2 before cutting the gable pieces.</li>
+    <li>Measure the <b>gap</b> from the inside face of the insulation to the joist edge in a few places before cutting noggins.</li>
+  </ul>
+</div>
+
+<div class="card" data-group="lodge">
+  <h2>Cut list — 6 × 4.8 m + 4 × 3.6 m</h2>
+  <div class="row" data-k="l1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="what"><div class="hd">4 × 4.8 m lengths</div><div class="cut">Cut 50 off, measure <span class="num">4700</span></div>
+    <div class="gets">One each: IB-NL-2 · IB-SL-1 · IB-NR-2 · IB-SR-2</div></div></div>
+  <div class="row" data-k="l2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="what"><div class="hd">2 × 4.8 m lengths</div><div class="cut">Cut 50 off, then <span class="num">1809</span> + <span class="num">1964</span> from each</div>
+    <div class="gets">1809 → IB-NL-1 and IB-SL-2 · 1964 → IB-NR-1 and IB-SR-2. Keep the ~900 off-cut for noggins.</div></div></div>
+  <div class="row" data-k="l3"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="what"><div class="hd">4 × 3.6 m lengths</div><div class="cut"><span class="num">3250 minus the 2×2 thickness</span> (<span class="num">3206</span> if it's 44)</div>
+    <div class="gets">IB-GW-1 · IB-GW-2 · IB-GE-1 · IB-GE-2. Off-cuts to noggins.</div></div></div>
+  <div class="row" data-k="l4"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="what"><div class="hd">Noggins, from the off-cuts</div><div class="cut">Length = the gap minus the 2×2 thickness (about <span class="num">56</span>)</div>
+    <div class="gets">32 for the four long walls + one per joist end on the two gables.</div></div></div>
+</div>
+
+<div class="card">
+  <h2>Where they go</h2>
+  <p>On each long wall the <b>4700 runs right under the door</b>; the short piece is at the end away from it.</p>
+  <table class="pl">
+    <tr><th>Wall</th><th>Pieces, in order</th></tr>
+    <tr><td class="l">Left block, north</td><td>1809 at the gable end → 4700 under the bifold to the bridge end</td></tr>
+    <tr><td class="l">Left block, south</td><td>4700 from the gable end under the slider → 1809 at the bridge end</td></tr>
+    <tr><td class="l">Right block, north</td><td>1964 at the bridge end → 4700 under the bifold to the gable end</td></tr>
+    <tr><td class="l">Right block, south</td><td>1964 at the bridge end → 4700 under the slider to the gable end</td></tr>
+    <tr><td class="l">Both gables</td><td>Fit between the long-wall pieces, one each side of the middle split, 3 mm clear of it</td></tr>
+  </table>
+  <p style="margin-top:12px;"><b>Noggins:</b> 100 from each end, one each side of every joint (about 50 off it), then no more than 1.3 m apart. PU glue and small pins to the batten.</p>
+</div>
+
+<!-- ================= PLANT ================= -->
+<div class="part" id="plant">2. Plant room battens</div>
+<p class="partsub">Same system as the Lodge. Four walls: the <b>back</b> (metal sheet), the <b>front</b> (bifold door), the <b>plant end</b> (small window) and the <b>office end</b> (big window).</p>
+
+<div class="card rules">
+  <h2>How to cut the 4×1</h2>
+  <ul>
+    <li>Cut <b>50 off one end</b> of each 4.8 m board, then measure from that cut.</li>
+    <li><b>Cross-cut first, rip second.</b> Cut the board into the pieces on its line below.</li>
+    <li>Pieces marked <span class="tag rip">RIP</span> get ripped in half with the chamfer, like the Lodge, so each one makes <b>two</b> battens.</li>
+    <li>"<b>then cut one down to …</b>" means after the rip, chop one of the pair to the second length.</li>
+    <li>Pieces marked <span class="tag norip">DON'T RIP</span> are the over/under battens: full 95 width, chamfered top.</li>
+    <li>Label both edges on the back before ripping. Treat every cut end.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>What you're making</h2>
+  <table class="pl">
+    <tr><th>Label</th><th>Where</th><th class="r">Length</th><th class="r">Qty</th></tr>
+    <tr><td class="l">PN-1</td><td>Back wall, plant-end half</td><td class="r num">4590</td><td class="r">5</td></tr>
+    <tr><td class="l">PN-2</td><td>Back wall, office-end half</td><td class="r num">3880</td><td class="r">5</td></tr>
+    <tr><td class="l">PS-1</td><td>Front, plant-end corner → bifold</td><td class="r num">4132</td><td class="r">5</td></tr>
+    <tr><td class="l">PS-2</td><td>Front, bifold → office-end corner</td><td class="r num">3017</td><td class="r">5</td></tr>
+    <tr><td class="l">PW-1</td><td>Plant end, back corner → window</td><td class="r num">1776</td><td class="r">5</td></tr>
+    <tr><td class="l">PW-2</td><td>Plant end, window → front corner</td><td class="r num">701</td><td class="r">5</td></tr>
+    <tr><td class="l">PE-1</td><td>Office end, back corner → window</td><td class="r num">1156</td><td class="r">5</td></tr>
+    <tr><td class="l">PE-2</td><td>Office end, window → front corner</td><td class="r num">701</td><td class="r">5</td></tr>
+    <tr><td class="l">PW-OU</td><td>Over + under the plant-end window</td><td class="r num">980</td><td class="r">2</td></tr>
+    <tr><td class="l">PE-OU</td><td>Over + under the office-end window</td><td class="r num">1600</td><td class="r">2</td></tr>
+    <tr><td class="l">PS-OU</td><td>Over + under the bifold</td><td class="r num">1311</td><td class="r">2</td></tr>
+  </table>
+  <p style="margin-top:12px;">PW-2 and PE-2 are the same length: cut ten 701s and split them five and five. Rows 1–5 on every wall, same heights as the Lodge.</p>
+</div>
+
+<div class="card" data-group="plant">
+  <h2>Board by board — 13 × 4.8 m 4×1</h2>
+  <div id="boards"></div>
+</div>
+
+<div class="card" data-group="plantib">
+  <h2>Plant inside backers — 2×2 treated</h2>
+  <p>Under the <b>front and both ends only</b> (not the back). Same 50-off rule.</p>
+  <div id="pib"></div>
+  <p style="margin-top:10px;"><b>Where they go:</b> front = 2408 from the plant-end corner, then the 4700 <b>centred under the bifold</b>, then 1292 to the office-end corner. Each end runs from the back corner to the front backer.</p>
+  <p><b>Check:</b> the front joist is doubled under the bifold, so the gap there may be smaller. Measure it before cutting those noggins.</p>
+</div>
+
+<div class="card">
+  <h2>Leave for Neil</h2>
+  <p>The <b>4×2 × 3.6 m</b> is the roof support beam. Neil's cutting that one himself.</p>
+</div>
+
+<button class="reset" id="reset" type="button">Clear all ticks</button>
+<p class="sig">Lord Claude<small>Neil's mate</small></p>
+
+</div>
+<script>
+(function(){
+  var TICK='<div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  var R='<span class="tag rip">RIP</span>', N='<span class="tag norip">DON\'T RIP</span>';
+  var boards=[
+    ['1','4590 '+R,'PN-1 ×2'],
+    ['2','4590 '+R,'PN-1, then cut one down to PN-2 3880. The off-cut (about 707) → one 701.'],
+    ['3','4590 '+R,'PN-1 ×2'],
+    ['4','4132 '+R,'PS-1 ×2'],
+    ['5','4132 '+R,'PS-1, then cut one down to PS-2 3017. The off-cut → one 701.'],
+    ['6','4132 '+R,'PS-1 ×2'],
+    ['7','3880 '+R+' · 701 '+R,'PN-2 ×2 · 701 ×2'],
+    ['8','3880 '+R+' · 701 '+R,'PN-2 ×2 · 701 ×2'],
+    ['9','3017 '+R+' · 1600 '+N,'PS-2 ×2 · PE-OU'],
+    ['10','3017 '+R+' · 1600 '+N,'PS-2 ×2 · PE-OU'],
+    ['11','1776 '+R+' · 1776 '+R+' · 980 '+N,'PW-1 ×4 · PW-OU'],
+    ['12','1776 '+R+' · 1311 '+N+' · 701 '+R+' · 701 '+R,'PW-1, then cut one down to PE-1 1156 · PS-OU · 701 ×4'],
+    ['13','1156 '+R+' · 1156 '+R+' · 1311 '+N+' · 980 '+N,'PE-1 ×4 · PS-OU · PW-OU']
+  ];
+  var pib=[
+    ['A','4.8 m: 4700','IB-PS-2 (front, middle)'],
+    ['B','4.8 m: 2408 + 1292','IB-PS-1 (front, plant end) · IB-PS-3 (front, office end). Off-cut (~990) to noggins.'],
+    ['C + D','2 × 3.6 m: 3396 minus the 2×2 thickness (3352 if it\'s 44)','IB-PW (plant end) · IB-PE (office end)'],
+    ['Noggins','Gap minus thickness (about 56), from the off-cuts','About 20: 10 along the front, one per joist end on each end wall (about 5 each). Off-cuts give exactly 20, so go carefully.']
+  ];
+  function rows(el,list,prefix,label){
+    el.innerHTML=list.map(function(b){
+      return '<div class="row" data-k="'+prefix+b[0]+'">'+TICK+'<div class="what"><div class="hd">'+label+b[0]+'</div><div class="cut">'+b[1]+'</div><div class="gets">'+b[2]+'</div></div></div>';
+    }).join('');
+  }
+  rows(document.getElementById('boards'),boards,'b','Board ');
+  rows(document.getElementById('pib'),pib,'p','');
+  var KEY='lh-cuts-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var all=document.querySelectorAll('.row[data-k]');
+  Array.prototype.forEach.call(all,function(r){
+    var k=r.getAttribute('data-k');
+    if(st[k]) r.classList.add('done');
+    r.addEventListener('click',function(){ r.classList.toggle('done'); st[k]=r.classList.contains('done'); save(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every tick on this page?')) return;
+    st={}; save(); Array.prototype.forEach.call(all,function(r){ r.classList.remove('done'); });
+  });
+})();
+</script>
+</body>
+</html>
