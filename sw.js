@@ -1,6 +1,6 @@
 // Lodge to-do — service worker (network-first so updates show immediately when online,
 // cache fallback so the app still opens on patchy site signal).
-const C = "lodge-todo-v2";
+const C = "lodge-todo-v3";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", e => {
