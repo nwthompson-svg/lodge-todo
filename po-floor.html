@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Plant room floor: membrane + mesh</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey-soft:#EFEDE8; --blue:#3A6FB0; --red:#C0392B;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey-soft:#2C2E31; --blue:#7FA8E0; --red:#E57364;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:18px; line-height:1.4;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .jump{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .jump a{font-size:16px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border-radius:20px; padding:7px 14px; text-decoration:none;}
+  .part{font-size:26px; font-weight:700; letter-spacing:-0.3px; margin:34px 4px 4px;}
+  .partsub{font-size:17px; color:var(--sec); margin:0 4px 6px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 14px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 10px; padding-left:22px;} .card li{margin:5px 0;}
+  .rules{background:var(--amber-soft); border-color:transparent;}
+  .rules h2{color:var(--amber);}
+  .num{font-variant-numeric:tabular-nums; font-weight:700;}
+  .hero{display:flex; gap:10px; margin:6px 0 2px;}
+  .hero div{flex:1; background:var(--grey-soft); border-radius:12px; padding:10px 12px;}
+  .hero b{display:block; font-size:28px; font-variant-numeric:tabular-nums;}
+  .hero span{font-size:15px; color:var(--sec);}
+
+  .row{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:0.5px solid var(--divider); cursor:pointer;}
+  .row:first-of-type{border-top:0;}
+  .tick{width:26px; height:26px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    border:2px solid var(--muted); display:flex; align-items:center; justify-content:center;}
+  .tick svg{width:14px; height:14px; opacity:0;}
+  .row.done .tick{background:var(--green); border-color:var(--green);}
+  .row.done .tick svg{opacity:1;}
+  .row.done .what{color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px;}
+  .what{flex:1; min-width:0;}
+  .what .hd{font-weight:700;}
+  .what .cut{margin-top:2px;}
+  .what .gets{color:var(--sec); font-size:16px; margin-top:3px;}
+
+  .pl{width:100%; border-collapse:collapse; font-size:16px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:8px 6px 8px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right;}
+  .pl td:last-child, .pl th:last-child{padding-right:0;}
+  .pl td.l{font-weight:700; white-space:nowrap;}
+  .mk{color:var(--green);}
+  .pl td small{display:block; font-weight:400; color:var(--sec); font-size:13px;}
+  .pl tr[data-k]{cursor:pointer;}
+  .pl tr.done td{color:var(--muted); text-decoration:line-through;}
+  .pl tr.done td.l::before{content:"✓ "; color:var(--green);}
+  .note{font-size:15px; color:var(--sec); margin-top:10px;}
+
+  svg.plan, svg.edge{width:100%; height:auto; display:block; margin:4px 0 6px;}
+  .clt{fill:none; stroke:var(--muted); stroke-width:14; stroke-dasharray:60 40;}
+  .jz{fill:var(--grey-soft); stroke:var(--sec); stroke-width:18;}
+  .m0{fill:var(--green); fill-opacity:.30; stroke:var(--green); stroke-width:14;}
+  .m1{fill:var(--green); fill-opacity:.30; stroke:var(--green); stroke-width:14;}
+  .r0{fill:var(--blue); fill-opacity:.24; stroke:var(--blue); stroke-width:12;}
+  .r1{fill:var(--blue); fill-opacity:.24; stroke:var(--blue); stroke-width:12;}
+  .steel{stroke:var(--red); stroke-width:30; stroke-dasharray:90 60;}
+  .lbl{fill:var(--ink); font-family:inherit;}
+  .lbl.b{font-size:320px; font-weight:700;}
+  .lbl.n{font-size:300px; font-weight:700; fill:var(--ink);}
+  .lbl.e{font-size:250px; font-weight:600; fill:var(--sec); letter-spacing:10px;}
+  .lbl.s{font-size:250px; fill:var(--red); font-weight:600;}
+  .cltf{fill:#D9B98A;} .jj{fill:#C9A46A;} .fib{fill:#B89670;}
+  .cl{stroke:var(--muted); stroke-width:2; stroke-dasharray:8 6;}
+  .mem{fill:none; stroke:var(--green); stroke-width:7;}
+  .memx{stroke:var(--green); stroke-width:7; stroke-dasharray:6 6;}
+  .dim, .dimb{stroke:var(--ink); stroke-width:2;} .dimb{stroke-width:4;}
+  .el{font-size:24px; fill:#20211F;} .eo{font-size:24px; fill:var(--ink);} .dl{font-size:30px; font-weight:700; fill:var(--ink);}
+  .ds{font-size:22px; fill:var(--sec);} .ml{font-size:24px; fill:var(--green); font-weight:700;}
+  .key{display:flex; gap:14px; flex-wrap:wrap; font-size:15px; color:var(--sec);}
+  .key i{display:inline-block; width:14px; height:14px; border-radius:3px; vertical-align:-2px; margin-right:5px;}
+
+  .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
+  .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
+  .sig small{display:block; font-size:14px; color:var(--muted);}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+
+<div class="wrap">
+
+<header>
+  <h1>Plant room floor: membrane + mesh</h1>
+  <div class="sub">Cut list and where every piece goes</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 18/10/2026 for Monday 19/10.</div>
+  <div class="jump"><a href="#rules">Before you cut</a><a href="#cuts">Cut list</a><a href="#membrane">Membrane</a><a href="#mesh">Mesh</a><a href="#edge">Edges</a><a href="#lay">Laying</a></div>
+</header>
+
+<div class="card">
+  <h2>The job</h2>
+  <p>Cut the membrane and the mouse mesh for the <b>underside of the plant room floor</b>. Every piece is the same length and runs <b>across</b> the floor, back to front. The pieces sit side by side along the 8.4 m with an even overlap.</p>
+  <div class="hero">
+    <div><b>3766</b><span>every piece</span></div>
+    <div><b>6</b><span>membrane, 46 overlap</span></div>
+    <div><b>11</b><span>mesh, 113 overlap</span></div>
+  </div>
+</div>
+
+<div class="card rules" id="rules">
+  <h2>Before you cut</h2>
+  <ul>
+    <li><b>Measure the joists.</b> Outside of the back joist to outside of the front joist should be <b class="num">3196</b> (measure away from the doubled joist at the bifold). End of the joists to end of the joists should be <b class="num">8200</b>. The joists sit 100 in from the CLT edge all round. <b>If either is out by more than 10, stop and message Neil.</b></li>
+    <li><b>Joists not on yet?</b> Measure the CLT instead: <b class="num">3396</b> across, <b class="num">8400</b> long. Cut anyway; the cut length doesn't change.</li>
+    <li><b>Check the mesh:</b> 900 wide, 30 m on the label, and 2 rolls. If not, stop and message Neil: the layout changes.</li>
+    <li><b>Check the Traspir roll</b> has at least <b>23 m</b> left (6 pieces = 22.6 m).</li>
+    <li>A <b>30 m mesh roll gives 7 pieces, not 8</b> (8 would need 30.1 m). So 11 pieces = 7 off one roll + 4 off the next.</li>
+    <li><b>Label every piece</b> as you cut it with a marker in one corner (M1 to M6, R1 to R11), and write <b>BACK</b> on the end that goes to the back.</li>
+    <li>Membrane goes on <b>the same way up as the Lodge floor</b>.</li>
+  </ul>
+</div>
+
+<div class="part" id="cuts">1. Cut list</div>
+<div class="card" data-group="cuts">
+  <h2>Cut</h2>
+  <div class="row" data-k="c-m"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Membrane: 6 × 3766</div><div class="cut">From the Traspir roll (1500 wide). Uses 22.6 m.</div><div class="gets">Label them M1 to M6.</div></div></div>
+  <div class="row" data-k="c-r1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mesh roll 1: 7 × 3766</div><div class="cut">26.4 m off a 30 m roll. Leaves about 3.6 m.</div><div class="gets">Label them R1 to R7.</div></div></div>
+  <div class="row" data-k="c-r2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mesh roll 2: 4 × 3766</div><div class="cut">15.1 m.</div><div class="gets">Label them R8 to R11.</div></div></div>
+</div>
+
+<div class="card">
+  <h2>How to read the positions</h2>
+  <p>All positions are measured <b>along the edge joist from the end of the joists at the plant end</b> (the small window end).</p>
+  <ul>
+    <li><b>Mark the END of each piece</b> (the green numbers) on the bare joists. That mark stays visible until that piece goes on. Start marks would be hidden under the piece before.</li>
+    <li>Mark on <b>both</b> the back and front joists, so each piece goes on square.</li>
+    <li><b>First piece</b> (M1 / R1): hangs 285 past the joist end, far edge on its end mark.</li>
+    <li><b>Each next piece:</b> far edge on its own end mark. It overlaps back over the last piece by itself.</li>
+    <li><b>Last piece</b> (M6 / R11): finishes 285 past the joist end at the office end. Check it does.</li>
+    <li>Across the floor, every piece hangs <b>285 past</b> the back joist and 285 past the front joist.</li>
+    <li>The layout works the same from either end and either way up, so it doesn't matter if the cassette is upside down.</li>
+  </ul>
+</div>
+
+<div class="part" id="membrane">2. Membrane: 6 pieces</div>
+<p class="partsub">Plan view from above. Darker bands are the overlaps. The number in each piece is its end mark.</p>
+<div class="card">
+  <svg viewBox="-765 -1285 9730 5666" class="plan" role="img" aria-label="Membrane layout, plan view">
+<rect x="-100" y="-100" width="8400" height="3396" class="clt"/>
+<rect x="0" y="0" width="8200" height="3196" class="jz"/>
+<rect x="-285.0" y="-285" width="1500" height="3766" class="m0"/>
+<rect x="1169.0" y="-285" width="1500" height="3766" class="m1"/>
+<rect x="2623.0" y="-285" width="1500" height="3766" class="m0"/>
+<rect x="4077.0" y="-285" width="1500" height="3766" class="m1"/>
+<rect x="5531.0" y="-285" width="1500" height="3766" class="m0"/>
+<rect x="6985.0" y="-285" width="1500" height="3766" class="m1"/>
+<line x1="700" y1="0" x2="700" y2="3196" class="steel"/>
+<text x="700" y="3911" class="lbl s" text-anchor="middle">steel</text>
+<line x1="3420" y1="0" x2="3420" y2="3196" class="steel"/>
+<text x="3420" y="3911" class="lbl s" text-anchor="middle">steel</text>
+<line x1="7500" y1="0" x2="7500" y2="3196" class="steel"/>
+<text x="7500" y="3911" class="lbl s" text-anchor="middle">steel</text>
+<text x="465.0" y="-445" class="lbl b" text-anchor="middle">M1</text>
+<text transform="translate(540.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">1215</text>
+<text x="1919.0" y="-445" class="lbl b" text-anchor="middle">M2</text>
+<text transform="translate(1994.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">2669</text>
+<text x="3373.0" y="-445" class="lbl b" text-anchor="middle">M3</text>
+<text transform="translate(3448.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">4123</text>
+<text x="4827.0" y="-445" class="lbl b" text-anchor="middle">M4</text>
+<text transform="translate(4902.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">5577</text>
+<text x="6281.0" y="-445" class="lbl b" text-anchor="middle">M5</text>
+<text transform="translate(6356.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">7031</text>
+<text x="7735.0" y="-445" class="lbl b" text-anchor="middle">M6</text>
+<text transform="translate(-425,1598.0) rotate(-90)" class="lbl e" text-anchor="middle">PLANT END</text>
+<text transform="translate(8625,1598.0) rotate(90)" class="lbl e" text-anchor="middle">OFFICE END</text>
+<text x="4100.0" y="-905" class="lbl e" text-anchor="middle">BACK (hedge side)</text>
+<text x="4100.0" y="4261" class="lbl e" text-anchor="middle">FRONT (bifold side)</text>
+</svg>
+  <div class="key"><span><i style="background:var(--green);opacity:.5"></i>membrane piece</span><span><i style="background:var(--grey-soft);border:1px solid var(--sec)"></i>joists</span><span><i style="background:var(--red)"></i>steels (for reference)</span></div>
+</div>
+<div class="card" data-group="mem">
+  <h2>Membrane positions</h2>
+  <table class="pl">
+    <tr><th>Piece</th><th class="r">Start</th><th class="r">End = mark</th><th class="r">Overlap at</th></tr>
+    <tr data-k="M1"><td class="l">M1</td><td class="r">285 <small>hangs past the joist end</small></td><td class="r num"><b class='mk'>1215</b></td><td class="r">—</td></tr>
+<tr data-k="M2"><td class="l">M2</td><td class="r">1169</td><td class="r num"><b class='mk'>2669</b></td><td class="r">1169–1215</td></tr>
+<tr data-k="M3"><td class="l">M3</td><td class="r">2623</td><td class="r num"><b class='mk'>4123</b></td><td class="r">2623–2669</td></tr>
+<tr data-k="M4"><td class="l">M4</td><td class="r">4077</td><td class="r num"><b class='mk'>5577</b></td><td class="r">4077–4123</td></tr>
+<tr data-k="M5"><td class="l">M5</td><td class="r">5531</td><td class="r num"><b class='mk'>7031</b></td><td class="r">5531–5577</td></tr>
+<tr data-k="M6"><td class="l">M6</td><td class="r">6985</td><td class="r num">285 <small>hangs past the joist end</small></td><td class="r">6985–7031</td></tr>
+  </table>
+  <p class="note">Each overlap is 46. No overlap lands on a steel.</p>
+</div>
+
+<div class="part" id="mesh">3. Mesh: 11 pieces</div>
+<p class="partsub">The mesh goes on <b>after</b> the membrane, on the outside. Darker bands are the 113 overlaps.</p>
+<div class="card">
+  <svg viewBox="-765 -1285 9730 5666" class="plan" role="img" aria-label="Mesh layout, plan view">
+<rect x="-100" y="-100" width="8400" height="3396" class="clt"/>
+<rect x="0" y="0" width="8200" height="3196" class="jz"/>
+<rect x="-285.0" y="-285" width="900" height="3766" class="r0"/>
+<rect x="502.0" y="-285" width="900" height="3766" class="r1"/>
+<rect x="1289.0" y="-285" width="900" height="3766" class="r0"/>
+<rect x="2076.0" y="-285" width="900" height="3766" class="r1"/>
+<rect x="2863.0" y="-285" width="900" height="3766" class="r0"/>
+<rect x="3650.0" y="-285" width="900" height="3766" class="r1"/>
+<rect x="4437.0" y="-285" width="900" height="3766" class="r0"/>
+<rect x="5224.0" y="-285" width="900" height="3766" class="r1"/>
+<rect x="6011.0" y="-285" width="900" height="3766" class="r0"/>
+<rect x="6798.0" y="-285" width="900" height="3766" class="r1"/>
+<rect x="7585.0" y="-285" width="900" height="3766" class="r0"/>
+<line x1="700" y1="0" x2="700" y2="3196" class="steel"/>
+<text x="700" y="3911" class="lbl s" text-anchor="middle">steel</text>
+<line x1="3420" y1="0" x2="3420" y2="3196" class="steel"/>
+<text x="3420" y="3911" class="lbl s" text-anchor="middle">steel</text>
+<line x1="7500" y1="0" x2="7500" y2="3196" class="steel"/>
+<text x="7500" y="3911" class="lbl s" text-anchor="middle">steel</text>
+<text x="165.0" y="-445" class="lbl b" text-anchor="middle">R1</text>
+<text transform="translate(240.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">615</text>
+<text x="952.0" y="-445" class="lbl b" text-anchor="middle">R2</text>
+<text transform="translate(1027.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">1402</text>
+<text x="1739.0" y="-445" class="lbl b" text-anchor="middle">R3</text>
+<text transform="translate(1814.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">2189</text>
+<text x="2526.0" y="-445" class="lbl b" text-anchor="middle">R4</text>
+<text transform="translate(2601.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">2976</text>
+<text x="3313.0" y="-445" class="lbl b" text-anchor="middle">R5</text>
+<text transform="translate(3388.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">3763</text>
+<text x="4100.0" y="-445" class="lbl b" text-anchor="middle">R6</text>
+<text transform="translate(4175.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">4550</text>
+<text x="4887.0" y="-445" class="lbl b" text-anchor="middle">R7</text>
+<text transform="translate(4962.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">5337</text>
+<text x="5674.0" y="-445" class="lbl b" text-anchor="middle">R8</text>
+<text transform="translate(5749.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">6124</text>
+<text x="6461.0" y="-445" class="lbl b" text-anchor="middle">R9</text>
+<text transform="translate(6536.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">6911</text>
+<text x="7248.0" y="-445" class="lbl b" text-anchor="middle">R10</text>
+<text transform="translate(7323.0,1598.0) rotate(-90)" class="lbl n" text-anchor="middle">7698</text>
+<text x="8035.0" y="-445" class="lbl b" text-anchor="middle">R11</text>
+<text transform="translate(-425,1598.0) rotate(-90)" class="lbl e" text-anchor="middle">PLANT END</text>
+<text transform="translate(8625,1598.0) rotate(90)" class="lbl e" text-anchor="middle">OFFICE END</text>
+<text x="4100.0" y="-905" class="lbl e" text-anchor="middle">BACK (hedge side)</text>
+<text x="4100.0" y="4261" class="lbl e" text-anchor="middle">FRONT (bifold side)</text>
+</svg>
+  <div class="key"><span><i style="background:var(--blue);opacity:.5"></i>mesh piece</span><span><i style="background:var(--grey-soft);border:1px solid var(--sec)"></i>joists</span><span><i style="background:var(--red)"></i>steels</span></div>
+</div>
+<div class="card" data-group="mesh">
+  <h2>Mesh positions</h2>
+  <table class="pl">
+    <tr><th>Piece</th><th class="r">Start</th><th class="r">End = mark</th><th class="r">Overlap at</th></tr>
+    <tr data-k="R1"><td class="l">R1</td><td class="r">285 <small>hangs past the joist end</small></td><td class="r num"><b class='mk'>615</b></td><td class="r">—</td></tr>
+<tr data-k="R2"><td class="l">R2</td><td class="r">502</td><td class="r num"><b class='mk'>1402</b></td><td class="r">502–615</td></tr>
+<tr data-k="R3"><td class="l">R3</td><td class="r">1289</td><td class="r num"><b class='mk'>2189</b></td><td class="r">1289–1402</td></tr>
+<tr data-k="R4"><td class="l">R4</td><td class="r">2076</td><td class="r num"><b class='mk'>2976</b></td><td class="r">2076–2189</td></tr>
+<tr data-k="R5"><td class="l">R5</td><td class="r">2863</td><td class="r num"><b class='mk'>3763</b></td><td class="r">2863–2976</td></tr>
+<tr data-k="R6"><td class="l">R6</td><td class="r">3650</td><td class="r num"><b class='mk'>4550</b></td><td class="r">3650–3763</td></tr>
+<tr data-k="R7"><td class="l">R7</td><td class="r">4437</td><td class="r num"><b class='mk'>5337</b></td><td class="r">4437–4550</td></tr>
+<tr data-k="R8"><td class="l">R8</td><td class="r">5224</td><td class="r num"><b class='mk'>6124</b></td><td class="r">5224–5337</td></tr>
+<tr data-k="R9"><td class="l">R9</td><td class="r">6011</td><td class="r num"><b class='mk'>6911</b></td><td class="r">6011–6124</td></tr>
+<tr data-k="R10"><td class="l">R10</td><td class="r">6798</td><td class="r num"><b class='mk'>7698</b></td><td class="r">6798–6911</td></tr>
+<tr data-k="R11"><td class="l">R11</td><td class="r">7585</td><td class="r num">285 <small>hangs past the joist end</small></td><td class="r">7585–7698</td></tr>
+  </table>
+  <p class="note">Each overlap is 113. No overlap lands on a steel, but the R1/R2 and R10/R11 overlaps stop about <b>40</b> short of the two end steels, so keep to the marks. (For landing: the steels sit <b>700 in</b> from each joist end.)</p>
+</div>
+
+<div class="part" id="edge">4. The 285 at every edge</div>
+<div class="card">
+  <svg viewBox="-70 -60 780 530" class="edge" role="img" aria-label="Edge detail">
+  <rect x="87" y="-60" width="60" height="60" class="cltf"/>
+  <rect x="-70" y="0" width="217" height="60" class="cltf"/>
+  <text x="-60" y="40" class="el">CLT floor</text>
+  <rect x="0" y="60" width="47" height="38" class="jj"/><rect x="18" y="98" width="11" height="144" class="jj"/><rect x="0" y="242" width="47" height="38" class="jj"/>
+  <text x="-62" y="170" class="eo">joist</text>
+  <rect x="147" y="-60" width="60" height="340" class="fib"/>
+  <text transform="translate(185,110) rotate(-90)" class="el" text-anchor="middle">wood fibre 60</text>
+  <path d="M -70 288 L 215 288 L 215 188" class="mem"/>
+  <line x1="215" y1="188" x2="215" y2="163" class="memx"/>
+  <line x1="47" y1="330" x2="207" y2="330" class="dim"/>
+  <line x1="47" y1="318" x2="47" y2="342" class="dim"/><line x1="147" y1="318" x2="147" y2="342" class="dim"/><line x1="207" y1="318" x2="207" y2="342" class="dim"/>
+  <text x="97" y="370" class="dl" text-anchor="middle">100</text>
+  <text x="177" y="370" class="dl" text-anchor="middle">60</text>
+  <line x1="255" y1="288" x2="255" y2="163" class="dim"/><line x1="243" y1="288" x2="267" y2="288" class="dim"/><line x1="243" y1="163" x2="267" y2="163" class="dim"/>
+  <text x="280" y="225" class="dl">125 up</text>
+  <text x="280" y="256" class="ds">(100 + 25 spare)</text>
+  <text x="-60" y="420" class="dl">100 + 60 + 125 = 285 past the joist</text>
+  <text x="-60" y="460" class="ml">green line = membrane + mesh</text>
+</svg>
+  <p>From the edge joist: <b>100</b> across to the CLT edge, <b>60</b> under the wood fibre, then <b>125</b> up its face (100 plus 25 spare). Same at the back, front and both ends.</p>
+  <p><b>Don't trim it.</b> The wood fibre isn't on yet: leave it loose (roll it up and tack it out of the way if it's in the way) until it is.</p>
+</div>
+
+<div class="part" id="lay">5. Laying (when Neil says go)</div>
+<div class="card">
+  <h2>Same as the Lodge floor</h2>
+  <ol>
+    <li>Loft roll in between the joists first.</li>
+    <li><b>Membrane:</b> start with M1 at the plant end, far edge on its end marks, hanging 285 past the back joist.</li>
+    <li>Staple to the bottom of every joist, about <b>150 apart</b>.</li>
+    <li>Each next piece overlaps the last by 46. <b>Staple through both sheets at every joist</b>, then <b>tape the overlap</b> (FLEXI) the full length.</li>
+    <li><b>Mesh</b> over the top the same way: R1 at the plant end, far edges on the mesh end marks.</li>
+    <li><b>Wire-tie every mesh overlap</b> closed, no more than <b>300 apart</b>.</li>
+    <li>Leave the 285 loose at all four edges (section 4).</li>
+  </ol>
+</div>
+
+<button class="reset" id="reset" type="button">Clear all ticks</button>
+<p class="sig">Lord Claude<small>Neil's mate</small></p>
+
+</div>
+<script>
+(function(){
+  var KEY='lh-po-floor-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var all=document.querySelectorAll('[data-k]');
+  Array.prototype.forEach.call(all,function(r){
+    var k=r.getAttribute('data-k');
+    if(st[k]) r.classList.add('done');
+    r.addEventListener('click',function(){ r.classList.toggle('done'); st[k]=r.classList.contains('done'); save(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every tick on this page?')) return;
+    st={}; save(); Array.prototype.forEach.call(all,function(r){ r.classList.remove('done'); });
+  });
+})();
+</script>
+</body>
+</html>
