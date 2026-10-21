@@ -59,7 +59,7 @@
   @media (prefers-reduced-motion: reduce){ .js .card{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
 
   /* contents */
-  ol.toc{list-style:none; padding:0; margin:0; counter-reset:t;}
+  ol.toc{list-style:none; padding:0; margin:0; counter-reset:t -1;}
   ol.toc li{margin:0; border-top:0.5px solid var(--divider); counter-increment:t;}
   ol.toc li:first-child{border-top:0;}
   ol.toc a{display:flex; gap:12px; align-items:baseline; padding:10px 0; color:var(--ink); text-decoration:none;}
@@ -137,7 +137,7 @@
   <header>
     <h1>Your music business: the whole route</h1>
     <div class="sub">by Neil's mate Lord Claude</div>
-    <div class="meta">Set out 21/10/2026. Market figures researched the same day. Sources at the bottom.</div>
+    <div class="meta">Set out 21/10/2026, revised the same day (your website, real running costs, tax). Sources at the bottom.</div>
   </header>
 
   <section class="card" id="top">
@@ -145,6 +145,16 @@
     <p>Wayne, Neil told me about your chat. You want to go from site work to teaching music full time over the next six months. This page is the whole road, from your first paying pupil to a business that's worth something.</p>
     <p>Read it once, top to bottom. Then come back to whichever step you're on. There are two things on here to play with: a <a href="#numbers">money calculator</a> and a <a href="#proposition">proposition builder</a>. They save what you type on your phone.</p>
   </section>
+
+  <section class="card" style="background:var(--amber-soft); border-color:transparent">
+    <h2 style="color:var(--amber)">Read this first: it's a first stab</h2>
+    <p><b>This page is a first draft. I wrote it from a few minutes of Neil telling me about your chat, plus a morning of research.</b> I don't know your pupils, your band diary, your van, your evenings, what you and Ruth have already tried, or what you actually want your week to look like.</p>
+    <p>So treat every number and suggestion on here as a starting point to argue with, not an answer.</p>
+    <p><b>The real plan gets made in conversation.</b> That means you sitting down with an AI (<a href="#ai">step 11</a>) and being asked dozens of detailed questions. Who's paid you before, and what for? Which lessons did you love, and which drained you? Which families round here could you name tomorrow? What would make you turn work down?</p>
+    <p>You answer, it pushes back, you brainstorm, and you change your mind. The business plan, the marketing, the prices and the to-do list all get sharper with every round. Expect to do that over several sessions, not one.</p>
+    <p class="fine">That work is yours to do, and it's the bit that makes this your plan rather than mine.</p>
+  </section>
+
 
   <section class="card hero">
     <h2>The whole thing in one line</h2>
@@ -155,6 +165,7 @@
   <section class="card">
     <h2>The route</h2>
     <ol class="toc">
+      <li class="z"><a href="#futurerock"><div>What you've already built<span>Future Rock: what it says now, and a sharper version</span></div></a></li>
       <li><a href="#who"><div>Who it's for<span>The people who'll pay the most</span></div></a></li>
       <li><a href="#proposition"><div>What you're selling<span>Your proposition, and what only you have</span></div></a></li>
       <li><a href="#price"><div>The price<span>What the market pays, and where the ceiling is</span></div></a></li>
@@ -170,6 +181,43 @@
     </ol>
   </section>
 
+  <section class="card" id="futurerock">
+    <h2>I found Future Rock</h2>
+    <div class="one">You've already built more than Neil thought: futurerockmusic.co.uk. Here's what it says to a parent now, and how it could say it better.</div>
+    <h3>What it says now</h3>
+    <p>A warm, genuine music-for-everyone business. The big line is "Unlock your musical potential: we make the power of music accessible, inclusive and inspiring." Below that it offers seven things to five different kinds of buyer:</p>
+    <ul>
+      <li>private guitar lessons</li>
+      <li>youth programmes</li>
+      <li>full and half-day school workshops for KS1 and KS2</li>
+      <li>party jams</li>
+      <li>mic workshops</li>
+      <li>sessions for care homes</li>
+      <li>sessions for SEND</li>
+    </ul>
+    <p>Lessons are £25 for 30 minutes at the pupil's house, in blocks of 6, free travel within 10 miles of Castle Cary.</p>
+    <h3>What's really good</h3>
+    <ul>
+      <li><b>The name.</b> "Future Rock" is exactly right for teenagers who want to be in a band. Keep it.</li>
+      <li><b>Your story.</b> You started it because your two boys picked up instruments. Parents trust that.</li>
+      <li><b>Your credentials are gold.</b> Thirty years playing. The Four Seasons in Geneva. Touring from Italy. <b>Foo Fakers and Nirvanot at Teddy Rocks, Cheese &amp; Grain and Rock n Ribs.</b> A 14-year-old who's into Foo Fighters will think that's the coolest thing they've ever heard.</li>
+      <li><b>The idea's already in there.</b> "Experience what it feels like to be in a band", "band experience", the songs you love, band videos. Blocks paid up front, and DBS checked.</li>
+    </ul>
+    <h3>What's holding it back</h3>
+    <ul>
+      <li><b>It's for everyone, so it isn't for anyone.</b> Five kinds of buyer on one page. A Bruton parent looking for their son has to read past care homes and KS1 curriculum days to find out you'll come to their house.</li>
+      <li><b>The best bit is buried.</b> The top line could be any music teacher in the country. Foo Fakers at Teddy Rocks is halfway down the About section.</li>
+      <li><b>"Accessible, inclusive, wellbeing"</b> is how you talk to schools, care homes and councils. They're careful buyers with tight budgets. Wealthy parents buy something else: "my kid in a band, on a stage".</li>
+      <li><b>£25 for 30 minutes at their house looks cheap, and it is cheap.</b> Add 20 minutes of driving and you're earning about £30 an hour of your time (<a href="#price">step 3</a>).</li>
+      <li><b>Two of the three reviews are from Surrey and Sussex</b>, and the Lovington Festival notice is last September's. Local names and fresh news show a parent you're busy round here, now.</li>
+      <li><b>Little snags:</b> "Hours 9 to 5" (the website builder's default, when your lessons are after school), and contact only by email or form, with no WhatsApp. Three spellings: Futurerock, FutureRock and Future Rock. A "we" and an "I". A stray apostrophe in "Nurture's".</li>
+    </ul>
+    <h3>A sharper version</h3>
+    <div class="result" style="margin-top:6px">Future Rock: your kid's first band.<br><span style="font-weight:500; font-size:17px">Guitar, vocals and band coaching for 10 to 17-year-olds round Castle Cary, Bruton and Frome. From Wayne, who still plays Teddy Rocks and the Cheese &amp; Grain with Foo Fakers and Nirvanot. At your house. The songs they love. A real gig every term.</span><br><span style="font-weight:600; font-size:17px">[ WhatsApp Wayne ]</span></div>
+    <p style="margin-top:12px"><b>Keep the rest. Just move it off the front page.</b> Schools, SEND and care-home sessions become one "Schools &amp; groups" page: that's your daytime work, at a day rate (the Musicians' Union minimum for leading a workshop is £285 for up to five hours). Party jams become a "Parties" page, for weekend money. The front page is only for the parent of a kid who wants to play in a band.</p>
+    <p class="fine">That's my first go at it. Your proposition comes out of the questions in step 2 and step 11.</p>
+  </section>
+
   <!-- 1 WHO -->
   <section class="card" id="who">
     <span class="step">STEP 1</span>
@@ -179,7 +227,7 @@
     <ul>
       <li><b>The kid:</b> 11 to 17, wants to be in a band, and is bored stiff by grade books and scales. They want to play the songs they actually listen to.</li>
       <li><b>The parent:</b> wants them off their phone, more confident, with a group of mates and something good for their CV or university application. They're time-poor, so <b>you coming to their house is worth real money to them</b>.</li>
-      <li><b>Where:</b> the ring of money round Bruton. Independent-school families (King's Bruton, Hazlegrove, Millfield, Downside, Sherborne, All Hallows, Port Regis), London families with weekend and second homes, and the farm and estate families. Plus Frome, Castle Cary and Wells, which have plenty of busy parents too.</li>
+      <li><b>Where:</b> within about 10 miles of you in Castle Cary, and the ring of money round Bruton. Independent-school families (King's Bruton, Hazlegrove, Millfield, Downside, Sherborne, All Hallows, Port Regis), London families with weekend and second homes, and the farm and estate families. Plus Frome, Castle Cary and Wells, which have plenty of busy parents too.</li>
     </ul>
     <h3>The daytime problem</h3>
     <p>Kids are only free from about 15:30 to 19:30 on weekdays, and on Saturdays. That's only about 25 hours a week you can sell to kids. Daytime has to come from somewhere else:</p>
@@ -199,7 +247,7 @@
     <div class="one">A proposition is one sentence that tells the right parent: this is for my kid, and nobody else does it.</div>
     <p>Here's what you've got that a normal music teacher hasn't:</p>
     <ul>
-      <li><b>You actually gig.</b> You're in a working band, not just a teacher who used to play.</li>
+      <li><b>You actually gig.</b> Thirty years of it, from the Four Seasons in Geneva to Foo Fakers and Nirvanot at Teddy Rocks and the Cheese &amp; Grain. You're not a teacher who used to play.</li>
       <li><b>Guitar <i>and</i> voice.</b> You can make a kid into the one who plays and sings at the front.</li>
       <li><b>Down to earth.</b> Teenagers will listen to you when they won't listen to a teacher.</li>
       <li><b>You can put bands together</b> and get them a real gig.</li>
@@ -216,10 +264,10 @@
     <p><b>Grades aren't the enemy.</b> Trinity Rock &amp; Pop and RSL Rockschool grades are rock and pop exams. At grades 6 to 8 they carry UCAS points, the same as classical grades. A parent who's worried "it's just mucking about in a band" hears that and relaxes. Offer grades as an option, never as the point.</p>
     <h3>Build yours</h3>
     <p class="fine">Fill these in. The sentence builds itself underneath. It saves on your phone.</p>
-    <div class="fld"><label>For… (who)</label><textarea id="p1" rows="2" placeholder="young people round Bruton and Frome"></textarea></div>
+    <div class="fld"><label>For… (who)</label><textarea id="p1" rows="2" placeholder="10 to 17-year-olds round Castle Cary, Bruton and Frome"></textarea></div>
     <div class="fld"><label>who want… (what they want)</label><textarea id="p2" rows="2" placeholder="to play real music in a real band"></textarea></div>
     <div class="fld"><label>I… (what you do)</label><textarea id="p3" rows="2" placeholder="teach guitar and singing at your house, with the songs you love, and put you in a band with a proper gig at the end of every term"></textarea></div>
-    <div class="fld"><label>Unlike… (the alternative, and why you're different)</label><textarea id="p4" rows="2" placeholder="a grade-book lesson at school, because I'm a working musician who still gigs every month"></textarea></div>
+    <div class="fld"><label>Unlike… (the alternative, and why you're different)</label><textarea id="p4" rows="2" placeholder="a grade-book lesson at school, because I still play festivals like Teddy Rocks with Foo Fakers and Nirvanot"></textarea></div>
     <div class="result" id="pOut"></div>
     <button class="cp" id="pCopy" type="button">Copy it</button><button class="reset" id="pReset" type="button">Clear</button>
     <div class="do"><b class="h">Test it</b>Read it out to three parents you know. If they say "oh, my lad would love that", you've got it. If they say "so, guitar lessons?", it isn't sharp enough yet.</div>
@@ -234,6 +282,7 @@
     <h3>What the market pays (2025 to 2026)</h3>
     <table class="pl">
       <tr><th>Who</th><th class="r">Per hour</th></tr>
+      <tr><td>A Castle Cary guitar teacher, at his own house (£17 for 30 min)</td><td class="r">£34</td></tr>
       <tr><td>Guitar teachers on the websites (Superprof, Tutorful, Frome and Bath)</td><td class="r">£25–35</td></tr>
       <tr><td>Typical private teacher (ISM survey, middle figure)</td><td class="r">£38</td></tr>
       <tr><td>Musicians' Union recommended minimum, 2025/26</td><td class="r">£44</td></tr>
@@ -241,6 +290,8 @@
       <tr class="hl"><td><b>Hazlegrove (King's Bruton prep): parents pay, 2026/27</b><br><span class="fine">£41 for 30 min, £51 for 45 min, £60 for an hour, in a practice room at school</span></td><td class="r"><b>£60–82</b></td></tr>
     </table>
     <p><b>Look at that last row.</b> Parents round here already pay £41 for half an hour, at school, with a term's notice to stop. You'd be coming to their kitchen, teaching the songs their kid loves, and putting them in a band. That's worth more, not less.</p>
+    <h3>What you charge now</h3>
+    <p>Future Rock charges £25 for 30 minutes at the pupil's house. On paper that's £50 an hour. But with about 20 minutes of driving to get to each house, a 30-minute lesson takes nearly an hour of your evening. So <b>it's really about £30 an hour</b>, and you can only fit 4 or 5 in a night. The 30-minute home visit is the trap. Make 45 minutes the standard at their house. Keep 30 minutes for siblings back to back, or for pupils who come to you.</p>
     <h3>Where I'd start</h3>
     <table class="pl">
       <tr><th>What</th><th class="r">Price</th></tr>
@@ -265,7 +316,7 @@
     <span class="step">STEP 4</span>
     <h2>The numbers</h2>
     <div class="one">Count weeks, not hours. School terms give you about 36 teaching weeks a year, not 52.</div>
-    <p>Say you want about £40,000 a year coming in. Take off about £6,000 of costs (below) and that's roughly a decent site wage before tax. From lessons alone, over 36 weeks, that's £1,111 a week.</p>
+    <p>Say you want about £40,000 a year coming in. Take off about £6,800 of running costs and about £5,700 of tax and NI (both worked out below), and that's roughly £28,500 in your pocket, a decent site wage. From lessons alone, over 36 weeks, £40,000 is £1,111 a week.</p>
     <table class="pl">
       <tr><th>Price of a 45-min lesson</th><th class="r">Lessons a week needed</th></tr>
       <tr class="bad"><td>£30 <span class="fine">(the website rate)</span></td><td class="r">37: won't fit</td></tr>
@@ -282,9 +333,11 @@
     <div class="ctl"><div class="lab"><span>Band sessions a week</span><b id="vBands"></b></div><input type="range" id="c_bands" min="0" max="4" step="1" value="1"><div class="note">Each one: 5 kids at £22, 90 minutes</div></div>
     <div class="ctl"><div class="lab"><span>Holiday camp weeks a year</span><b id="vCamps"></b></div><input type="range" id="c_camps" min="0" max="6" step="1" value="2"><div class="note">Each one: 8 kids, 5 days, £60 a day</div></div>
     <div class="out">
-      <div class="tile g"><div class="n" id="oYear"></div><div class="l">coming in a year</div></div>
-      <div class="tile g"><div class="n" id="oNet"></div><div class="l">after ~£6,000 costs, before tax</div></div>
-      <div class="tile"><div class="n" id="oWeek"></div><div class="l">a week, averaged over all 52</div></div>
+      <div class="tile"><div class="n" id="oYear"></div><div class="l">coming in a year</div></div>
+      <div class="tile"><div class="n" id="oCost"></div><div class="l">running costs, incl. mileage</div></div>
+      <div class="tile"><div class="n" id="oTax"></div><div class="l">income tax and NI</div></div>
+      <div class="tile g"><div class="n" id="oNet"></div><div class="l">take-home a year</div></div>
+      <div class="tile g"><div class="n" id="oMonth"></div><div class="l">take-home a month, all 12 months</div></div>
       <div class="tile"><div class="n" id="oHrs"></div><div class="l">hours a week in term, with driving</div></div>
     </div>
     <div class="warn" id="oWarn">More than about 26 home-visit lessons won't fit after school and on Saturdays. The rest has to be daytime: adults, or schools.</div>
@@ -292,18 +345,43 @@
     <h3>How many families</h3>
     <p>A full diary is about <b>25 to 30 families</b>. Some leave every year: exams, moving house, losing interest. Plan on a quarter to a third going, which means <b>8 to 10 new families a year just to stand still</b>. That's what your marketing is for.</p>
     <p>One family is worth about £1,600 a year (£45 × 36 weeks), and maybe £3,000 to £5,000 over the two or three years they stay. Keep that number in your head. It tells you what you can afford to spend to win one.</p>
-    <h3>The costs (rough)</h3>
+    <h3>The real running costs</h3>
+    <p>These are for a frugal setup: you work from home, use your own vehicle, and already own the guitars, the PA and a phone. The figures are for the calculator's starting diary (20 lessons a week, 1 band, 2 camp weeks). Change the sliders and the calculator redoes the mileage, the room hire and the tax.</p>
     <table class="pl">
-      <tr><td>Fuel, about 100 miles a week in term</td><td class="r">~£1,700</td></tr>
-      <tr><td>Ads, if you run them, £5 a day</td><td class="r">~£1,800</td></tr>
-      <tr><td>Gear for bands: PA, leads, strings, a spare guitar</td><td class="r">~£800</td></tr>
-      <tr><td>Accountant or bookkeeping app</td><td class="r">~£400</td></tr>
-      <tr><td>Musicians' Union (includes insurance, see step 9)</td><td class="r">~£270</td></tr>
-      <tr><td>Website, domain, booking app</td><td class="r">~£300</td></tr>
-      <tr><td>Phone, DBS check, safeguarding course, music, venue hire</td><td class="r">~£700</td></tr>
-      <tr><td><b>Roughly</b></td><td class="r"><b>~£6,000</b></td></tr>
+      <tr><th>What</th><th class="r">A year</th></tr>
+      <tr><td><b>Mileage</b>, claimed at HMRC's 55p a mile<br><span class="fine">About 6 miles per home lesson (evenings grouped by village), 10 per band session, 15 a week for schools and errands, 100 per camp week. That's 5,420 miles.</span></td><td class="r">£2,981</td></tr>
+      <tr><td><b>Band room</b>, a hall at £16 an hour, 2 hours with setting up, 36 weeks<br><span class="fine">£0 if a family's barn or garage hosts the band</span></td><td class="r">£1,152</td></tr>
+      <tr><td><b>Camp venue</b>, a hall at £16 an hour × 7 hours × 5 days, plus £40 for squash and materials, × 2 weeks</td><td class="r">£1,200</td></tr>
+      <tr><td><b>Musicians' Union</b><br><span class="fine">£10m public liability, £3,000 instrument cover, legal help. The cheapest route is public liability only, about £65 a year, but with no instrument cover or legal help.</span></td><td class="r">£287</td></tr>
+      <tr><td><b>Marketing</b><br><span class="fine">Flyers £40. Two 6-week Facebook and Instagram pushes (before September and January) at £5 a day: £420. Gig-night costs £90. Google profile, Instagram and WhatsApp Business: free.</span></td><td class="r">£550</td></tr>
+      <tr><td><b>Website</b>, GoDaddy builder about £12 a month, plus the domain</td><td class="r">~£160</td></tr>
+      <tr><td><b>Bookkeeping app</b> that does Making Tax Digital (see Tax below)</td><td class="r">~£150</td></tr>
+      <tr><td><b>Enhanced DBS</b> through an umbrella body (£73), plus the £15 Update Service<br><span class="fine">After year 1, only the £15</span></td><td class="r">£88</td></tr>
+      <tr><td><b>Safeguarding course</b>, online</td><td class="r">~£25</td></tr>
+      <tr><td><b>Strings, picks, leads</b>, and tab and backing-track apps</td><td class="r">~£210</td></tr>
+      <tr><td>Phone, home office, bank account <span class="fine">(you've already got them)</span></td><td class="r">£0</td></tr>
+      <tr class="hl"><td><b>Total</b></td><td class="r"><b>£6,803</b></td></tr>
     </table>
-    <p class="fine">All of these are estimates. Your real numbers will be different, so swap them in once you know them. Lesson money goes on your self-assessment like any self-employed income. Put a quarter of everything aside for tax.</p>
+    <p><b>About the mileage.</b> Because you work from home, the drive to every lesson counts as business mileage. HMRC lets you claim 55p a mile for the first 10,000 miles a year (it went up from 45p in April 2026). Only about £750 to £800 of that is fuel you'll actually buy, at about £1.40 a litre. The rest pays for the wear on your vehicle: tyres, servicing, and replacing it one day. All of it comes off your tax bill.</p>
+    <p class="fine">Once you use the flat rate for a vehicle, you have to stick with it for that vehicle. And you can't use it on a vehicle you've already claimed capital allowances on, for example for the building work. Ask an accountant if the van's already in your building accounts.</p>
+    <h3>Tax</h3>
+    <table class="pl">
+      <tr><th>Starting diary, 2026/27 rates</th><th class="r">A year</th></tr>
+      <tr><td>Coming in</td><td class="r">£41,160</td></tr>
+      <tr><td>Less running costs</td><td class="r">−£6,803</td></tr>
+      <tr><td><b>Profit</b></td><td class="r"><b>£34,357</b></td></tr>
+      <tr><td>Income tax: 20% on profit over £12,570</td><td class="r">−£4,357</td></tr>
+      <tr><td>Class 4 National Insurance: 6% on profit over £12,570</td><td class="r">−£1,307</td></tr>
+      <tr class="hl"><td><b>Take-home</b></td><td class="r"><b>£28,692</b></td></tr>
+      <tr><td>Take-home a month, all 12 months</td><td class="r">£2,391</td></tr>
+    </table>
+    <ul class="fine">
+      <li><b>Put aside about £1 in every £6 of profit</b> for tax, in a separate account, every month.</li>
+      <li><b>Watch the first year.</b> Once your bill is over £1,000, HMRC also wants half of next year's bill in advance (in January and July). The first year can feel like a double bill.</li>
+      <li><b>Teaching and building go on the same tax return.</b> If you're doing both in the switch-over year, the £12,570 tax-free allowance is only used once. Building money with CIS already taken off counts towards the bill.</li>
+      <li><b>Making Tax Digital:</b> once your self-employed takings (before costs, building and teaching together) are over £30,000 on your 2025/26 return, you have to keep digital records and send HMRC an update every quarter from April 2027. Over £20,000 on 2026/27 means from April 2028. That's why the bookkeeping app is on the costs list.</li>
+      <li>Class 2 NI no longer needs paying at these profits. VAT doesn't come in until takings pass £90,000 (step 10).</li>
+    </ul>
     <a class="top" href="#top">back to the top</a>
   </section>
 
@@ -313,7 +391,7 @@
     <h2>Brand and website</h2>
     <div class="one">The brand is you. A gigging musician the kids think is cool and the parents trust.</div>
     <h3>The name</h3>
-    <p>Pick one and stick to it everywhere: website, Instagram, Facebook, Google, the van. The name and the line underneath should say <b>what</b> and <b>where</b>, for example "<i>[Your name] Music: guitar, singing and bands, Bruton and Frome</i>". If the name you and Ruth started with does that, keep it.</p>
+    <p><b>You've got it: Future Rock.</b> Keep it, spell it one way everywhere (website, Instagram, Facebook, Google, the van), and always put a line under it that says <b>what</b> and <b>where</b>: "<i>Future Rock: guitar, vocals and bands, Castle Cary, Bruton and Frome</i>".</p>
     <h3>The look</h3>
     <ul>
       <li><b>Photos of you playing live</b>, not a stock photo of a guitar.</li>
@@ -332,7 +410,7 @@
       <li>The area you cover: Bruton, Castle Cary, Frome, Wincanton, Shepton, Wells.</li>
       <li><b>One big button: "WhatsApp me"</b>, plus a short form.</li>
     </ol>
-    <p>Squarespace or Wix do this for about £15 to £25 a month. You can run it yourself from your phone. AI can write every word of it with you (step 11).</p>
+    <p>You're already on GoDaddy's website builder, so there's no need to move. Change the words and the order, and keep everything else. AI can write every word of it with you (step 11).</p>
     <a class="top" href="#top">back to the top</a>
   </section>
 
@@ -419,8 +497,8 @@
     <h3>Safeguarding: the one that ends it overnight</h3>
     <p>You'll be alone with other people's children. One allegation, even a false one, can finish the business. Protect yourself from day one:</p>
     <ul>
-      <li><b>Enhanced DBS check.</b> Since January 2026, self-employed people can apply for one themselves, through an umbrella body. The law doesn't make you have one for private lessons, but every school and most parents will expect it. Join the DBS Update Service so one certificate does for everyone.</li>
-      <li><b>Join the Musicians' Union</b> (about £23 a month). It includes £10 million public liability insurance that covers teaching, plus help with DBS and contracts. Check the current terms with them when you join.</li>
+      <li><b>Enhanced DBS check.</b> Since January 2026, self-employed people can apply for one themselves, through an umbrella body. The law doesn't make you have one for private lessons, but every school and most parents will expect it. It costs about £73 through an umbrella body. Then join the DBS Update Service (£15 a year) so one certificate does for everyone.</li>
+      <li><b>Join the Musicians' Union</b> (about £24 a month, £287 a year). It includes £10 million public liability insurance that covers teaching, plus help with DBS and contracts. Check the current terms with them when you join.</li>
       <li><b>A short safeguarding course</b> online, and a one-page safeguarding policy on your website. Schools ask for both.</li>
       <li><b>House rules:</b> a parent in the house for every lesson, a door left open, messages to parents only, never to kids on their own phones or socials.</li>
       <li><b>Written consent</b> from parents before any photo or video of their child goes anywhere.</li>
@@ -440,6 +518,7 @@
       <li><span class="k">4</span><span class="t"><b>A brand with value</b> <span>(years 3–5)</span><span style="display:block">More towns (Frome, Wells, Sherborne), school contracts, holiday camps, recording days, a regular young-bands gig night. Now there's a client list, termly income that comes back every term, a team and a name. That can be sold, franchised, or run by you from the side as you get older.</span></span></li>
     </ol>
     <p>The model's been proven. Rocksteady (in-school bands, about £45 a month per kid) and The Rock Project (bands and camps in Bath and Bristol) are both businesses built on exactly this. Nobody's doing it round here yet.</p>
+    <p class="fine">Once other teachers are billing through Future Rock, your takings can pass the £90,000 VAT threshold. Get an accountant's view before you get there, because how the teachers are set up changes the answer.</p>
     <div class="do"><b class="h">What makes it worth something</b><ul>
       <li>Termly income that comes back every term without you chasing it.</li>
       <li>Systems written down: booking, terms, safeguarding, the camp plan.</li>
@@ -455,6 +534,18 @@
     <h2>Using AI as your coach</h2>
     <div class="one">You don't need to learn marketing first. Get an AI to interview you, one question at a time, and do each step with it.</div>
     <p>Use Claude (claude.ai) or ChatGPT on your phone. The free versions will do to start. Talking out loud with voice mode works well in the van. Neil uses this every day and can show you how he sets it up.</p>
+    <h3>Expect lots of questions</h3>
+    <p>A good AI session should feel like being interviewed for an hour, not handed a leaflet. It'll ask things like these, and your answers are what turn this draft into a real plan:</p>
+    <ul>
+      <li>Who's paid you for music in the last two years? What for, and how much?</li>
+      <li>Which lessons or sessions left you buzzing, and which drained you?</li>
+      <li>What evenings and weekends do you and Ruth actually want free?</li>
+      <li>Name ten families within 10 miles you could message tomorrow.</li>
+      <li>What does a perfect week of Future Rock look like a year from now?</li>
+      <li>What would you never do, even for good money?</li>
+      <li>What money do you need each month, and what's your buffer?</li>
+    </ul>
+    <p>Answer honestly and at length. Talking out loud is fine. Then ask it to write up what it's learned, and keep that write-up for the next session.</p>
     <h3>How to get good answers</h3>
     <ul>
       <li><b>Tell it who you are and where</b> every time you start a new chat (copy the first box below).</li>
@@ -463,7 +554,8 @@
       <li><b>It doesn't know Bruton</b> unless you tell it. It can be confidently wrong, so check anything legal, tax or insurance with a real person.</li>
     </ul>
     <p class="fine">Tap "Copy" on any box below, then paste it into a new chat.</p>
-    <div class="prompt"><span class="lab">Start here</span><span class="pt">I'm Wayne, a gigging guitarist and singer near Bruton in Somerset. I'm moving from building work to teaching guitar, singing and band coaching to teenagers, aimed at well-off local families, over the next six months. Read this page and be my business coach through it, one step at a time, starting with step 1: https://nwthompson-svg.github.io/lodge-todo/music.html</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Start here</span><span class="pt">I'm Wayne, a guitarist and singer in Castle Cary, Somerset, with 30 years of gigging (Foo Fakers, Nirvanot). My business is Future Rock Music (futurerockmusic.co.uk). Over the next six months I want to move from building work to teaching guitar, singing and band coaching to teenagers, aimed at well-off local families. Read this first-draft plan: https://nwthompson-svg.github.io/lodge-todo/music.html. Then don't give me advice yet. Interview me. Ask me detailed questions one at a time, as many as it takes, until you understand my situation, what I want, and what I've already tried. Then help me turn the draft into my own plan, step by step, pushing back when my answers don't add up.</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Your website</span><span class="pt">Read my website, futurerockmusic.co.uk. Tell me what a wealthy parent in Bruton would think in the first ten seconds. Then help me rewrite the front page so it's only for parents of 10 to 17-year-olds who want to play in a band, with schools, care homes and parties moved to their own pages. Ask me questions before you write anything.</span><br><button class="cp" type="button">Copy</button></div>
     <div class="prompt"><span class="lab">Step 2: your proposition</span><span class="pt">Interview me one question at a time to find out what makes me different from other guitar teachers. Ask about my bands, gigs, how I play and how I get on with teenagers. Then write my proposition in one sentence, and give me three versions to test on parents.</span><br><button class="cp" type="button">Copy</button></div>
     <div class="prompt"><span class="lab">Step 5: the website</span><span class="pt">Write the words for a one-page website for my music lessons, using my proposition. Sections: top line, who it's for, what you get, prices, about me, area covered, how to book. Down to earth, no corporate waffle, British English. Then tell me how to set it up on Squarespace, one screen at a time.</span><br><button class="cp" type="button">Copy</button></div>
     <div class="prompt"><span class="lab">Step 6: pay-per-click</span><span class="pt">Explain Google Ads and Facebook ads to me like I'm a builder. Then walk me through setting up a £5-a-day campaign for guitar and singing lessons within 15 miles of Bruton, one screen at a time. Wait for me to say "done" before the next step.</span><br><button class="cp" type="button">Copy</button></div>
@@ -507,6 +599,17 @@
       <li>Enhanced DBS for self-employed, from 21/01/2026: gov.uk news, 20/01/2026</li>
       <li>Google Ads costs (UK local services, all trades): UK agency surveys, 2026. Nothing specific to music lessons was found</li>
       <li>Cheese &amp; Grain Sunday Sessions: cheeseandgrain.com</li>
+      <li>Future Rock Music: futurerockmusic.co.uk, read 21/10/2026</li>
+      <li>Castle Cary guitar rates: johncalcott.com</li>
+      <li>Mileage 55p/25p from 2026/27: gov.uk, travel, mileage and fuel rates (updated 21/05/2026); simplified expenses for vehicles</li>
+      <li>Income tax and Class 4 NI 2026/27, and the thresholds frozen to April 2031: gov.uk</li>
+      <li>Making Tax Digital for Income Tax thresholds and qualifying income: gov.uk (updated 2026)</li>
+      <li>DBS fees from 05/10/2026 (enhanced £41, Update Service £15): gov.uk. Umbrella-body total £73: ucheck.co.uk</li>
+      <li>Musicians' Union: "under £25 a month" (musiciansunion.org.uk/join); £287 a year (TUC profile, undated); insurance benefits from the MU site</li>
+      <li>Public liability only, from about £61–69 a year: simplybusiness.co.uk</li>
+      <li>Hall hire, £16 an hour weekly booking: Caryford Community Hall charges sheet (2024–26; ask for the current one)</li>
+      <li>GoDaddy builder £8–14 a month: GoDaddy UK blog (not checked against the live checkout)</li>
+      <li>Fuel per mile, safeguarding course, bookkeeping app, strings and apps: my estimates</li>
     </ul>
     <p class="sig">Lord Claude<small>Neil's mate</small></p>
   </section>
@@ -521,7 +624,10 @@ const save=()=>{ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){}
 const gbp=n=>'£'+Math.round(n).toLocaleString('en-GB');
 
 // ---- calculator ----
-const WEEKS=36, COSTS=6000, BAND=5*22, CAMP=8*5*60;
+const WEEKS=36, BAND=5*22, CAMP=8*5*60;
+// running costs (see the costs table): mileage at HMRC 55p/25p, band room, camp venue, fixed items
+const MI_LESSON=6, MI_BAND=10, MI_OTHER=15, MI_CAMP=100, ROOM=32, VENUE=600, FIXED=1470;
+const PA=12570, BASIC=37700, NI_UPPER=50270;
 const C=['price','lessons','bands','camps'];
 const DEF={price:45,lessons:20,bands:1,camps:2};
 C.forEach(k=>{ if(st.calc && st.calc[k]!=null) $('c_'+k).value=st.calc[k]; });
@@ -529,9 +635,19 @@ function calc(){
   const p=+$('c_price').value, l=+$('c_lessons').value, b=+$('c_bands').value, c=+$('c_camps').value;
   $('vPrice').textContent='£'+p; $('vLessons').textContent=l; $('vBands').textContent=b; $('vCamps').textContent=c;
   const year=(p*l + BAND*b)*WEEKS + CAMP*c;
+  const miles=(l*MI_LESSON + b*MI_BAND + MI_OTHER)*WEEKS + c*MI_CAMP;
+  const mileage=Math.min(miles,10000)*0.55 + Math.max(0,miles-10000)*0.25;
+  const costs=mileage + b*ROOM*WEEKS + c*VENUE + FIXED;
+  const profit=Math.max(0,year-costs);
+  const taxable=Math.max(0,profit-PA);
+  const it=Math.min(taxable,BASIC)*0.20 + Math.max(0,taxable-BASIC)*0.40;
+  const ni=Math.min(taxable,NI_UPPER-PA)*0.06 + Math.max(0,profit-NI_UPPER)*0.02;
+  const home=profit-it-ni;
   $('oYear').textContent=gbp(year);
-  $('oNet').textContent=gbp(Math.max(0,year-COSTS));
-  $('oWeek').textContent=gbp(Math.max(0,year-COSTS)/52);
+  $('oCost').textContent=gbp(costs);
+  $('oTax').textContent=gbp(it+ni);
+  $('oNet').textContent=gbp(home);
+  $('oMonth').textContent=gbp(home/12);
   $('oHrs').textContent=Math.round(l*1 + b*2);   // a lesson ~1 h with driving; a band session ~2 h with setting up
   $('oWarn').classList.toggle('on', l>26);
   st.calc={price:p,lessons:l,bands:b,camps:c}; save();
