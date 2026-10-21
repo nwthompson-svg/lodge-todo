@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Your music business: the whole route</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey:#B8B5AE; --grey-soft:#EFEDE8; --grey-bar:#C9C6BF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey:#6E6D68; --grey-soft:#2C2E31; --grey-bar:#5E5D58;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:19px; line-height:1.4;}
+  html{scroll-behavior:smooth;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 16px; margin:14px 0; scroll-margin-top:12px;}
+  .card h2{font-size:17px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card h3{font-size:19px; font-weight:700; margin:16px 0 6px;}
+  .card p{margin:0 0 12px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 12px; padding-left:22px;} .card li{margin:5px 0;}
+  .card ul:last-child, .card ol:last-child{margin-bottom:0;}
+  .big{font-size:24px; font-weight:600; line-height:1.3;}
+  .step{display:inline-block; font-size:14px; font-weight:700; color:var(--green); background:var(--green-soft);
+    border-radius:8px; padding:2px 9px; margin-bottom:8px; letter-spacing:0.3px;}
+  .one{background:var(--grey-soft); border-radius:12px; padding:12px 14px; margin:0 0 14px; font-size:20px; font-weight:600; line-height:1.3;}
+  .do{background:var(--amber-soft); border-radius:12px; padding:12px 14px; margin:14px 0 0;}
+  .do b.h{display:block; color:var(--amber); font-size:15px; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;}
+  .do ul, .do ol{margin:0; padding-left:20px;}
+  .hero{background:var(--green-soft); border-color:var(--green-line);}
+  .hero .money{font-size:40px; font-weight:800; letter-spacing:-1px; line-height:1.05; color:var(--green);}
+  .hero .money small{font-size:18px; font-weight:600; color:var(--sec); letter-spacing:0; margin-left:6px;}
+  .fine{font-size:16px; color:var(--sec);}
+  .sig{margin-top:14px; font-size:19px;}
+  .sig small{display:block; font-size:16px; color:var(--sec);}
+  .js .card{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .js .card.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){ .js .card{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
+  /* contents */
+  ol.toc{list-style:none; padding:0; margin:0; counter-reset:t;}
+  ol.toc li{margin:0; border-top:0.5px solid var(--divider); counter-increment:t;}
+  ol.toc li:first-child{border-top:0;}
+  ol.toc a{display:flex; gap:12px; align-items:baseline; padding:10px 0; color:var(--ink); text-decoration:none;}
+  ol.toc a::before{content:counter(t); min-width:24px; font-weight:700; color:var(--green); font-variant-numeric:tabular-nums;}
+  ol.toc a span{color:var(--sec); font-size:16px; display:block;}
+  .top{display:block; text-align:right; font-size:15px; color:var(--muted); text-decoration:none; margin-top:10px;}
+
+  /* tables */
+  .pl{width:100%; border-collapse:collapse; font-size:16px; margin:4px 0 12px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:7px 6px 7px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right; padding-right:0; white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .pl tr.hl td{background:var(--green-soft);} .pl tr.hl td:first-child{border-radius:8px 0 0 8px; padding-left:6px;} .pl tr.hl td:last-child{border-radius:0 8px 8px 0; padding-right:6px;}
+  .pl tr.bad td{color:var(--muted);}
+  .pl:last-child{margin-bottom:0;}
+
+  /* ladder */
+  .ladder{list-style:none; padding:0; margin:0 0 12px;}
+  .ladder li{display:flex; gap:12px; padding:10px 0; border-top:0.5px solid var(--divider); margin:0;}
+  .ladder li:first-child{border-top:0;}
+  .ladder .k{flex:0 0 34px; height:34px; border-radius:50%; background:var(--green-soft); color:var(--green); font-weight:800; display:flex; align-items:center; justify-content:center; font-size:16px;}
+  .ladder .t b{display:block;} .ladder .t span{color:var(--sec); font-size:16px;}
+
+  /* prompts */
+  .prompt{background:var(--grey-soft); border-radius:12px; padding:12px 14px; margin:10px 0; font-size:16px; line-height:1.4; position:relative; overflow-wrap:anywhere;}
+  .prompt .lab{display:block; font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; margin-bottom:4px;}
+  .cp{display:inline-block; margin-top:8px; border:0; background:var(--green-soft); color:var(--green); font:inherit; font-size:15px; font-weight:600; border-radius:16px; padding:6px 14px; cursor:pointer;}
+
+  /* calculator */
+  .ctl{margin:12px 0 4px;}
+  .ctl .lab{display:flex; justify-content:space-between; align-items:baseline; font-size:16px; color:var(--sec);}
+  .ctl .lab b{font-size:22px; color:var(--ink); font-weight:800; font-variant-numeric:tabular-nums;}
+  .ctl .note{font-size:14px; color:var(--muted);}
+  input[type=range]{width:100%; margin:6px 0 0; accent-color:var(--green); height:28px;}
+  .out{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+  .tile{background:var(--grey-soft); border-radius:12px; padding:12px 12px 10px;}
+  .tile.g{background:var(--green-soft);}
+  .tile .n{font-size:26px; font-weight:800; letter-spacing:-0.5px; line-height:1.1; font-variant-numeric:tabular-nums;}
+  .tile.g .n{color:var(--green);}
+  .tile .l{font-size:15px; color:var(--sec); margin-top:4px; line-height:1.25;}
+  .warn{display:none; background:var(--amber-soft); border-radius:12px; padding:10px 14px; margin-top:10px; font-size:16px;}
+  .warn.on{display:block;}
+
+  /* proposition builder */
+  .fld{margin:10px 0;}
+  .fld label{display:block; font-size:15px; color:var(--sec); margin-bottom:4px;}
+  .fld textarea{width:100%; font:inherit; font-size:17px; color:var(--ink); background:var(--bg); border:1px solid var(--divider); border-radius:10px; padding:9px 11px; resize:vertical; min-height:46px;}
+  .result{background:var(--green-soft); border-radius:12px; padding:12px 14px; margin-top:12px; font-size:19px; font-weight:600; line-height:1.35;}
+  .reset{display:inline-block; margin-top:10px; margin-left:6px; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:16px; padding:6px 14px; font-family:inherit; cursor:pointer;}
+
+  /* month rows */
+  .mo{display:flex; gap:12px; padding:11px 0; border-top:0.5px solid var(--divider);}
+  .mo:first-of-type{border-top:0;}
+  .mo .m{flex:0 0 52px; font-weight:800; color:var(--green); font-size:17px;}
+  .mo .w{flex:1; min-width:0; font-size:17px;}
+  a{color:var(--green);}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+<div class="wrap">
+  <header>
+    <h1>Your music business: the whole route</h1>
+    <div class="sub">by Neil's mate Lord Claude</div>
+    <div class="meta">Set out 21/10/2026. Market figures researched the same day. Sources at the bottom.</div>
+  </header>
+
+  <section class="card" id="top">
+    <h2>From Lord Claude</h2>
+    <p>Wayne, Neil told me about your chat. You want to go from site work to teaching music full time over the next six months. This page is the whole road, from your first paying pupil to a business that's worth something.</p>
+    <p>Read it once, top to bottom. Then come back to whichever step you're on. There are two things on here to play with: a <a href="#numbers">money calculator</a> and a <a href="#proposition">proposition builder</a>. They save what you type on your phone.</p>
+  </section>
+
+  <section class="card hero">
+    <h2>The whole thing in one line</h2>
+    <p class="big">You're not selling guitar lessons. You're selling the moment a kid walks on stage with their own band, and their parents film it.</p>
+    <p class="fine" style="margin-top:12px">Lessons are just how you get there. Parents pay for the stage moment, and they pay a lot more for it than for half an hour with a grade book.</p>
+  </section>
+
+  <section class="card">
+    <h2>The route</h2>
+    <ol class="toc">
+      <li><a href="#who"><div>Who it's for<span>The people who'll pay the most</span></div></a></li>
+      <li><a href="#proposition"><div>What you're selling<span>Your proposition, and what only you have</span></div></a></li>
+      <li><a href="#price"><div>The price<span>What the market pays, and where the ceiling is</span></div></a></li>
+      <li><a href="#numbers"><div>The numbers<span>How many pupils you need. Calculator</span></div></a></li>
+      <li><a href="#brand"><div>Brand and website<span>What it needs, and nothing more</span></div></a></li>
+      <li><a href="#find"><div>How people find you<span>Including whether you need pay-per-click</span></div></a></li>
+      <li><a href="#contact"><div>How they get hold of you<span>And the first phone call</span></div></a></li>
+      <li><a href="#defend"><div>Defending your price<span>What to say when they push</span></div></a></li>
+      <li><a href="#risks"><div>The things that can sink it<span>The sensitivities, honestly</span></div></a></li>
+      <li><a href="#grow"><div>Growing it into something bigger<span>From your diary to a brand with value</span></div></a></li>
+      <li><a href="#ai"><div>Using AI as your coach<span>What to type, to work through all of this</span></div></a></li>
+      <li><a href="#plan"><div>The first six months<span>Month by month</span></div></a></li>
+    </ol>
+  </section>
+
+  <!-- 1 WHO -->
+  <section class="card" id="who">
+    <span class="step">STEP 1</span>
+    <h2>Who it's for</h2>
+    <div class="one">The parent pays. The teenager decides. You have to win both.</div>
+    <p>"Anyone who wants lessons" is nobody. Your best clients look like this:</p>
+    <ul>
+      <li><b>The kid:</b> 11 to 17, wants to be in a band, and is bored stiff by grade books and scales. They want to play the songs they actually listen to.</li>
+      <li><b>The parent:</b> wants them off their phone, more confident, with a group of mates and something good for their CV or university application. They're time-poor, so <b>you coming to their house is worth real money to them</b>.</li>
+      <li><b>Where:</b> the ring of money round Bruton. Independent-school families (King's Bruton, Hazlegrove, Millfield, Downside, Sherborne, All Hallows, Port Regis), London families with weekend and second homes, and the farm and estate families. Plus Frome, Castle Cary and Wells, which have plenty of busy parents too.</li>
+    </ul>
+    <h3>The daytime problem</h3>
+    <p>Kids are only free from about 15:30 to 19:30 on weekdays, and on Saturdays. That's only about 25 hours a week you can sell to kids. Daytime has to come from somewhere else:</p>
+    <ul>
+      <li><b>Adults</b> who always wanted to play: retired people, people who work from home, the dad who wants to play at a mate's wedding.</li>
+      <li><b>Schools</b> that pay visiting teachers to teach in the school day (step 6).</li>
+      <li><b>Home-schooled kids.</b></li>
+    </ul>
+    <div class="do"><b class="h">Your ideal-client test</b>Lives within 20 minutes. Comes every week. Pays a term up front. Would tell their friends. If a family ticks all four, that's who you aim every word at.</div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 2 PROPOSITION -->
+  <section class="card" id="proposition">
+    <span class="step">STEP 2</span>
+    <h2>What you're selling</h2>
+    <div class="one">A proposition is one sentence that tells the right parent: this is for my kid, and nobody else does it.</div>
+    <p>Here's what you've got that a normal music teacher hasn't:</p>
+    <ul>
+      <li><b>You actually gig.</b> You're in a working band, not just a teacher who used to play.</li>
+      <li><b>Guitar <i>and</i> voice.</b> You can make a kid into the one who plays and sings at the front.</li>
+      <li><b>Down to earth.</b> Teenagers will listen to you when they won't listen to a teacher.</li>
+      <li><b>You can put bands together</b> and get them a real gig.</li>
+      <li><b>Nobody does this locally.</b> I couldn't find any band coaching for teenagers in Bruton, Frome, Wells or Shepton Mallet. The nearest is The Rock Project in Bath and Bristol.</li>
+    </ul>
+    <h3>Make it a ladder, not just lessons</h3>
+    <ol class="ladder">
+      <li><span class="k">1</span><span class="t"><b>One-to-one lessons</b><span>Guitar or singing, at their house, songs they love</span></span></li>
+      <li><span class="k">2</span><span class="t"><b>The band</b><span>4 or 5 of your pupils put together, rehearsing weekly or fortnightly</span></span></li>
+      <li><span class="k">3</span><span class="t"><b>The gig</b><span>An end-of-term show in a pub, village hall or venue. Parents fill the room</span></span></li>
+      <li><span class="k">4</span><span class="t"><b>Holiday band camp</b><span>A week in Easter or summer: form a band Monday, gig Friday</span></span></li>
+      <li><span class="k">5</span><span class="t"><b>Extras</b><span>Recording day, rock and pop grades for the ones who want them</span></span></li>
+    </ol>
+    <p><b>Grades aren't the enemy.</b> Trinity Rock &amp; Pop and RSL Rockschool grades are rock and pop exams. At grades 6 to 8 they carry UCAS points, the same as classical grades. A parent who's worried "it's just mucking about in a band" hears that and relaxes. Offer grades as an option, never as the point.</p>
+    <h3>Build yours</h3>
+    <p class="fine">Fill these in. The sentence builds itself underneath. It saves on your phone.</p>
+    <div class="fld"><label>For… (who)</label><textarea id="p1" rows="2" placeholder="young people round Bruton and Frome"></textarea></div>
+    <div class="fld"><label>who want… (what they want)</label><textarea id="p2" rows="2" placeholder="to play real music in a real band"></textarea></div>
+    <div class="fld"><label>I… (what you do)</label><textarea id="p3" rows="2" placeholder="teach guitar and singing at your house, with the songs you love, and put you in a band with a proper gig at the end of every term"></textarea></div>
+    <div class="fld"><label>Unlike… (the alternative, and why you're different)</label><textarea id="p4" rows="2" placeholder="a grade-book lesson at school, because I'm a working musician who still gigs every month"></textarea></div>
+    <div class="result" id="pOut"></div>
+    <button class="cp" id="pCopy" type="button">Copy it</button><button class="reset" id="pReset" type="button">Clear</button>
+    <div class="do"><b class="h">Test it</b>Read it out to three parents you know. If they say "oh, my lad would love that", you've got it. If they say "so, guitar lessons?", it isn't sharp enough yet.</div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 3 PRICE -->
+  <section class="card" id="price">
+    <span class="step">STEP 3</span>
+    <h2>The price</h2>
+    <div class="one">Your price isn't set by other guitar teachers. It's set by what the parent would otherwise pay, and by what you're saving them.</div>
+    <h3>What the market pays (2025 to 2026)</h3>
+    <table class="pl">
+      <tr><th>Who</th><th class="r">Per hour</th></tr>
+      <tr><td>Guitar teachers on the websites (Superprof, Tutorful, Frome and Bath)</td><td class="r">£25–35</td></tr>
+      <tr><td>Typical private teacher (ISM survey, middle figure)</td><td class="r">£38</td></tr>
+      <tr><td>Musicians' Union recommended minimum, 2025/26</td><td class="r">£44</td></tr>
+      <tr><td>Downside: parents pay per lesson in school</td><td class="r">£43 a lesson</td></tr>
+      <tr class="hl"><td><b>Hazlegrove (King's Bruton prep): parents pay, 2026/27</b><br><span class="fine">£41 for 30 min, £51 for 45 min, £60 for an hour, in a practice room at school</span></td><td class="r"><b>£60–82</b></td></tr>
+    </table>
+    <p><b>Look at that last row.</b> Parents round here already pay £41 for half an hour, at school, with a term's notice to stop. You'd be coming to their kitchen, teaching the songs their kid loves, and putting them in a band. That's worth more, not less.</p>
+    <h3>Where I'd start</h3>
+    <table class="pl">
+      <tr><th>What</th><th class="r">Price</th></tr>
+      <tr><td>45-minute lesson at their house <span class="fine">(the main one)</span></td><td class="r"><b>£45</b></td></tr>
+      <tr><td>One-hour lesson at their house</td><td class="r">£55–60</td></tr>
+      <tr><td>30 minutes, for younger kids</td><td class="r">£30</td></tr>
+      <tr><td>Band session, 90 min, per kid <span class="fine">(The Rock Project charges £20)</span></td><td class="r">£22–25</td></tr>
+      <tr><td>Holiday band camp, per kid per day <span class="fine">(Rock Project Bath £54–70)</span></td><td class="r">£60</td></tr>
+    </table>
+    <h3>The ceiling</h3>
+    <p>For one-to-one at home, the ceiling is about what the top schools charge, <b>£60 an hour</b>, plus whatever coming to them is worth. Some families will pay £70 or more. Find that out by trying it on new families, not by guessing. The bigger money isn't in pushing the hourly rate. It's in groups (step 4).</p>
+    <div class="do"><b class="h">Three price rules</b><ol>
+      <li><b>Start at the price you mean to keep.</b> Raising prices on families you already have is much harder than starting high.</li>
+      <li><b>Sell by the term, paid up front.</b> 10 to 12 weeks. Never pay-as-you-go. That one rule decides whether this works (step 9).</li>
+      <li><b>If everyone says yes straight away, you're too cheap.</b> About one in five saying "that's a bit much" is about right.</li>
+    </ol></div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 4 NUMBERS -->
+  <section class="card" id="numbers">
+    <span class="step">STEP 4</span>
+    <h2>The numbers</h2>
+    <div class="one">Count weeks, not hours. School terms give you about 36 teaching weeks a year, not 52.</div>
+    <p>Say you want about £40,000 a year coming in. Take off about £6,000 of costs (below) and that's roughly a decent site wage before tax. From lessons alone, over 36 weeks, that's £1,111 a week.</p>
+    <table class="pl">
+      <tr><th>Price of a 45-min lesson</th><th class="r">Lessons a week needed</th></tr>
+      <tr class="bad"><td>£30 <span class="fine">(the website rate)</span></td><td class="r">37: won't fit</td></tr>
+      <tr><td>£40</td><td class="r">28: only just</td></tr>
+      <tr class="hl"><td><b>£45</b></td><td class="r"><b>25: a full diary</b></td></tr>
+      <tr><td>£55</td><td class="r">20: room to breathe</td></tr>
+    </table>
+    <p>This is the most important table on the page. <b>About 26 home-visit lessons a week is the most you can fit</b>: 4 a night, Monday to Friday, with driving, plus about 6 on a Saturday. At £30 it can't be done, however hard you work. Price isn't greed. It's whether the business works at all.</p>
+    <h3>Why groups change everything</h3>
+    <p>One band session: 5 kids at £22 = <b>£110 for 90 minutes</b>, about £73 an hour. A camp week: 8 kids, 5 days, £60 = <b>£2,400</b>. Add one band session a week and two camp weeks a year, and you only need about <b>19 lessons a week instead of 25</b>.</p>
+    <h3>Try it</h3>
+    <div class="ctl"><div class="lab"><span>45-min lesson price</span><b id="vPrice"></b></div><input type="range" id="c_price" min="25" max="75" step="5" value="45"></div>
+    <div class="ctl"><div class="lab"><span>Lessons a week</span><b id="vLessons"></b></div><input type="range" id="c_lessons" min="0" max="35" step="1" value="20"></div>
+    <div class="ctl"><div class="lab"><span>Band sessions a week</span><b id="vBands"></b></div><input type="range" id="c_bands" min="0" max="4" step="1" value="1"><div class="note">Each one: 5 kids at £22, 90 minutes</div></div>
+    <div class="ctl"><div class="lab"><span>Holiday camp weeks a year</span><b id="vCamps"></b></div><input type="range" id="c_camps" min="0" max="6" step="1" value="2"><div class="note">Each one: 8 kids, 5 days, £60 a day</div></div>
+    <div class="out">
+      <div class="tile g"><div class="n" id="oYear"></div><div class="l">coming in a year</div></div>
+      <div class="tile g"><div class="n" id="oNet"></div><div class="l">after ~£6,000 costs, before tax</div></div>
+      <div class="tile"><div class="n" id="oWeek"></div><div class="l">a week, averaged over all 52</div></div>
+      <div class="tile"><div class="n" id="oHrs"></div><div class="l">hours a week in term, with driving</div></div>
+    </div>
+    <div class="warn" id="oWarn">More than about 26 home-visit lessons won't fit after school and on Saturdays. The rest has to be daytime: adults, or schools.</div>
+    <button class="reset" id="cReset" type="button" style="margin-left:0">Reset</button>
+    <h3>How many families</h3>
+    <p>A full diary is about <b>25 to 30 families</b>. Some leave every year: exams, moving house, losing interest. Plan on a quarter to a third going, which means <b>8 to 10 new families a year just to stand still</b>. That's what your marketing is for.</p>
+    <p>One family is worth about £1,600 a year (£45 × 36 weeks), and maybe £3,000 to £5,000 over the two or three years they stay. Keep that number in your head. It tells you what you can afford to spend to win one.</p>
+    <h3>The costs (rough)</h3>
+    <table class="pl">
+      <tr><td>Fuel, about 100 miles a week in term</td><td class="r">~£1,700</td></tr>
+      <tr><td>Ads, if you run them, £5 a day</td><td class="r">~£1,800</td></tr>
+      <tr><td>Gear for bands: PA, leads, strings, a spare guitar</td><td class="r">~£800</td></tr>
+      <tr><td>Accountant or bookkeeping app</td><td class="r">~£400</td></tr>
+      <tr><td>Musicians' Union (includes insurance, see step 9)</td><td class="r">~£270</td></tr>
+      <tr><td>Website, domain, booking app</td><td class="r">~£300</td></tr>
+      <tr><td>Phone, DBS check, safeguarding course, music, venue hire</td><td class="r">~£700</td></tr>
+      <tr><td><b>Roughly</b></td><td class="r"><b>~£6,000</b></td></tr>
+    </table>
+    <p class="fine">All of these are estimates. Your real numbers will be different, so swap them in once you know them. Lesson money goes on your self-assessment like any self-employed income. Put a quarter of everything aside for tax.</p>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 5 BRAND -->
+  <section class="card" id="brand">
+    <span class="step">STEP 5</span>
+    <h2>Brand and website</h2>
+    <div class="one">The brand is you. A gigging musician the kids think is cool and the parents trust.</div>
+    <h3>The name</h3>
+    <p>Pick one and stick to it everywhere: website, Instagram, Facebook, Google, the van. The name and the line underneath should say <b>what</b> and <b>where</b>, for example "<i>[Your name] Music: guitar, singing and bands, Bruton and Frome</i>". If the name you and Ruth started with does that, keep it.</p>
+    <h3>The look</h3>
+    <ul>
+      <li><b>Photos of you playing live</b>, not a stock photo of a guitar.</li>
+      <li><b>Video of your pupils playing a gig</b> as soon as you have one, with the parents' written OK first (step 9). Thirty seconds of a 14-year-old band nailing a song does more selling than any words.</li>
+      <li>Plain and simple. Two colours, one font, the same photo of you everywhere.</li>
+    </ul>
+    <h3>The website: one page is enough</h3>
+    <ol>
+      <li>The top line: your proposition (step 2), with a photo of you on stage.</li>
+      <li>Who it's for: age, area, "no grade books unless you want them".</li>
+      <li>What you get: lessons, the band, the gig, camps.</li>
+      <li><b>Prices.</b> Show them, or at least "from £45". It puts off the time-wasters, and almost nobody round here does it.</li>
+      <li>About you: your bands, the gigs, why you teach.</li>
+      <li>What parents say, once you have it.</li>
+      <li>"DBS checked. Fully insured." Parents look for it.</li>
+      <li>The area you cover: Bruton, Castle Cary, Frome, Wincanton, Shepton, Wells.</li>
+      <li><b>One big button: "WhatsApp me"</b>, plus a short form.</li>
+    </ol>
+    <p>Squarespace or Wix do this for about £15 to £25 a month. You can run it yourself from your phone. AI can write every word of it with you (step 11).</p>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 6 FIND -->
+  <section class="card" id="find">
+    <span class="step">STEP 6</span>
+    <h2>How people find you</h2>
+    <div class="one">Cheapest and best first. Don't spend a penny on ads until the free stuff is done.</div>
+    <h3>1. The first five families: people you know</h3>
+    <p>Parents at your kids' school, the band's followers, Neil's lot, the pub. Tell everyone, every time. Your first five are what give you reviews, photos and the first band.</p>
+    <h3>2. Google Business Profile (free, and the most important thing)</h3>
+    <p>This is the box with the map that comes up when a parent searches "guitar lessons near me". Set one up (free, at google.com/business), put in your area, photos and prices, and <b>ask every happy family for a Google review</b>. Ten good reviews and you'll beat most teachers round here.</p>
+    <h3>3. Schools (this fills the daytime)</h3>
+    <p>Schools hire visiting music teachers as self-employed staff. Email or ring the <b>Head of Music</b> directly, because many of these jobs never get advertised. They'll want an enhanced DBS check, references, and often a trial lesson.</p>
+    <p><b>Worth knowing:</b> Sexey's, in Bruton itself, published its music lessons list for 2024/25 and <b>there was no guitar on it</b>. Its drum and singing teachers are self-employed and parents pay them directly, £20 for 30 minutes. That's the nearest open door there is. Ask whether it's still open.</p>
+    <h3>4. The gig is the advert</h3>
+    <p>Every end-of-term gig puts 30 to 60 parents in a room. Every one of them films it and sends it to their friends. Venues to try: the pubs, village halls, and Frome's Cheese &amp; Grain, which already runs free Sunday sessions for young musicians and could be a partner.</p>
+    <h3>5. Local Facebook groups, village magazines and noticeboards</h3>
+    <p>Free, or nearly. Post the gig videos rather than "lessons available".</p>
+    <h3>6. Pay-per-click: do you need it?</h3>
+    <p><b>Not yet, and you don't need to be an expert.</b> Here's all of it:</p>
+    <ul>
+      <li><b>Google ads</b> catch people who are <i>already looking</i> ("guitar lessons Frome"). You pay Google each time someone clicks your ad, not when it's shown. For local services in the UK that's usually £1.50 to £3 a click. I couldn't find a figure for music lessons; Google tells you the real one when you set it up.</li>
+      <li><b>Facebook and Instagram ads</b> reach people who <i>weren't</i> looking: parents in BA10, BA11 and BA7 who see your kid-band video and think "oh, that's for Ollie". For this business that's often better than Google.</li>
+      <li><b>Rough sum:</b> £5 a day is £150 a month and maybe 50 to 100 clicks. If a handful turn into enquiries and one or two sign up, that's £150 to win a family worth £1,600 a year. Good business, but only once the website and Google profile are right. Otherwise you're paying to send people to a shop with nothing in the window.</li>
+      <li>Keep it tight: 15 miles round you, your town names in the words. Turn it off in August, when nobody's booking.</li>
+    </ul>
+    <div class="do"><b class="h">Track it</b>Ask every enquiry: "How did you hear about me?" Write it down. After three months you'll know what's working, and you can stop paying for what isn't.</div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 7 CONTACT -->
+  <section class="card" id="contact">
+    <span class="step">STEP 7</span>
+    <h2>How they get hold of you</h2>
+    <div class="one">One number, WhatsApp, and answer fast. The teacher who replies first usually gets the pupil.</div>
+    <ul>
+      <li><b>One way in:</b> a WhatsApp Business number (free app) on the website, Google and every post. Set it up to send a polite automatic reply when you're teaching.</li>
+      <li><b>Reply the same day.</b> If you can, reply within the hour. Rich, busy parents ask two or three teachers at once.</li>
+      <li><b>Message the parents, never the kids.</b> Always (step 9).</li>
+    </ul>
+    <h3>The first phone call</h3>
+    <ol>
+      <li><b>Ask about the kid, not the lessons.</b> How old? What do they listen to? Do they play already? Do they want to be in a band?</li>
+      <li><b>Ask the parent what they want.</b> Confidence, mates, getting off screens, grades? Whatever they say is what you sell back to them.</li>
+      <li><b>Paint the picture:</b> "By Easter I'd want them playing two songs they love, and if they're up for it, in a band for the summer gig."</li>
+      <li><b>Book a first lesson there and then.</b> A trial lesson at the normal price, or free if you'd rather. Put it in the diary before you hang up.</li>
+      <li><b>After the trial:</b> send the term booking, the price, and your terms in one message. Booked and paid within the week.</li>
+    </ol>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 8 DEFEND -->
+  <section class="card" id="defend">
+    <span class="step">STEP 8</span>
+    <h2>Defending your price</h2>
+    <div class="one">Say the price once, clearly, then stop talking. Whoever fills the silence loses.</div>
+    <h3>When they say "that's more than the school"</h3>
+    <p class="prompt">"It is a bit. I come to you, so there's no running about. It's the music they actually want to play. And they get a band and a real gig every term. Most parents tell me that's what keeps them at it."</p>
+    <h3>When they say "I found someone for £25"</h3>
+    <p class="prompt">"There are definitely cheaper lessons out there. If it's just learning chords, that might suit you better. What I do is get them playing in a band, on a stage. If that's what they want, I'm your man."</p>
+    <p><b>Never cut the price of an hour.</b> If money's tight for a family, offer a different thing instead: a 30-minute lesson, a shared lesson with a mate, or band sessions only. The price of your hour stays the same.</p>
+    <p><b>Put prices up a little every September</b>, with a term's notice, by letter. Families expect it. Do it once a year, never in the middle of a year.</p>
+    <p><b>Practise saying it.</b> This is the bit most people find hardest, and you can rehearse it with AI as many times as you like (step 11).</p>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 9 RISKS -->
+  <section class="card" id="risks">
+    <span class="step">STEP 9</span>
+    <h2>The things that can sink it</h2>
+    <div class="one">Most teaching businesses don't die from a lack of pupils. They die from cancellations, holidays and a cheap price.</div>
+    <table class="pl">
+      <tr><th>The risk</th><th>What protects you</th></tr>
+      <tr><td><b>Price</b></td><td>The step 4 table. £10 a lesson is the difference between a full diary and one that can't pay you.</td></tr>
+      <tr><td><b>Cancellations</b></td><td>Termly up-front payment. Missed lessons aren't refunded. One swap per term with 48 hours' notice. Put it in writing before the first lesson.</td></tr>
+      <tr><td><b>Holidays</b></td><td>About 16 weeks a year with no lessons. Fill them with camps. Pay yourself the same amount every month from a separate account, so a quiet August doesn't hurt.</td></tr>
+      <tr><td><b>The seasons</b></td><td>September and January are when families sign up. May and June, exam kids drop off. Push your marketing just before the start of each term.</td></tr>
+      <tr><td><b>Driving</b></td><td>Every minute in the van is unpaid. Group families by village and evening: Bruton Mondays, Frome Tuesdays. Maybe add a teaching room later for the kids who'll come to you.</td></tr>
+      <tr><td><b>It's all you</b></td><td>Ill or injured means no income. Look at income-protection insurance. The long-term answer is other teachers (step 10).</td></tr>
+      <tr><td><b>Evenings and Saturdays</b></td><td>You'll be working when your own kids are home. Talk it through with Ruth before you start, not after. Keep one evening and Sunday fixed and off.</td></tr>
+      <tr><td><b>Reputation</b></td><td>Wealthy families talk to each other, for good and bad. On time, every time. Tidy messages. Say what you'll do, then do it.</td></tr>
+    </table>
+    <h3>Safeguarding: the one that ends it overnight</h3>
+    <p>You'll be alone with other people's children. One allegation, even a false one, can finish the business. Protect yourself from day one:</p>
+    <ul>
+      <li><b>Enhanced DBS check.</b> Since January 2026, self-employed people can apply for one themselves, through an umbrella body. The law doesn't make you have one for private lessons, but every school and most parents will expect it. Join the DBS Update Service so one certificate does for everyone.</li>
+      <li><b>Join the Musicians' Union</b> (about £23 a month). It includes £10 million public liability insurance that covers teaching, plus help with DBS and contracts. Check the current terms with them when you join.</li>
+      <li><b>A short safeguarding course</b> online, and a one-page safeguarding policy on your website. Schools ask for both.</li>
+      <li><b>House rules:</b> a parent in the house for every lesson, a door left open, messages to parents only, never to kids on their own phones or socials.</li>
+      <li><b>Written consent</b> from parents before any photo or video of their child goes anywhere.</li>
+    </ul>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 10 GROW -->
+  <section class="card" id="grow">
+    <span class="step">STEP 10</span>
+    <h2>Growing it into something bigger</h2>
+    <div class="one">A job pays you while you work. A business is worth something even when you're not there. The aim is to move from the first to the second.</div>
+    <ol class="ladder">
+      <li><span class="k">1</span><span class="t"><b>Your diary</b> <span>(year 1)</span><span style="display:block">You, teaching. Worth exactly what you earn. Get the price, the terms and the reputation right.</span></span></li>
+      <li><span class="k">2</span><span class="t"><b>The band programme</b> <span>(years 1–2)</span><span style="display:block">Bands, termly gigs, camps. More money per hour, and the gigs bring the next families in.</span></span></li>
+      <li><span class="k">3</span><span class="t"><b>Other teachers under your brand</b> <span>(years 2–3)</span><span style="display:block">Local musicians on drums, bass and keys, working for themselves under your name. Say a parent pays £45: the teacher gets about £32, and you keep about £13 for finding the family, booking and billing. Ten teachers doing 20 lessons a week each is about £2,600 a week across your bands, while you teach less.</span></span></li>
+      <li><span class="k">4</span><span class="t"><b>A brand with value</b> <span>(years 3–5)</span><span style="display:block">More towns (Frome, Wells, Sherborne), school contracts, holiday camps, recording days, a regular young-bands gig night. Now there's a client list, termly income that comes back every term, a team and a name. That can be sold, franchised, or run by you from the side as you get older.</span></span></li>
+    </ol>
+    <p>The model's been proven. Rocksteady (in-school bands, about £45 a month per kid) and The Rock Project (bands and camps in Bath and Bristol) are both businesses built on exactly this. Nobody's doing it round here yet.</p>
+    <div class="do"><b class="h">What makes it worth something</b><ul>
+      <li>Termly income that comes back every term without you chasing it.</li>
+      <li>Systems written down: booking, terms, safeguarding, the camp plan.</li>
+      <li>A name parents recognise.</li>
+      <li>It doesn't fall over if you're off for a fortnight.</li>
+    </ul></div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 11 AI -->
+  <section class="card" id="ai">
+    <span class="step">STEP 11</span>
+    <h2>Using AI as your coach</h2>
+    <div class="one">You don't need to learn marketing first. Get an AI to interview you, one question at a time, and do each step with it.</div>
+    <p>Use Claude (claude.ai) or ChatGPT on your phone. The free versions will do to start. Talking out loud with voice mode works well in the van. Neil uses this every day and can show you how he sets it up.</p>
+    <h3>How to get good answers</h3>
+    <ul>
+      <li><b>Tell it who you are and where</b> every time you start a new chat (copy the first box below).</li>
+      <li><b>Ask it to interview you</b> rather than tell you. Its answers get far better.</li>
+      <li><b>Ask for one step at a time</b>, and say "explain it like I'm a builder, not a marketer".</li>
+      <li><b>It doesn't know Bruton</b> unless you tell it. It can be confidently wrong, so check anything legal, tax or insurance with a real person.</li>
+    </ul>
+    <p class="fine">Tap "Copy" on any box below, then paste it into a new chat.</p>
+    <div class="prompt"><span class="lab">Start here</span><span class="pt">I'm Wayne, a gigging guitarist and singer near Bruton in Somerset. I'm moving from building work to teaching guitar, singing and band coaching to teenagers, aimed at well-off local families, over the next six months. Read this page and be my business coach through it, one step at a time, starting with step 1: https://nwthompson-svg.github.io/lodge-todo/music.html</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Step 2: your proposition</span><span class="pt">Interview me one question at a time to find out what makes me different from other guitar teachers. Ask about my bands, gigs, how I play and how I get on with teenagers. Then write my proposition in one sentence, and give me three versions to test on parents.</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Step 5: the website</span><span class="pt">Write the words for a one-page website for my music lessons, using my proposition. Sections: top line, who it's for, what you get, prices, about me, area covered, how to book. Down to earth, no corporate waffle, British English. Then tell me how to set it up on Squarespace, one screen at a time.</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Step 6: pay-per-click</span><span class="pt">Explain Google Ads and Facebook ads to me like I'm a builder. Then walk me through setting up a £5-a-day campaign for guitar and singing lessons within 15 miles of Bruton, one screen at a time. Wait for me to say "done" before the next step.</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Step 8: practise defending your price</span><span class="pt">Role-play a wealthy parent in Somerset whose 14-year-old wants guitar lessons. My price is £45 for 45 minutes at your house, paid by the term. Push back hard: "the school's cheaper", "I found someone for £25", "can we pay as we go?". After each of my answers, tell me how it landed and how to say it better.</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Step 9: the paperwork</span><span class="pt">Write my lesson terms and conditions in plain English: termly payment in advance, no refunds for missed lessons, one swap per term with 48 hours' notice, a term's notice to stop, a parent at home during lessons, and photo and video consent. Then a one-page safeguarding policy for a self-employed music teacher in England. Tell me what a real person should check.</span><br><button class="cp" type="button">Copy</button></div>
+    <div class="prompt"><span class="lab">Every month: the review</span><span class="pt">Here are this month's enquiries, where they came from, and who signed up: [paste]. Here's what I spent on ads: [paste]. What's working, what should I stop, and what should I do more of next month?</span><br><button class="cp" type="button">Copy</button></div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <!-- 12 PLAN -->
+  <section class="card" id="plan">
+    <span class="step">STEP 12</span>
+    <h2>The first six months</h2>
+    <div class="one">Lessons are after school and on Saturdays, so the first months can run alongside site work. You switch when the diary says so, not on a date.</div>
+    <div class="mo"><div class="m">Nov</div><div class="w"><b>Get ready.</b> Name, proposition and prices settled. Join the MU (insurance). Apply for the enhanced DBS. Set up the Google Business Profile and WhatsApp Business. Tell everyone you know, and book the first trial lessons.</div></div>
+    <div class="mo"><div class="m">Dec</div><div class="w"><b>Get seen.</b> Website live. Get photos and video at one of your own gigs. <b>Sell a "give a term of guitar lessons" Christmas voucher.</b> Wealthy parents love a present that isn't more stuff.</div></div>
+    <div class="mo"><div class="m">Jan</div><div class="w"><b>First termly families.</b> January is a signing-up month. Email the Heads of Music, Sexey's first. If the website's ready, switch on £5-a-day ads.</div></div>
+    <div class="mo"><div class="m">Feb</div><div class="w"><b>The first band.</b> Put four or five pupils together. Book a venue for an end-of-term gig. Ask every family for a Google review.</div></div>
+    <div class="mo"><div class="m">Mar</div><div class="w"><b>The first gig.</b> Film it (with consent). Post it everywhere. Take Easter camp bookings at the gig, while the parents are proud.</div></div>
+    <div class="mo"><div class="m">Apr</div><div class="w"><b>Easter camp, then the check.</b> Run your first camp. Count your numbers against the switch point below. Book the summer term.</div></div>
+    <div class="do"><b class="h">The switch point (suggested)</b>Go full time when all three are true:<ol>
+      <li><b>15 or more families</b> paying termly, up front.</li>
+      <li><b>Enquiries still coming in</b> each month, without you chasing.</li>
+      <li><b>Three months of money in the bank</b> to get through the first summer holiday.</li>
+    </ol>Set the exact numbers with Ruth. Then talk to Neil about how and when the site days move across.</div>
+    <a class="top" href="#top">back to the top</a>
+  </section>
+
+  <section class="card">
+    <h2>Small print and sources</h2>
+    <p class="fine">Researched 21/10/2026. The figures came from the sources below. Some come from comparison websites and are only a guide. All the sums are estimates, so check them before you rely on them, especially anything about tax, insurance or DBS.</p>
+    <ul class="fine">
+      <li>Hazlegrove fees sheet 2026/27 (instrumental lessons): hazlegrove.co.uk</li>
+      <li>Downside fees and information 2025/26: downside.co.uk</li>
+      <li>Sexey's School music lessons 2024/25 (PDF): sexeys.somerset.sch.uk</li>
+      <li>Musicians' Union rate (£44/h, 2025/26) and ISM survey medians: Prospects, private music teacher profile, March 2026</li>
+      <li>Superprof, Tutorful and BizHub365 local rates (aggregators, a guide only)</li>
+      <li>The Rock Project (Bradley Stoke £20 a session; Bath summer school 2025 £270–350): local listings</li>
+      <li>Rocksteady (about £45 a month, 2025/26): school parent letters</li>
+      <li>Trinity Rock &amp; Pop UCAS points (grades 6–8): trinitycollege.com. RSL Rockschool: check rslawards.com</li>
+      <li>Enhanced DBS for self-employed, from 21/01/2026: gov.uk news, 20/01/2026</li>
+      <li>Google Ads costs (UK local services, all trades): UK agency surveys, 2026. Nothing specific to music lessons was found</li>
+      <li>Cheese &amp; Grain Sunday Sessions: cheeseandgrain.com</li>
+    </ul>
+    <p class="sig">Lord Claude<small>Neil's mate</small></p>
+  </section>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+const $=id=>document.getElementById(id);
+const KEY='lh-music-v1';
+let st={}; try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+const save=()=>{ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} };
+const gbp=n=>'£'+Math.round(n).toLocaleString('en-GB');
+
+// ---- calculator ----
+const WEEKS=36, COSTS=6000, BAND=5*22, CAMP=8*5*60;
+const C=['price','lessons','bands','camps'];
+const DEF={price:45,lessons:20,bands:1,camps:2};
+C.forEach(k=>{ if(st.calc && st.calc[k]!=null) $('c_'+k).value=st.calc[k]; });
+function calc(){
+  const p=+$('c_price').value, l=+$('c_lessons').value, b=+$('c_bands').value, c=+$('c_camps').value;
+  $('vPrice').textContent='£'+p; $('vLessons').textContent=l; $('vBands').textContent=b; $('vCamps').textContent=c;
+  const year=(p*l + BAND*b)*WEEKS + CAMP*c;
+  $('oYear').textContent=gbp(year);
+  $('oNet').textContent=gbp(Math.max(0,year-COSTS));
+  $('oWeek').textContent=gbp(Math.max(0,year-COSTS)/52);
+  $('oHrs').textContent=Math.round(l*1 + b*2);   // a lesson ~1 h with driving; a band session ~2 h with setting up
+  $('oWarn').classList.toggle('on', l>26);
+  st.calc={price:p,lessons:l,bands:b,camps:c}; save();
+}
+C.forEach(k=>$('c_'+k).addEventListener('input',calc));
+$('cReset').addEventListener('click',()=>{ C.forEach(k=>$('c_'+k).value=DEF[k]); calc(); });
+calc();
+
+// ---- proposition builder ----
+const P=['p1','p2','p3','p4'];
+P.forEach(k=>{ if(st[k]) $(k).value=st[k]; });
+function prop(){
+  const v=P.map(k=>($(k).value.trim()||$(k).placeholder).replace(/[.\s]+$/,''));
+  $('pOut').textContent=`For ${v[0]} who want ${v[1]}, I ${v[2]}. Unlike ${v[3]}.`;
+  P.forEach(k=>st[k]=$(k).value); save();
+}
+P.forEach(k=>$(k).addEventListener('input',prop));
+$('pReset').addEventListener('click',()=>{ P.forEach(k=>{ $(k).value=''; }); prop(); });
+prop();
+
+// ---- copy buttons ----
+function copyText(t,btn){
+  const done=()=>{ const o=btn.textContent; btn.textContent='Copied'; setTimeout(()=>btn.textContent=o,1500); };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,()=>fallback(t,done)); }
+  else fallback(t,done);
+}
+function fallback(t,done){
+  const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){} ta.remove();
+}
+$('pCopy').addEventListener('click',e=>copyText($('pOut').textContent,e.currentTarget));
+document.querySelectorAll('.prompt .cp').forEach(b=>b.addEventListener('click',()=>copyText(b.parentNode.querySelector('.pt').textContent,b)));
+
+// ---- reveal ----
+const io=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) return; en.target.classList.add('in'); io.unobserve(en.target); }),{threshold:0.05});
+document.querySelectorAll('.card').forEach(c=>io.observe(c));
+setTimeout(()=>document.querySelectorAll('.card:not(.in)').forEach(c=>c.classList.add('in')),2500);
+// a jump link to a card that hasn't faded in yet: show it at once
+window.addEventListener('hashchange',()=>{ const t=document.querySelector(location.hash); if(t) t.classList.add('in'); });
+</script>
+</body>
+</html>
