@@ -35,7 +35,7 @@
   .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
   .meta{font-size:16px; color:var(--muted); margin-top:10px;}
   .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
-    padding:18px 18px 16px; margin:14px 0; scroll-margin-top:12px;}
+    padding:18px 18px 16px; margin:14px 0; scroll-margin-top:76px;}
   .card h2{font-size:17px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
   .card h3{font-size:19px; font-weight:700; margin:16px 0 6px;}
   .card p{margin:0 0 12px;} .card p:last-child{margin-bottom:0;}
@@ -75,6 +75,7 @@
   .pl tr.hl td{background:var(--green-soft);} .pl tr.hl td:first-child{border-radius:8px 0 0 8px; padding-left:6px;} .pl tr.hl td:last-child{border-radius:0 8px 8px 0; padding-right:6px;}
   .pl tr.bad td{color:var(--muted);}
   .pl:last-child{margin-bottom:0;}
+  .pl td.r + td.r, .pl th.r + th.r{padding-left:10px;}
 
   /* ladder */
   .ladder{list-style:none; padding:0; margin:0 0 12px;}
@@ -117,6 +118,14 @@
   .mo .m{flex:0 0 52px; font-weight:800; color:var(--green); font-size:17px;}
   .mo .w{flex:1; min-width:0; font-size:17px;}
   a{color:var(--green);}
+  /* tabs */
+  .tabs{position:sticky; top:0; z-index:8; display:flex; gap:6px; background:var(--bg); padding:10px 0 8px; margin:6px 0 0;}
+  .tabs button{flex:1; border:1px solid var(--divider); background:var(--card); color:var(--sec); font:inherit; font-size:16px; font-weight:600;
+    border-radius:12px; padding:10px 8px; cursor:pointer; line-height:1.2;}
+  .tabs button small{display:block; font-size:13px; font-weight:500; color:var(--muted); margin-top:2px;}
+  .tabs button[aria-selected="true"]{background:var(--green-soft); border-color:var(--green-line); color:var(--green);}
+  .tabs button[aria-selected="true"] small{color:var(--green);}
+  .tab[hidden]{display:none;}
   .gr{border-top:0.5px solid var(--divider); padding:12px 0;}
   .gr:first-of-type{border-top:0;}
   .gr .nm{font-weight:700;} .gr .amt{float:right; font-weight:700; color:var(--green); white-space:nowrap; margin-left:10px;}
@@ -143,13 +152,14 @@
   <header>
     <h1>Your music business: the whole route</h1>
     <div class="sub">by Neil's mate Lord Claude</div>
-    <div class="meta">Set out 21/10/2026, revised the same day (your website, real running costs and tax, the social side, money beyond your hours, grants). Sources at the bottom.</div>
+    <div class="meta">Set out 21/10/2026, revised the same day (your website, real running costs and tax, the social side, money beyond your hours, grants, and the In schools tab). Sources at the bottom.</div>
   </header>
 
   <section class="card" id="top">
     <h2>From Lord Claude</h2>
     <p>Wayne, Neil told me about your chat. You want to go from site work to teaching music full time over the next six months. This page is the whole road, from your first paying pupil to a business that's worth something.</p>
     <p>Read it once, top to bottom. Then come back to whichever step you're on. There are two things on here to play with: a <a href="#numbers">money calculator</a> and a <a href="#proposition">proposition builder</a>. They save what you type on your phone.</p>
+    <p><b>There are two tabs.</b> "Lessons &amp; bands" is the evening and weekend business. "In schools" is the daytime, term-time business your Rocksteady interview put the idea into your head for: <a href="#schools">jump to it</a>.</p>
   </section>
 
   <section class="card" style="background:var(--amber-soft); border-color:transparent">
@@ -162,6 +172,12 @@
   </section>
 
 
+  <nav class="tabs" role="tablist">
+    <button type="button" role="tab" id="tbA" aria-controls="tabA" aria-selected="true">Lessons &amp; bands<small>evenings and weekends</small></button>
+    <button type="button" role="tab" id="tbB" aria-controls="tabB" aria-selected="false">In schools<small>daytime, in term</small></button>
+  </nav>
+
+  <div class="tab" id="tabA" role="tabpanel">
   <section class="card hero">
     <h2>The whole thing in one line</h2>
     <p class="big">You're not selling guitar lessons. You're selling the moment a kid walks on stage with their own band, and their parents film it.</p>
@@ -575,7 +591,7 @@
     <h3>The ideas, roughly sized</h3>
     <p class="fine">My sums, from published prices. Every one needs testing with real families and schools.</p>
     <div class="gr"><span class="amt">the big one</span><div class="nm">1. A band programme inside schools</div>
-      <div class="ln">Bands of 5 in 30-minute slots in the school day, with parents paying about £45 a month by direct debit. That's how Rocksteady works: £30 million of sales and £5.3 million profit last year, with band leaders on salaries of £28,000 to £33,000. <b>One school day a week (10 bands, 50 kids) brings in about £25,000 a year.</b> Pay a tutor about £150 a day and the business keeps about £20,000 before kit and admin. Each new school adds the same again. And it fills the daytime. Rocksteady covers primary schools, so check which local schools it's already in. Prep schools and secondary lunchtime clubs are the gap.</div></div>
+      <div class="ln">Bands of 5 in 30-minute slots in the school day, with parents paying about £45 a month by direct debit. That's how Rocksteady works: £30 million of sales and £5.3 million profit last year, with band leaders on salaries of £28,000 to £33,000. <b>One school day a week (10 bands, 50 kids) brings in about £25,000 a year.</b> Pay a tutor about £150 a day and the business keeps about £20,000 before kit and admin. Each new school adds the same again. And it fills the daytime. Rocksteady covers primary schools, so check which local schools it's already in. Prep schools and secondary lunchtime clubs are the gap. <a href="#schools">The full workings are in the "In schools" tab.</a></div></div>
     <div class="gr"><span class="amt">~£5,000 a week</span><div class="nm">2. Holiday camps run with hired tutors</div>
       <div class="ln">30 kids × £60 × 5 days is £9,000. Take off two tutors at the MU day rate, the hall and snacks, and you keep about £5,300 a camp week. Four a year is about £21,000, and you're running it rather than teaching every hour. Add some HAF-funded places (step 11).</div></div>
     <div class="gr"><span class="amt">~£13 a lesson</span><div class="nm">3. Teachers under the Future Rock name</div>
@@ -725,6 +741,205 @@
     <a class="top" href="#top">back to the top</a>
   </section>
 
+  </div><!-- /tabA -->
+
+  <div class="tab" id="tabB" role="tabpanel" hidden>
+  <section class="card hero" id="schools">
+    <h2>Future Rock in Schools: the daytime business</h2>
+    <p class="big">Bands of five or six kids, 30 minutes a week in the school day, and their parents pay a monthly subscription. It's the same idea as your evenings, sold in term time, to a different set of parents.</p>
+    <p class="fine" style="margin-top:12px">This is where the whole idea came from: your Rocksteady interview. This tab works out how their model makes money, who else does it, what's left locally, and what it could make you.</p>
+  </section>
+
+  <section class="card">
+    <h2>Same business or a separate one?</h2>
+    <div class="one">The same business, Future Rock, with two halves: "In schools" in the daytime and "Lessons &amp; bands" in the evenings.</div>
+    <ul>
+      <li><b>One name, one reputation.</b> A parent who sees their 8-year-old play the school concert is already a Future Rock parent when that child turns 11.</li>
+      <li><b>The schools are where your teenagers come from.</b> Rocksteady stops at Year 6. Future Rock doesn't, so the primary bands feed straight into your teen lessons and bands.</li>
+      <li><b>The paperwork's shared:</b> the same DBS, insurance, safeguarding policy, website and bank.</li>
+      <li><b>They fit together in the week.</b> Schools take 9 till 3, and lessons take 3.30 till 7.30 and Saturdays. Between them they fill the week that evening lessons alone leave empty.</li>
+    </ul>
+    <p class="fine">If it grows to several teachers, it might later become its own limited company for the employment side. That's a decision for when it happens, with an accountant.</p>
+  </section>
+
+  <section class="card" id="rs-model">
+    <span class="step">SCHOOLS 1</span>
+    <h2>How Rocksteady's model works</h2>
+    <div class="one">The school pays nothing and lends a room. The parents pay a monthly direct debit, and a band leader runs a string of small bands one after another through the school day.</div>
+    <ul>
+      <li><b>The lesson:</b> a band of children (iRock caps it at 9) plays together for 30 minutes a week in the school day. Drums, keys, guitar, bass and vocals, with the instruments provided. Ages 4 to 11, Reception to Year 6.</li>
+      <li><b>The price round here:</b> £46.48 a month at every local Rocksteady school (checked on their booking system, 21/10/2026). iRock is £45.99 at Wincanton Primary.</li>
+      <li><b>The school:</b> pays nothing, provides a room, sends the letter home and lets them do a taster assembly. The company does all the admin with parents.</li>
+      <li><b>The concerts:</b> the bands play to the school and the parents through the year. That's the bit parents film and share, and it's what sells the next term.</li>
+      <li><b>The free places:</b> Rocksteady says it gave over £3 million of free teaching last year, "so no child is left behind". iRock gives one bursary place per school. Schools like it, and it makes the whole thing easy for a head teacher to say yes to.</li>
+    </ul>
+    <h3>A band leader's week</h3>
+    <p>Up to 10 schools a week, usually two a day, Monday to Friday in the daytime only. You load and unload the kit from your own car at every school, then run one 30-minute band after another, with a concert each term. Then 11-plus weeks off with the school holidays.</p>
+    <p class="fine">From Rocksteady's own adverts (Crewkerne, Somerset, posted 18/06/2026 and still live). Band size and lesson length come from iRock's published model, which is the same as Rocksteady's.</p>
+
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-money">
+    <span class="step">SCHOOLS 2</span>
+    <h2>What their accounts show</h2>
+    <div class="one">It's a seriously profitable model. They're growing about 40% a year, and they sold for nearly £30 million in 2024.</div>
+    <table class="pl">
+      <tr><th>Rocksteady, year to 31 Aug</th><th class="r">2023</th><th class="r">2024</th><th class="r">2025</th></tr>
+      <tr><td>Sales</td><td class="r">£13.8m</td><td class="r">£21.7m</td><td class="r">£30.4m</td></tr>
+      <tr><td>Gross margin</td><td class="r">55%</td><td class="r">58%</td><td class="r">58%</td></tr>
+      <tr><td>Operating profit</td><td class="r">£1.5m</td><td class="r">£4.1m</td><td class="r">£5.3m</td></tr>
+      <tr><td>Staff (average)</td><td class="r">327</td><td class="r">424</td><td class="r">546</td></tr>
+      <tr><td>Staff costs, % of sales</td><td class="r">71%</td><td class="r">62%</td><td class="r">62%</td></tr>
+    </table>
+    <ul>
+      <li><b>Where it started:</b> founded in 2012 by Mark and Katherine Robinson. It had 32 staff in 2016 and 546 by 2025.</li>
+      <li><b>What it sold for:</b> in May 2024 a private-equity-backed company (Melos Education, Vespa Capital) bought it for <b>£29.8 million cash</b>, about 7 times that year's operating profit. That's what a subscription business with termly income, a method and a team is worth.</li>
+      <li><b>Per band leader:</b> about £59,000 of sales a year per teaching employee. At their price that's roughly 115 paying children each. That's the realistic full load for one teacher, and it's the number our sums use below.</li>
+      <li><b>What their board watches:</b> sales, profit, "customer churn" and "staff satisfaction". Keeping parents and keeping teachers is the whole game.</li>
+    </ul>
+    <p class="fine">From the filed accounts at Companies House (Rocksteady Music School Ltd, 08111026; parent Melos Education Ltd, 15560096). Figures for the years before 2023 weren't filed in full. The per-teacher figures are my sums.</p>
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-recruit">
+    <span class="step">SCHOOLS 3</span>
+    <h2>Why the interview felt like a machine</h2>
+    <div class="one">Because it is one. The band leaders <i>are</i> the product, they're growing 40% a year, and the thing they can't train in a hurry is being brilliant with a room of six-year-olds.</div>
+    <h3>The job they were hiring for</h3>
+    <ul>
+      <li>A full-time, permanent, salaried job: <b>£28,000 rising to £33,000</b>, plus a £1,500 bonus.</li>
+      <li>You use your own car, at 50p a mile, and the job comes with 11-plus weeks of paid holiday.</li>
+      <li>Up to 10 schools a week. The nearest live advert is a patch centred on Crewkerne.</li>
+      <li>No teaching experience is needed. They train you in their method before your timetable starts.</li>
+    </ul>
+    <h3>Why it's a machine</h3>
+    <ul>
+      <li><b>They're always hiring.</b> Their careers site has <b>39 live adverts today, 34 of them for band leaders</b>. Ten went up on one day (08/10/2026), and there's a standing "talent pool". Staff numbers went from 327 to 546 in two years, plus replacing everyone who leaves.</li>
+      <li><b>Three stages:</b> a video interview, a group assessment day with problem-solving and teamwork exercises, then a <b>live band-leading demonstration</b>, sometimes a whole observation day. Getting to the end, like you did, means you passed the musician and the person tests.</li>
+      <li><b>What the last stage tests</b> is the one thing they can't train in three weeks: walking into a room of excitable 6-year-olds and having them playing together, safely and happily, in 30 minutes. They need at least 2 instruments, but the skill is being in charge of children.</li>
+    </ul>
+    <h3>Why they're so fussy</h3>
+    <ul>
+      <li><b>The band leader is the whole product.</b> Staff costs are 62% of their sales. One weak band leader loses the parents, then the school, then the next school along.</li>
+      <li><b>They're the salesforce too.</b> One review: "more pressure on signing children up… you are a salesman as well as a teacher". Every new child is another £46 a month, and the board measures "customer churn".</li>
+      <li><b>Safeguarding</b> is non-negotiable in a school. A provider gets one chance.</li>
+    </ul>
+    <p class="fine">Staff rate it 4.4 out of 5 (77 Glassdoor ratings, 89% would recommend). The common complaints are a "very overwhelming" start, setting up and packing down every day, lots of driving, sales pressure and some micromanagement. The interview steps come from candidates' Glassdoor reports, 2021 to 2026.</p>
+    <div class="do"><b class="h">What it means for you</b><ul>
+      <li><b>The demand is real.</b> Nobody hires 34 people at once for a business that doesn't work.</li>
+      <li><b>The gap they saw can be fixed</b> in a few months of working with young children (Schools 8, below).</li>
+      <li><b>It's your hiring recipe later:</b> a written method, a live audition with real children, a salary, and training.</li>
+    </ul></div>
+
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-others">
+    <span class="step">SCHOOLS 4</span>
+    <h2>Who else does it</h2>
+    <div class="gr"><span class="amt">£30.4m sales</span><div class="nm">Rocksteady Music School</div><div class="ln">The big one: thousands of primary schools, with employed, salaried band leaders. Already in 23 schools within 15 miles of Castle Cary.</div></div>
+    <div class="gr"><span class="amt">113 staff</span><div class="nm">iRock School of Music</div><div class="ln">The same model. Bands of up to 9, 30 minutes, about £46 a month, employed band coaches, one bursary place per school. Staff grew from 73 to 113 in a year. It files small-company accounts, so no sales figure, but net assets went from £220,000 to £522,000. In 11 schools within 15 miles, including Wincanton Primary and the Shepton juniors.</div></div>
+    <div class="gr"><span class="amt">£35 a month</span><div class="nm">SoMi Academy CIC (Liverpool)</div><div class="ln">A small social-enterprise version, priced openly against Rocksteady: "£35 for 10 months against their £42+ for 11". It began with an Arts Council pilot. A good model for a community-flavoured Future Rock.</div></div>
+    <div class="gr"><span class="amt">£78 a month</span><div class="nm">The Rock Project (franchise)</div><div class="ln">Not in the school day: 2-hour sessions after school, at £78 a month in Bristol. It shows the evening side works as a subscription too.</div></div>
+    <p class="fine">Somerset Music (the county music service) does whole-class lessons, mainly in Year 4, but has no rock-band offer.</p>
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-local">
+    <span class="step">SCHOOLS 5</span>
+    <h2>What's left round you</h2>
+    <div class="one">Within 10 miles of Castle Cary there are 40 state primaries. Rocksteady or iRock is in 9. Your own town's school, and most of the villages round it, have neither.</div>
+    <table class="pl">
+      <tr><th>Nearest primaries</th><th class="r">Pupils</th><th class="r">Now</th></tr>
+      <tr class="hl"><td><b>Castle Cary Community Primary</b> (0.2 mi)</td><td class="r">177</td><td class="r"><b>none</b></td></tr>
+      <tr><td>Ditcheat (2.6 mi)</td><td class="r">89</td><td class="r">none</td></tr>
+      <tr><td>Bruton Primary (3.0)</td><td class="r">262</td><td class="r">Rocksteady</td></tr>
+      <tr><td>North Cadbury (3.0)</td><td class="r">100</td><td class="r">none</td></tr>
+      <tr><td>Lovington (3.0)</td><td class="r">35</td><td class="r">none</td></tr>
+      <tr><td>Evercreech (4.3)</td><td class="r">198</td><td class="r">none</td></tr>
+      <tr><td>Our Lady of Mount Carmel, Wincanton (5.1)</td><td class="r">107</td><td class="r">none</td></tr>
+      <tr><td>Wincanton Primary (5.1)</td><td class="r">388</td><td class="r">iRock</td></tr>
+      <tr><td>Countess Gytha, Queen Camel (5.7)</td><td class="r">184</td><td class="r">none</td></tr>
+      <tr><td>Keinton Mandeville (5.8)</td><td class="r">149</td><td class="r">none</td></tr>
+      <tr><td>Horsington (6.1)</td><td class="r">93</td><td class="r">none</td></tr>
+      <tr><td>Upton Noble (6.2)</td><td class="r">161</td><td class="r">none</td></tr>
+      <tr><td>Baltonsborough (6.2)</td><td class="r">70</td><td class="r">none</td></tr>
+      <tr><td>Charlton Mackrell, Abbas &amp; Templecombe, Butleigh, Croscombe, Bourton, Milborne Port (7–9 mi)</td><td class="r">649</td><td class="r">none</td></tr>
+    </table>
+    <p><b>That's about 17 schools and 2,000 pupils within 9 miles with no band provider.</b> If 1 child in 10 signs up, that's about 200 children. At 1 in 7, it's nearly 300.</p>
+    <p><b>And the preps have nobody:</b> Hazlegrove (375 pupils, 4 miles), All Hallows (201), Millfield Prep (435), Sherborne Prep (204), Port Regis (305). Those parents already pay £41 for 30 minutes of a solo lesson (step 3), so a band at the prep could be priced higher.</p>
+    <p class="fine">From the government's schools register (21/10/2026), straight-line miles from Castle Cary. Who's where comes from Rocksteady's and iRock's own booking systems, searched by school name, so a few may be missed. Pupil numbers include nurseries. Take-up isn't published anywhere: 41% of UK children play an instrument (ABRSM 2025), and "1 in 10" is my guess, so test it.</p>
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-calc">
+    <span class="step">SCHOOLS 6</span>
+    <h2>What it could make you</h2>
+    <div class="one">One teacher can realistically carry about 115 paying children. That's about £50,000 a year of sales. Per hour of your time, it's roughly double what an evening home lesson earns once you count the driving.</div>
+    <div class="ctl"><div class="lab"><span>Schools</span><b id="sv1"></b></div><input type="range" id="s_schools" min="1" max="25" step="1" value="6"></div>
+    <div class="ctl"><div class="lab"><span>Paying children per school</span><b id="sv2"></b></div><input type="range" id="s_kids" min="4" max="40" step="1" value="15"><div class="note">Castle Cary at 1 in 10 is about 18. A village school of 90 is about 9.</div></div>
+    <div class="ctl"><div class="lab"><span>Monthly fee</span><b id="sv3"></b></div><input type="range" id="s_fee" min="30" max="55" step="1" value="42"><div class="note">Charged for 11 months. Rocksteady here is £46.48, SoMi £35.</div></div>
+    <div class="ctl"><div class="lab"><span>Days a week you teach in schools yourself</span><b id="sv4"></b></div><input type="range" id="s_mydays" min="0" max="5" step="1" value="4"><div class="note">Beyond that, the calculator hires band leaders on £30,000 a year</div></div>
+    <div class="out">
+      <div class="tile"><div class="n" id="so1"></div><div class="l">paying children</div></div>
+      <div class="tile"><div class="n" id="so2"></div><div class="l" id="so2l"></div></div>
+      <div class="tile"><div class="n" id="so3"></div><div class="l">sales a year</div></div>
+      <div class="tile"><div class="n" id="so4"></div><div class="l">running costs, incl. any hired teachers</div></div>
+      <div class="tile g"><div class="n" id="so5"></div><div class="l">profit a year, before tax</div></div>
+      <div class="tile g"><div class="n" id="so6"></div><div class="l">profit per paying child</div></div>
+    </div>
+    <div class="warn" id="soWarn"></div>
+    <button class="reset" id="sReset" type="button" style="margin-left:0">Reset</button>
+    <h3>How the sums work</h3>
+    <ul class="fine">
+      <li><b>Bands:</b> 5 children each on average (iRock caps at 9, but bands are rarely full), rounded up per school.</li>
+      <li><b>Teaching day:</b> 8 bands, so two schools a day with driving and setting up.</li>
+      <li><b>Free places:</b> one free place per school, the way iRock does it. It counts as a cost.</li>
+      <li><b>Running costs:</b> mileage at 55p (about 30 miles per teaching day, 36 weeks). Taking payments by direct debit, about 1.5% (an estimate). A portable kit (e-drums, keys, amps, guitars, mics, about £4,000) spread over 4 years. Booking software about £360 a year and marketing £200. These are estimates.</li>
+      <li><b>Hired band leaders:</b> £30,000 salary (Rocksteady pays £28,000 to £33,000), plus employer NI and pension, about £34,400 a year, which is £6,880 per teaching day a week.</li>
+      <li><b>Not included:</b> tax, your time on sales and admin, and the insurance and DBS you're already paying for in the other tab.</li>
+    </ul>
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-rules">
+    <span class="step">SCHOOLS 7</span>
+    <h2>The rules</h2>
+    <ul>
+      <li><b>Charging parents in school hours is allowed for this.</b> Schools can't normally charge for anything in the school day. Music is the exception: group or individual instrument tuition can be charged when a parent asks for it (Charges for Music Tuition (England) Regulations 2007). Children in care can't be charged, and the school needs a charging and remissions policy.</li>
+      <li><b>Safeguarding is the big one.</b> Teaching children every week is "regulated activity". You need an enhanced DBS check <b>with the children's barred list</b> (the self-employed route through an umbrella body, as in the other tab). The school puts you on its single central record, checks your ID every visit, and wants your safeguarding policy. That's Keeping Children Safe in Education 2026, in force since 01/09/2026.</li>
+      <li><b>Some schools ask visiting teachers for a room fee.</b> It's not common in primaries, but ask up front.</li>
+      <li><b>Write it down.</b> A short agreement with each school: the room, the times, the free place, safeguarding, and who tells parents what.</li>
+    </ul>
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  <section class="card" id="rs-start">
+    <span class="step">SCHOOLS 8</span>
+    <h2>How to start</h2>
+    <div class="one">Start with one school, Castle Cary, where you live. Make it brilliant, film the concert, then take that film to the next head teacher.</div>
+    <ol>
+      <li><b>Fix the gap Rocksteady found.</b> Get hours with young children before you pitch a school: holiday clubs (step 11 in the other tab), school workshop days, helping at your boys' school, a Cubs or Brownies session. Get a head teacher to give you a reference.</li>
+      <li><b>Build the method.</b> A term of songs, a simple level system kids can climb, a concert at the end, and a short report to parents each term. Rocksteady and iRock both grade the children's progress, and parents love it.</li>
+      <li><b>Kit:</b> one portable rig you can set up in 10 minutes. Second-hand, or grant-funded (step 13).</li>
+      <li><b>The pitch to the head:</b> free to the school, a free place for a child who needs it, a concert for the school, fully DBS-checked, all admin done for them. Offer a free taster assembly.</li>
+      <li><b>The letter home:</b> the school sends it. Parents sign up online and pay by direct debit. Start when you have 2 bands.</li>
+      <li><b>Then the villages:</b> Ditcheat, North Cadbury, Evercreech, Keinton, Queen Camel. Group them so one day covers two schools that are close together.</li>
+      <li><b>Hire when you're full.</b> When you're turning schools away, your first band leader is the musician you'd have been in that interview.</li>
+    </ol>
+    <div class="do"><b class="h">Another option worth thinking about</b>Reapply to Rocksteady in a year with that experience with children. It's a salaried, term-time job, and your evenings and Saturdays stay free for Future Rock. Read the contract carefully for anything that stops you teaching privately or working with "their" schools.</div>
+    <div class="do"><b class="h">Questions to take to the AI</b><ul>
+      <li>What did the Rocksteady assessment actually ask you to do, and where did it go wrong?</li>
+      <li>Which head teachers do you or Ruth already know?</li>
+      <li>Could you be in Castle Cary Primary for the summer term?</li>
+      <li>Does an 8-year-old version of Future Rock feel like you, or would you rather hire for it?</li>
+    </ul></div>
+    <a class="top" href="#schools">back to the top of this tab</a>
+  </section>
+
+  </div><!-- /tabB -->
+
   <section class="card">
     <h2>Small print and sources</h2>
     <p class="fine">Researched 21/10/2026. The figures came from the sources below. Some come from comparison websites and are only a guide. All the sums are estimates, so check them before you rely on them, especially anything about tax, insurance or DBS.</p>
@@ -761,6 +976,7 @@
       <li>Grants: helpmusicians.org.uk (Fast Track); artscouncil.org.uk (Project Grants guidance, Sept 2026; DYCP); prsfoundation.com; youthmusic.org.uk (Trailblazer, July 2026 guidance); tnlcommunityfund.org.uk (Awards for All); somersetcf.org.uk; musicforall.org.uk; Castle Cary and Bruton town councils; startuploans.co.uk; King's Trust (gov.uk)</li>
       <li>CIC set-up fee, asset lock and director pay: Companies House fees (25/09/2026) and CIC guidance, gov.uk</li>
       <li>Pension tax relief (£80 becomes £100 at basic rate): gov.uk</li>
+      <li><b>In schools tab:</b> Rocksteady Music School Ltd (08111026) and Melos Education Ltd (15560096) accounts, FY2016–FY2025, Companies House. Rocksteady and iRock booking systems, searched 21/10/2026. Rocksteady careers site (Pinpoint feed, Crewkerne advert 18/06/2026). Glassdoor interview and employee reports. iRock School of Music Ltd (10223683), SoMi Academy CIC (12976684) and The Rock Project Ltd (06268490) filings and websites. Get Information About Schools register, 21/10/2026. Charges for Music Tuition (England) Regulations 2007 (SI 2007/2239). DfE Charging for school activities. Keeping Children Safe in Education 2026. ABRSM Making Music 2025</li>
     </ul>
     <p class="sig">Lord Claude<small>Neil's mate</small></p>
   </section>
@@ -831,6 +1047,50 @@ function fallback(t,done){
 }
 $('pCopy').addEventListener('click',e=>copyText($('pOut').textContent,e.currentTarget));
 document.querySelectorAll('.prompt .cp').forEach(b=>b.addEventListener('click',()=>copyText(b.parentNode.querySelector('.pt').textContent,b)));
+
+// ---- schools calculator ----
+const SC=['schools','kids','fee','mydays'], SDEF={schools:6,kids:15,fee:42,mydays:4};
+const S_MONTHS=11, S_BAND=5, S_SLOTS=8, S_MILE_DAY=30*0.55*36, S_HIRE_DAY=34400/5, S_FIXED=560, S_KIT=1000;
+SC.forEach(k=>{ if(st.sch && st.sch[k]!=null) $('s_'+k).value=st.sch[k]; });
+function scalc(){
+  const n=+$('s_schools').value, k=+$('s_kids').value, f=+$('s_fee').value, d=+$('s_mydays').value;
+  $('sv1').textContent=n; $('sv2').textContent=k; $('sv3').textContent='£'+f; $('sv4').textContent=d;
+  const paying=n*k, bands=n*Math.ceil((k+1)/S_BAND), days=bands/S_SLOTS;
+  const sales=paying*f*S_MONTHS;
+  const hired=Math.max(0,days-d);
+  const costs=days*S_MILE_DAY + sales*0.015 + Math.max(1,Math.ceil(days/5))*S_KIT + S_FIXED + hired*S_HIRE_DAY;
+  const profit=sales-costs;
+  $('so1').textContent=paying;
+  $('so2').textContent=(Math.round(days*10)/10)+' days'; $('so2l').textContent='teaching a week ('+bands+' bands)';
+  $('so3').textContent=gbp(sales);
+  $('so4').textContent=gbp(costs);
+  $('so5').textContent=(profit<0?'−':'')+gbp(Math.abs(profit));
+  $('so6').textContent=paying?gbp(profit/paying):'£0';
+  const w=$('soWarn');
+  if(hired>0){ w.textContent='That is '+(Math.round(days*10)/10)+' teaching days a week. You teach '+d+', so the calculator hires band leaders for the other '+(Math.round(hired*10)/10)+'.'; w.classList.add('on'); }
+  else { w.textContent=''; w.classList.remove('on'); }
+  st.sch={schools:n,kids:k,fee:f,mydays:d}; save();
+}
+SC.forEach(k=>$('s_'+k).addEventListener('input',scalc));
+$('sReset').addEventListener('click',()=>{ SC.forEach(k=>$('s_'+k).value=SDEF[k]); scalc(); });
+scalc();
+
+// ---- tabs ----
+function showTab(id, push){
+  ['tabA','tabB'].forEach(t=>{ const on=(t===id); $(t).hidden=!on; $(t==='tabA'?'tbA':'tbB').setAttribute('aria-selected', on?'true':'false'); });
+  document.querySelectorAll('#'+id+' .card').forEach(c=>c.classList.add('in'));
+  try{ localStorage.setItem(KEY+'-tab', id); }catch(e){}
+}
+function tabFor(hash){
+  if(!hash || hash.length<2) return null;
+  const el=document.getElementById(hash.slice(1)); if(!el) return null;
+  return $('tabB').contains(el)?'tabB':($('tabA').contains(el)?'tabA':null);
+}
+$('tbA').addEventListener('click',()=>{ showTab('tabA'); $('tabA').scrollIntoView({block:'start'}); });
+$('tbB').addEventListener('click',()=>{ showTab('tabB'); $('tabB').scrollIntoView({block:'start'}); });
+document.addEventListener('click',e=>{ const a=e.target.closest('a[href^="#"]'); if(!a) return; const t=tabFor(a.getAttribute('href')); if(t) showTab(t); });
+window.addEventListener('hashchange',()=>{ const t=tabFor(location.hash); if(t) showTab(t); });
+(function(){ const t=tabFor(location.hash); if(t){ showTab(t); const el=document.querySelector(location.hash); if(el) setTimeout(()=>el.scrollIntoView(),0); } })();
 
 // ---- reveal ----
 const io=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) return; en.target.classList.add('in'); io.unobserve(en.target); }),{threshold:0.05});
