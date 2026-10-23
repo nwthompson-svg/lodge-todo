@@ -171,7 +171,7 @@
     <div class="titlerow"><h1 id="title">Wayne's to-do</h1><div class="counts" id="counts"></div></div>
     <div class="toggle" id="pageswitch">
       <button id="p-tasks" class="on">To-do</button>
-      <button id="p-hours">Hours</button>
+      <button id="p-hours">Site log</button>
     </div>
     <div class="toggle" id="viewtoggle">
       <button id="t-prio" class="on">Priority</button>
@@ -290,6 +290,8 @@ function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0
 function mondayOf(s){ const d=new Date(s+"T00:00:00"); if(isNaN(d)) return null; const off=(d.getDay()+6)%7; d.setDate(d.getDate()-off); return ymd(d); }
 function weekLabel(monday){ return "Week of "+new Date(monday+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}); }
 function sumHours(list){ return list.reduce((s,h)=>s+(Number(h.hours)||0),0); }
+function thisWeekDays(){ const m=mondayOf(ymd(new Date())); return new Set(hours.filter(h=>HLOGGED(h)&&!!h.date&&mondayOf(h.date)===m).map(h=>h.date)).size; }
+function daysLabel(n){ return n+(n===1?" day":" days"); }
 function thisWeekTotal(){ const m=mondayOf(ymd(new Date())); return sumHours(hours.filter(h=>HLOGGED(h)&&!!h.date&&mondayOf(h.date)===m)); }
 // Guard: if a Sheet date/time cell got coerced to a Date type, normalise back to plain strings.
 function normHour(h){
@@ -314,7 +316,7 @@ async function uploadPhoto(t, file){
 }
 
 function render(){
-  $("#title").textContent = page==="hours" ? "Wayne's hours" : "Wayne's to-do";
+  $("#title").textContent = page==="hours" ? "Site log" : "Wayne's to-do";
   $("#p-tasks").classList.toggle("on", page==="tasks");
   $("#p-hours").classList.toggle("on", page==="hours");
   $("#viewtoggle").style.display = page==="tasks" ? "" : "none";
@@ -339,7 +341,7 @@ function render(){
   }
   const fab = document.querySelector(".fab");
   fab.style.display = "";
-  fab.setAttribute("aria-label", page==="hours" ? "Log hours" : "Add task");
+  fab.setAttribute("aria-label", page==="hours" ? "Sign in" : "Add task");
   if(page==="hours"){ renderHours(); return; }
   renderTasks();
 }
@@ -395,18 +397,18 @@ function renderTasks(){
 const card = rows => `<div class="card">${rows.join("")}</div>`;
 
 function renderHours(){
-  $("#counts").textContent = `${fmtHours(thisWeekTotal())} this week`;
+  $("#counts").textContent = daysLabel(thisWeekDays())+" on site this week";
   const logged = hours.filter(h=>HLOGGED(h) && mondayOf(h.date)).slice()
     .sort((a,b)=> (b.date||"").localeCompare(a.date||"") || (hmToMin(b.start)||0)-(hmToMin(a.start)||0));
   let html = "";
   if(!logged.length){
-    html += `<div style="padding:48px 30px; text-align:center; color:var(--sec); font-size:18px; line-height:1.55;">No hours logged yet.<br>Tap ＋ to add a shift.</div>`;
+    html += `<div style="padding:48px 30px; text-align:center; color:var(--sec); font-size:18px; line-height:1.55;">Nobody signed in yet.<br>Tap ＋ to sign in.</div>`;
   }
   const groups = {};
   for(const h of logged){ const k=mondayOf(h.date); (groups[k]=groups[k]||[]).push(h); }
   const weeks = Object.keys(groups).sort((a,b)=> b.localeCompare(a));
   for(const wk of weeks){
-    html += `<div class="group week">${weekLabel(wk)}<span class="wtot">${fmtHours(sumHours(groups[wk]))}</span></div>`
+    html += `<div class="group week">${weekLabel(wk)}<span class="wtot">${daysLabel(new Set(groups[wk].map(h=>h.date)).size)}</span></div>`
       + card(groups[wk].map(hoursRowHTML));
   }
   const removed = hours.filter(h=>h.status==="Removed");
@@ -769,8 +771,8 @@ function wireHours(draft){
     const net = netHours(s, f, brk);
     const el = $("#h-net");
     if(s===""||f===""){ el.classList.remove("bad"); el.innerHTML="= <span>— h</span>"; return; }
-    if(net==null||net<=0){ el.classList.add("bad"); el.innerHTML="= <span>finish after start</span>"; return; }
-    el.classList.remove("bad"); el.innerHTML="= <span>"+fmtHours(net)+"</span>";
+    if(net==null||net<=0){ el.classList.add("bad"); el.innerHTML="= <span>sign-out after sign-in</span>"; return; }
+    el.classList.remove("bad"); el.innerHTML="= <span>"+fmtHours(net)+" on site</span>";
   };
   const seg = sheet.querySelector('[data-seg="break"]');
   seg.querySelectorAll("button[data-val]").forEach(b=>{
@@ -786,7 +788,7 @@ function readHours(draft){
   const brk = draft.break==="None" ? 0 : Number(draft.break);
   const net = netHours(start, finish, brk);
   if(!date || start==="" || finish==="" || net==null || net<=0){
-    const el=$("#h-net"); el.classList.add("bad"); el.innerHTML="= <span>check date, start &amp; finish</span>"; return null;
+    const el=$("#h-net"); el.classList.add("bad"); el.innerHTML="= <span>check date, sign-in &amp; sign-out</span>"; return null;
   }
   return { date, start, finish, break_min:brk, hours:Math.round(net*100)/100, note:$("#h-note").value.trim() };
 }
@@ -794,18 +796,18 @@ function openHoursAdd(){
   if(!CONNECTED()) return;
   const draft = {break:"30"};
   sheet.innerHTML = `
-    <h2>Log hours</h2>
+    <h2>Sign in / out</h2>
     <label>Date</label>
     <input type="date" id="h-date" value="${todayStr()}">
     <div class="times">
-      <div><label>Start</label><input type="time" id="h-start" step="900"></div>
-      <div><label>Finish</label><input type="time" id="h-finish" step="900"></div>
+      <div><label>Signed in</label><input type="time" id="h-start" step="900"></div>
+      <div><label>Signed out</label><input type="time" id="h-finish" step="900"></div>
     </div>
     <label>Break</label>${breakSeg(draft.break)}
     <div class="netout" id="h-net">= <span>— h</span></div>
     <label>Note</label>
     <textarea id="h-note" rows="2" placeholder="What was done (optional)"></textarea>
-    <button class="primary" id="h-add">Log hours</button>`;
+    <button class="primary" id="h-add">Save</button>`;
   wireHours(draft);
   $("#h-add").onclick = ()=>{
     const v = readHours(draft); if(!v) return;
@@ -819,19 +821,19 @@ function openHoursEdit(id){
   const draft = {break: (Number(h.break_min)||0)===0 ? "None" : String(h.break_min)};
   const removed = h.status==="Removed";
   sheet.innerHTML = `
-    <h2>Edit hours</h2>
+    <h2>Edit sign-in</h2>
     <label>Date</label>
     <input type="date" id="h-date" value="${h.date||''}">
     <div class="times">
-      <div><label>Start</label><input type="time" id="h-start" step="900" value="${h.start||''}"></div>
-      <div><label>Finish</label><input type="time" id="h-finish" step="900" value="${h.finish||''}"></div>
+      <div><label>Signed in</label><input type="time" id="h-start" step="900" value="${h.start||''}"></div>
+      <div><label>Signed out</label><input type="time" id="h-finish" step="900" value="${h.finish||''}"></div>
     </div>
     <label>Break</label>${breakSeg(draft.break)}
     <div class="netout" id="h-net">= <span>— h</span></div>
     <label>Note</label>
     <textarea id="h-note" rows="2" placeholder="What was done (optional)">${esc(h.note||'')}</textarea>
     <button class="primary" id="h-save">Save</button>
-    <button class="danger" id="h-del">${removed ? "Restore this entry" : "Delete (kept in sheet for Neil)"}</button>`;
+    <button class="danger" id="h-del">${removed ? "Restore this entry" : "Delete (kept in the site record)"}</button>`;
   wireHours(draft);
   $("#h-save").onclick = ()=>{
     const v = readHours(draft); if(!v) return;
