@@ -137,12 +137,12 @@
   <header>
     <h1>Flexibility analysis</h1>
     <div class="sub">by Neil's mate Lord Claude</div>
-    <div class="meta">An estimate from your own app entries, 21 July to 8 October 2026.</div>
+    <div class="meta">An estimate from your own app entries, the whole 13 weeks: 21 July to 16 October 2026. Updated 23 October.</div>
   </header>
 
   <section class="card">
     <h2>From Lord Claude</h2>
-    <p>Wayne, Neil asked me to go through your hours from the app and see how the deal has treated you. Everything here is built from what you logged, so it's an estimate. If a day's wrong, tell Neil and he'll have me fix it.</p>
+    <p>Wayne, Neil asked me to go through your hours from the app and see how the deal has treated you. The 13 weeks are done now, so this is the full picture rather than the half-time one. Everything here is built from what you logged, so it's an estimate. If a day's wrong, tell Neil and he'll have me fix it.</p>
   </section>
 
   <section class="card">
@@ -164,17 +164,17 @@
       <div class="tile g"><div class="n">40 → 35</div><div class="l">hours a week</div></div>
       <div class="tile g"><div class="n" data-count="5">0</div><div class="l">days off, effectively paid</div></div>
       <div class="tile"><div class="n" data-count="4">0</div><div class="l">days the site had no work, effectively paid</div></div>
-      <div class="tile g"><div class="n" data-count="9">0</div><div class="l">early finishes, effectively paid</div></div>
+      <div class="tile g"><div class="n" data-count="11">0</div><div class="l">early finishes, effectively paid</div></div>
       <div class="tile g"><div class="n" data-count="12">0</div><div class="l">later starts, effectively paid</div></div>
     </div>
   </section>
 
   <section class="card hero">
     <h2>Hours for the money</h2>
-    <div class="money">£8,120<small>so far</small></div>
-    <div class="hb last" style="--w:1"><div class="lab"><span>Last job, at £17.50 an hour</span><b>464 h</b></div><div class="bar"></div></div>
-    <div class="hb deal" style="--w:0.875"><div class="lab"><span>This deal, at £20 an hour</span><b>406 h</b></div><div class="bar"></div></div>
-    <p class="punch">The same money for <b>58 fewer hours</b>. That's a week and a half of your last job.</p>
+    <div class="money">£9,100<small>the whole 13 weeks</small></div>
+    <div class="hb last" style="--w:1"><div class="lab"><span>Last job, at £17.50 an hour</span><b>520 h</b></div><div class="bar"></div></div>
+    <div class="hb deal" style="--w:0.875"><div class="lab"><span>This deal, at £20 an hour</span><b>455 h</b></div><div class="bar"></div></div>
+    <p class="punch">The same money for <b>65 fewer hours</b>. That's more than a week and a half of your last job.</p>
   </section>
 
   <section class="card">
@@ -196,7 +196,7 @@
   <section class="card">
     <h2>What your last job might have cost</h2>
     <p>Days you weren't on site: 9. Five were yours, four were the site's. At your last job, assuming each one was a missed day, that might have been £1,260.</p>
-    <p>Nine early finishes. Assuming each of those counted as a missed day too, maybe another £1,260.</p>
+    <p>Eleven early finishes. Assuming each of those counted as a missed day too, maybe another £1,540.</p>
     <p><b>Here, none of it cost you anything.</b></p>
     <p>The later starts I haven't counted.</p>
     <ul class="list" id="offList"></ul>
@@ -214,11 +214,12 @@
   <section class="card">
     <h2>How it balances</h2>
     <p>Your early finishes and days off on one side. The site's late nights on the other. The money the same every week either way, including the two-day week after the storm and the three-day week with the elbow.</p>
+    <p>Since the first version of this page (8 October), the last six days were the steady end of it: nothing past half five, and two early finishes, one of them the school pick-up.</p>
   </section>
 
   <section class="card">
     <h2>Small print</h2>
-    <p class="fine">Worked out from your own entries in the app, 21 July to 8 October. Last job taken as 8 hours a day for £140, fixed start and finish, a day lost if you weren't there. The deal: £9,100 over 13 weeks. All estimates. Shout if a day's wrong.</p>
+    <p class="fine">Worked out from your own entries in the app, 21 July to 16 October. Last job taken as 8 hours a day for £140, fixed start and finish, a day lost if you weren't there. The deal: £9,100 over 13 weeks. All estimates. Shout if a day's wrong.</p>
     <p class="sig">Lord Claude<small>Neil's mate</small></p>
   </section>
 </div>
@@ -226,7 +227,7 @@
 <script>
 document.documentElement.classList.add('js');
 
-// ---- data: Wayne's own Hours entries, 21/07 to 08/10/2026 (frozen 08/10) ----
+// ---- data: Wayne's own Hours entries, 21/07 to 16/10/2026, the 13 weeks (rev 3, 23/10; first frozen 08/10) ----
 const RAW = `2026-07-21 08:30 18:00 30 9
 2026-07-22 07:00 18:00 30 10.5
 2026-07-23 06:00 15:30 30 9
@@ -275,7 +276,13 @@ const RAW = `2026-07-21 08:30 18:00 30 9
 2026-10-02 10:15 17:30 0 7.25
 2026-10-05 09:30 18:00 0 8.5
 2026-10-06 09:30 15:30 15 5.75
-2026-10-08 09:30 17:15 15 7.5`;
+2026-10-08 09:30 17:15 15 7.5
+2026-10-09 08:30 14:30 0 6
+2026-10-12 09:45 16:30 0 6.75
+2026-10-13 09:30 17:30 15 7.75
+2026-10-14 08:30 17:30 30 8.5
+2026-10-15 08:30 14:45 15 6
+2026-10-16 08:30 16:45 15 8`;
 
 const OFF_HIS = ['2026-07-31','2026-08-07','2026-08-10','2026-08-20','2026-08-21'];
 const OFF_SITE = {'2026-08-31':'bank holiday','2026-09-02':'storm, no work on site','2026-09-04':'no work on site','2026-10-07':'Neil away'};
@@ -306,8 +313,8 @@ const BY = Object.fromEntries(DAYS.map(o=>[o.d,o]));
 
 // sanity (console only)
 const n=(fn)=>DAYS.filter(fn).length;
-console.assert(DAYS.length===49,'49 days');
-console.assert(n(o=>o.ls)===12,'12 late starts'); console.assert(n(o=>o.ef)===9,'9 early finishes');
+console.assert(DAYS.length===55,'55 days');
+console.assert(n(o=>o.ls)===12,'12 late starts'); console.assert(n(o=>o.ef)===11,'11 early finishes');
 console.assert(n(o=>o.late)===15,'15 late finishes'); console.assert(n(o=>o.late&&o.ls)===5,'5 both');
 console.assert(n(o=>o.h>=10)===10,'10 ten-hour days'); console.assert(n(o=>o.fm>=19*60+30)===6,'6 past 19:30');
 
@@ -316,20 +323,19 @@ const fmt=d=>{const x=new Date(d+'T12:00:00'); return DOW[x.getDay()]+' '+x.getD
 const ddmm=d=>d.slice(8,10)+'/'+d.slice(5,7);
 const gbp=v=>'£'+v.toLocaleString('en-GB');
 
-// every weekday 21/07 .. 08/10
-const ALL=[]; for(let x=new Date('2026-07-21T12:00:00'); x<=new Date('2026-10-08T12:00:00'); x.setDate(x.getDate()+1)){
+// every weekday 21/07 .. 16/10
+const ALL=[]; for(let x=new Date('2026-07-21T12:00:00'); x<=new Date('2026-10-16T12:00:00'); x.setDate(x.getDate()+1)){
   if(x.getDay()===0||x.getDay()===6) continue; const d=x.toISOString().slice(0,10);
   ALL.push({d, e:BY[d]||null, his:OFF_HIS.includes(d), site:OFF_SITE[d]||null});
 }
-console.assert(ALL.length===58,'58 weekdays');
+console.assert(ALL.length===64,'64 weekdays');
 
 // weeks (w/c Monday)
 const WEEKS=[]; const wk={};
 ALL.forEach(r=>{const x=new Date(r.d+'T12:00:00'); x.setDate(x.getDate()-((x.getDay()+6)%7)); const k=x.toISOString().slice(0,10);
   if(!wk[k]){wk[k]={k,days:0,h:0,off:[]}; WEEKS.push(wk[k]);}
   if(r.e){wk[k].days++; wk[k].h+=r.e.h;} else wk[k].off.push(r);});
-WEEKS[WEEKS.length-1].part=true;
-console.assert(WEEKS.length===12,'12 weeks');
+console.assert(WEEKS.length===13,'13 weeks');
 console.assert(Math.abs(WEEKS[4].h-23.25)<1e-9 && WEEKS[4].days===3,'elbow week'); console.assert(WEEKS[6].h===12&&WEEKS[6].days===2,'storm week');
 
 // ---- weeks as rows ----
