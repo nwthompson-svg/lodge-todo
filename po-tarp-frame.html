@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Plant room tarp frame</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey-soft:#EFEDE8; --blue:#3A6FB0; --red:#C0392B;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey-soft:#2C2E31; --blue:#7FA8E0; --red:#E57364;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:18px; line-height:1.4;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .jump{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .jump a{font-size:16px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border-radius:20px; padding:7px 14px; text-decoration:none;}
+  .part{font-size:26px; font-weight:700; letter-spacing:-0.3px; margin:34px 4px 4px;}
+  .partsub{font-size:17px; color:var(--sec); margin:0 4px 6px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 14px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 10px; padding-left:22px;} .card li{margin:5px 0;}
+  .rules{background:var(--amber-soft); border-color:transparent;}
+  .rules h2{color:var(--amber);}
+  .big{font-size:20px; font-weight:700;}
+  .num{font-variant-numeric:tabular-nums; font-weight:700;}
+  .hero{display:flex; gap:10px; margin:6px 0 2px;}
+  .hero div{flex:1; background:var(--grey-soft); border-radius:12px; padding:10px 12px;}
+  .hero b{display:block; font-size:28px; font-variant-numeric:tabular-nums;}
+  .hero span{font-size:15px; color:var(--sec);}
+
+  .row{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:0.5px solid var(--divider); cursor:pointer;}
+  .row:first-of-type{border-top:0;}
+  .tick{width:26px; height:26px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    border:2px solid var(--muted); display:flex; align-items:center; justify-content:center;}
+  .tick svg{width:14px; height:14px; opacity:0;}
+  .row.done .tick{background:var(--green); border-color:var(--green);}
+  .row.done .tick svg{opacity:1;}
+  .row.done .what{color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px;}
+  .what{flex:1; min-width:0;}
+  .what .hd{font-weight:700;}
+  .what .cut{margin-top:2px;}
+  .what .gets{color:var(--sec); font-size:16px; margin-top:3px;}
+
+  .pl{width:100%; border-collapse:collapse; font-size:16px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:8px 6px 8px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right;}
+  .pl td:last-child, .pl th:last-child{padding-right:0;}
+  .pl td.l{font-weight:700;}
+  .pl td small{display:block; font-weight:400; color:var(--sec); font-size:13px;}
+  .buy{color:var(--red); font-weight:700;}
+  .have{color:var(--green); font-weight:700;}
+  .chk{color:var(--amber); font-weight:700;}
+  .note{font-size:15px; color:var(--sec); margin-top:10px;}
+
+  svg.sec, svg.posts{width:100%; height:auto; display:block; margin:4px 0 6px;}
+  .clt{fill:#D9B98A;} .fib{fill:#B89670;} .spc{fill:#8FB3D9;} .tim{fill:#C9A46A; stroke:#8A6A3A; stroke-width:6;}
+  .pur{fill:var(--green); } .foam{fill:#F2D04A; stroke:#B89A20; stroke-width:6;} .spr{fill:#E8DCC0; stroke:#8A6A3A; stroke-width:4;}
+  .fin{fill:var(--grey-soft);} .rl{stroke:var(--muted); stroke-width:6; stroke-dasharray:40 30;}
+  .tarp{fill:none; stroke:var(--blue); stroke-width:14; stroke-dasharray:60 30; stroke-linejoin:round;}
+  .dim{stroke:var(--ink); stroke-width:8;} .ptr{stroke:var(--sec); stroke-width:6;}
+  .rlm{stroke:var(--green); stroke-width:22;} .scr{stroke:var(--red); stroke-width:16; fill:none;}
+  .t{fill:var(--ink); font-family:inherit; font-size:200px;}
+  .t.s{fill:var(--sec); font-size:200px;} .t.b{font-weight:700; font-size:230px;} .t.e{fill:var(--sec); font-weight:600; font-size:210px;}
+  svg.posts .t{font-size:130px;} svg.posts .t.b{font-size:150px;}
+  .t.g{fill:var(--green); font-weight:700;} .t.r{fill:var(--red); font-weight:600;}
+  .key{display:flex; gap:12px; flex-wrap:wrap; font-size:15px; color:var(--sec);}
+  .key i{display:inline-block; width:14px; height:14px; border-radius:3px; vertical-align:-2px; margin-right:5px;}
+
+  .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
+  .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
+  .sig small{display:block; font-size:14px; color:var(--muted);}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+
+<div class="wrap">
+
+<header>
+  <h1>Plant room tarp frame</h1>
+  <div class="sub">Cut list and prep, screws, and how it goes up</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 26/10/2026 for Tuesday 27/10.</div>
+  <div class="jump"><a href="#rules">Before you cut</a><a href="#cuts">Cut list</a><a href="#prep">Ends + marks</a><a href="#screws">Screws</a><a href="#up">Going up</a></div>
+</header>
+
+<div class="card">
+  <h2>The job</h2>
+  <p>Five frames that stand over the plant room roof and hold a tarp while we work up there. Each frame is a <b>tall front post</b> (bifold side), a <b>short back post</b> and <b>one sloping rafter</b>. Six rows of battens (purlins) run along the top under the tarp.</p>
+  <p><b>Tomorrow is cutting and prep only.</b> The plant room isn't up yet. The kit waits until the roof panels are on.</p>
+  <div class="hero">
+    <div><b>5</b><span>frames</span></div>
+    <div><b>10°</b><span>fall, high at the front</span></div>
+    <div><b>700</b><span>clear at the back</span></div>
+  </div>
+</div>
+
+<div class="card rules" id="rules">
+  <h2>Before you cut</h2>
+  <p class="big">Measure a 4x2 across its wide face first.</p>
+  <p>This page assumes it's <b class="num">95</b>. <b>If it's the full 100, message Neil.</b> Carry on cutting: none of the lengths change.</p>
+  <ul>
+    <li><b>Every cut is square.</b> No angles anywhere on this job.</li>
+    <li><b>CRS timber</b> (came Monday 19/10): 8 × 4x2 at 4.8 m, 14 battens at 4.8 m, 2 × 2x2 at 4.8 m. <b>Leave the two 2x2s:</b> they're Neil's spares.</li>
+    <li><b>Back posts and spacers</b> come from the leftover 2x4 and 2x2 from the steel-leg bracing.</li>
+    <li><b>Mark every post from its top end.</b> The top end sets the rafter height, so a back post that's a bit long or short just runs further down the wall or finishes higher up it. That's why "or close length" is fine.</li>
+    <li>Nothing gets sanded up on the building. Any rounding is done here, on the trestles.</li>
+  </ul>
+</div>
+
+<div class="part" id="cuts">1. Cut list</div>
+<div class="card">
+  <h2>Cut</h2>
+<div class="row" data-k="c-fp"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Front posts: 5 × 2400</div><div class="cut">Cut 3 of the CRS 4x2s in half.</div><div class="gets">The 6th half is a spare. Write FRONT on each.</div></div></div>
+<div class="row" data-k="c-bp"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Back posts: 5 × 1600, or close length</div><div class="cut">Leftover 2x4 from the steel-leg bracing. Anything from 1500 up is fine, and longer is fine too.</div><div class="gets">Write BACK on each.</div></div></div>
+<div class="row" data-k="c-r"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Rafters: 5 × 4062</div><div class="cut">One from each of the other 5 CRS 4x2s.</div><div class="gets"><b>Keep the 5 offcuts</b> (about 738): Neil may use them for corner braces.</div></div></div>
+<div class="row" data-k="c-s"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Spacers: 10 × 480, or close length</div><div class="cut">Leftover 2x2 from the steel-leg bracing.</div></div></div>
+<div class="row" data-k="c-f"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Fibre pads: 10 × 480 × 50</div><div class="cut">60 mm wood-fibre offcuts, the same size as a spacer.</div></div></div>
+<div class="row" data-k="c-pa"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Purlins A: 6 × 4050</div><div class="cut">CRS battens.</div></div></div>
+<div class="row" data-k="c-pb"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Purlins B: 6 × 4350</div><div class="cut">CRS battens.</div></div></div>
+<div class="row" data-k="c-d"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Diagonals: 2 battens, don't cut</div><div class="cut">Leave them full length. They get cut to fit on the day.</div></div></div>
+  <p class="note">That uses all 8 CRS 4x2s and all 14 CRS battens.</p>
+</div>
+
+<div class="part" id="prep">2. Ends and marks</div>
+<p class="partsub">The posts drawn wider than they are, so the marks show. Every number is measured from the top.</p>
+<div class="card">
+<svg viewBox="0 -230 2800 2730" class="posts" role="img" aria-label="Marks on a front post and a back post, measured from the top"><text x="40" y="-70" class="t b">FRONT</text><rect x="40" y="0" width="200" height="2400" class="tim"/><rect x="240" y="1745" width="60" height="480" class="spc"/><line x1="10" y1="1525" x2="270" y2="1525" class="rlm"/><path d="M110 1835l60 60M170 1835l-60 60" class="scr"/><path d="M110 1995l60 60M170 1995l-60 60" class="scr"/><path d="M110 2155l60 60M170 2155l-60 60" class="scr"/><text x="310" y="90" class="t">Top</text><text x="310" y="1570" class="t g">Roof line 1525</text><text x="310" y="1835" class="t">Spacer</text><text x="310" y="1985" class="t">1745–2225</text><text x="310" y="2135" class="t r">3 × screws</text><text x="310" y="2445" class="t">Bottom 2400</text><text x="1440" y="-70" class="t b">BACK</text><rect x="1440" y="0" width="200" height="1600" class="tim"/><rect x="1640" y="1095" width="60" height="480" class="spc"/><line x1="1410" y1="875" x2="1670" y2="875" class="rlm"/><path d="M1510 1185l60 60M1570 1185l-60 60" class="scr"/><path d="M1510 1345l60 60M1570 1345l-60 60" class="scr"/><path d="M1510 1505l60 60M1570 1505l-60 60" class="scr"/><text x="1710" y="90" class="t">Top</text><text x="1710" y="920" class="t g">Roof line 875</text><text x="1710" y="1185" class="t">Spacer</text><text x="1710" y="1335" class="t">1095–1575</text><text x="1710" y="1485" class="t r">3 × screws</text><text x="1710" y="1645" class="t">Bottom 1600</text></svg>
+  <div class="key"><span><i style="background:var(--green)"></i>roof line</span><span><i style="background:#8FB3D9"></i>spacer goes here</span><span><i style="background:var(--red)"></i>post screws (×)</span></div>
+</div>
+<div class="card">
+  <h2>Prep</h2>
+<div class="row" data-k="p-round"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Round the purlin ends</div><div class="cut">With the sander, round all four corners at <b>both ends of every purlin</b>. The tarp folds over them at the ends of the building.</div></div></div>
+<div class="row" data-k="p-fm"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the front posts</div><div class="cut">From the top: roof line <b>1525</b>, spacer <b>1745 to 2225</b>, screw crosses at <b>1865 · 2025 · 2185</b>.</div></div></div>
+<div class="row" data-k="p-bm"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the back posts</div><div class="cut">From the top: roof line <b>875</b>, spacer <b>1095 to 1575</b>, screw crosses at <b>1215 · 1375 · 1535</b>.</div><div class="gets">Post shorter than 1575? The spacer just stops at the bottom of the post. Leave off any cross that doesn't fit.</div></div></div>
+<div class="row" data-k="p-pad"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Fibre pad on every spacer</div><div class="cut">Two 6×90 screws from the fibre side, about 100 in from each end, heads sunk into the fibre.</div></div></div>
+<div class="row" data-k="p-sm"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the spacers</div><div class="cut">On the face <b>without</b> the pad, mark the wall screws at <b>40 · 200 · 360</b> from the top.</div></div></div>
+<div class="row" data-k="p-rz"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the rafters: post zones</div><div class="cut">Square lines at <b>100 and 200</b> in from <b>both</b> ends. The posts go between them.</div></div></div>
+<div class="row" data-k="p-rp"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the rafters: purlin rows</div><div class="cut">Along one edge, from either end: <b>50 · 840 · 1635 · 2425 · 3220 · 4010</b>. Write TOP on that edge.</div></div></div>
+<div class="row" data-k="p-pd"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Pilot holes in the purlins</div><div class="cut">3 mm, 12 in from each end, in the middle of the batten.</div></div></div>
+<div class="row" data-k="p-stack"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Stack it as a kit</div><div class="cut">Front posts, back posts, rafters, spacers, purlins A, purlins B and the 2 diagonals, together and off the ground.</div></div></div>
+  <p class="note">Rafters and posts don't get rounded. The post tops end up just under the rafter, and Neil's foam blocks go on the rafter ends once they're up. The long edges stay as sawn.</p>
+</div>
+
+<div class="part" id="screws">3. Screws (for Neil)</div>
+<p class="partsub">Every joint, the screw, how many. Exact counts, no spares.</p>
+<div class="card">
+  <table class="pl">
+    <tr><th>Joint</th><th>Screw</th><th class="r">Qty</th></tr>
+    <tr><td class="l">Fibre pad → spacer<small>Wayne, tomorrow. 2 per spacer.</small></td><td>6 × 90 <small class="chk">probably on site</small></td><td class="r num">20</td></tr>
+    <tr><td class="l">Spacer + pad → wall<small>3 per spacer. 33 into the 60 wall, well short of the inside.</small></td><td>6 × 140 <small class="buy">buy (150 at most)</small></td><td class="r num">30</td></tr>
+    <tr><td class="l">Post → spacer<small>3 per post, on the × marks.</small></td><td>HBS 6 × 160 <small class="have">on site</small></td><td class="r num">30</td></tr>
+    <tr><td class="l">Rafter → post<small>2 each end.</small></td><td>6 × 90 <small class="chk">probably on site</small></td><td class="r num">20</td></tr>
+    <tr><td class="l">Purlins → rafters<small>1 per crossing, 2 at the middle joint.</small></td><td>5 × 60 <small class="chk">check</small></td><td class="r num">36</td></tr>
+    <tr><td class="l">Diagonals → rafters<small>2 each end.</small></td><td>5 × 60 <small class="chk">check</small></td><td class="r num">8</td></tr>
+    <tr><td class="l">Tarp battens → wall<small>Spruce 4x1s, about 600 apart, front and back walls.</small></td><td>batten + 35 <small>5 × 60 for a 25 batten</small></td><td class="r num">30</td></tr>
+    <tr><td class="l">Foam blocks → rafter ends<small>1 per block.</small></td><td>block + 50 <small class="chk">check</small></td><td class="r num">10</td></tr>
+    <tr><td class="l">Corner braces<small>As you build.</small></td><td>6 × 90 or HBS <small>from the boxes</small></td><td class="r">—</td></tr>
+  </table>
+  <p class="note"><b>Totals:</b> 6 × 90: 40 · <b class="buy">6 × 140: 30</b> · HBS 6 × 160: 30 · 5 × 60: 74 · foam-block screws: 10.</p>
+  <p class="note"><b>Don't use the HBS 160s into the wall.</b> Through the 47 spacer and the 60 pad they leave 53 in a 60 wall, and the pad squashes as the screw pulls in, so the point comes out inside the plant room. Drive the 140s snug, not buried.</p>
+</div>
+
+<div class="part" id="up">4. Going up (later)</div>
+<p class="partsub">When the plant room roof panels are on. Section across the building through one frame:</p>
+<div class="card">
+<svg viewBox="-620 -2010 4740 3330" class="sec" role="img" aria-label="Section across the plant room through one frame"><rect x="0" y="-115" width="3396" height="115" class="fin"/><rect x="0" y="0" width="3396" height="60" class="clt"/><rect x="0" y="60" width="60" height="1000" class="clt"/><rect x="3336" y="60" width="60" height="1000" class="clt"/><text x="1698" y="640" class="t e" text-anchor="middle">PLANT ROOM</text><rect x="-60" y="220" width="60" height="480" class="fib"/><rect x="3396" y="220" width="60" height="480" class="fib"/><rect x="-107" y="220" width="47" height="480" class="spc"/><rect x="3456" y="220" width="47" height="480" class="spc"/><rect x="-202" y="-1525" width="95" height="2400" class="tim"/><rect x="3503" y="-875" width="95" height="1600" class="tim"/><polygon points="-302.1,-1563.9 3698.1,-858.6 3681.6,-765.0 -318.6,-1470.4" class="tim"/><polygon points="-277.5,-1559.6 -228.3,-1550.9 -223.9,-1575.5 -273.2,-1584.2" class="pur"/><polygon points="502.8,-1422.0 552.1,-1413.3 556.4,-1437.9 507.2,-1446.6" class="pur"/><polygon points="1283.2,-1284.4 1332.4,-1275.7 1336.8,-1300.3 1287.5,-1309.0" class="pur"/><polygon points="2063.6,-1146.8 2112.8,-1138.1 2117.1,-1162.7 2067.9,-1171.4" class="pur"/><polygon points="2843.9,-1009.2 2893.2,-1000.5 2897.5,-1025.2 2848.3,-1033.8" class="pur"/><polygon points="3624.3,-871.6 3673.5,-862.9 3677.9,-887.6 3628.6,-896.2" class="pur"/><circle cx="-354.6" cy="-1525.5" r="70" class="foam"/><circle cx="3734.3" cy="-804.5" r="70" class="foam"/><polyline points="5.0,985.0 -227.0,905.0 -227.0,-1450.4 -377.1,-1593.9 -242.1,-1623.9 3638.1,-918.6 3773.1,-848.6 3623.0,-725.0 3623.0,760.0 3391.0,860.0" class="tarp"/><rect x="-28" y="925" width="28" height="110" class="spr"/><rect x="3396" y="805" width="28" height="110" class="spr"/><line x1="3366" y1="-115" x2="3366" y2="-820.7" class="dim"/><text x="3316" y="-388" class="t b" text-anchor="end">700 clear</text><line x1="40" y1="-115" x2="40" y2="-1407.2" class="dim"/><text x="100" y="-681" class="t b">~1300</text><text x="1500" y="-1416" class="t b" text-anchor="middle">rafter 4062, 10°</text><text x="-600" y="-1760" class="t e">FRONT (bifold)</text><text x="4100" y="-1180" class="t e" text-anchor="end">BACK (hedge)</text><text x="-600" y="1270" class="t s">front post 2400</text><text x="4100" y="1270" class="t s" text-anchor="end">back post 1600</text></svg>
+  <div class="key"><span><i style="background:#C9A46A"></i>posts + rafter</span><span><i style="background:var(--green)"></i>purlins</span><span><i style="background:#F2D04A"></i>foam</span><span><i style="background:var(--blue)"></i>tarp</span></div>
+</div>
+<div class="card">
+  <h2>Where the frames go</h2>
+  <p>Rafter centres at <b class="num">200 · 2125 · 4050 · 6175 · 8300</b>, measured from the outside of the <b>plant end</b> (the end with the narrow window). Each post sits on the <b>plant-end side</b> of its rafter.</p>
+  <p class="note">Check the middle front post is at least 100 clear of the bifold. If it isn't, put that post on the other side of its rafter. The rafter stays at 4050 so the purlin joint still lands on it.</p>
+</div>
+<div class="card">
+  <h2>Order of work</h2>
+  <ol>
+    <li><b>Mark the walls:</b> at each post position, front and back, the spacer goes <b>220 to 700 below the top of the roof panel</b>. The top 220 stays clear for the EPDM.</li>
+    <li><b>Spacers on:</b> pad against the wall, 3 × 6×140 on the marks.</li>
+    <li><b>Posts on:</b> front posts on the bifold wall, back posts on the back wall. Roof-line mark <b>level with the top of the roof panel</b>, plumb, then 3 × HBS 160 on the × marks.</li>
+    <li><b>Rafters on</b> (stand on the roof: chest height at the front, waist height at the back). High end at the front, post zones on the posts. Set the rafter's top edge <b>level with the post top at the corner where the rafter is lowest</b>, so nothing sticks up. 2 × 6×90 each end.</li>
+    <li><b>Corner braces</b> where Neil wants them, from the rafter offcuts.</li>
+    <li><b>Purlins on top:</b> one A and one B per row, butted on the middle rafter, ends flush with the ends of the building, on the rafter marks. One 5×60 per crossing, both ends at the joint.</li>
+    <li><b>Diagonals</b> under the rafters, one in each end bay, corner to corner. Cut to fit. 2 × 5×60 each end.</li>
+    <li><b>Foam blocks</b> on all ten rafter ends.</li>
+    <li><b>Tarp</b> over, pulled tight front to back. Bottom edges battened to the front and back walls with the spruce 4x1s about 600 apart. <b>Tighten it again after the first rain.</b> Slacken or drop it before a big storm.</li>
+  </ol>
+</div>
+
+<button class="reset" id="reset" type="button">Clear all ticks</button>
+<p class="sig">Lord Claude<small>Neil's mate</small></p>
+
+</div>
+<script>
+(function(){
+  var KEY='lh-po-tarp-frame-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var all=document.querySelectorAll('[data-k]');
+  Array.prototype.forEach.call(all,function(r){
+    var k=r.getAttribute('data-k');
+    if(st[k]) r.classList.add('done');
+    r.addEventListener('click',function(){ r.classList.toggle('done'); st[k]=r.classList.contains('done'); save(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every tick on this page?')) return;
+    st={}; save(); Array.prototype.forEach.call(all,function(r){ r.classList.remove('done'); });
+  });
+})();
+</script>
+</body>
+</html>
