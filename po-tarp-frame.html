@@ -76,6 +76,13 @@
   .have{color:var(--green); font-weight:700;}
   .chk{color:var(--amber); font-weight:700;}
   .note{font-size:15px; color:var(--sec); margin-top:10px;}
+  .sj{padding:12px 0; border-top:0.5px solid var(--divider);} .sj:first-child{border-top:0; padding-top:0;}
+  .sjh{display:flex; justify-content:space-between; gap:10px; font-weight:700;}
+  .sjh .q{font-variant-numeric:tabular-nums;}
+  .sjt{font-size:16px; color:var(--sec); margin-top:3px;}
+  .sjl{margin-top:5px;} .sjl b{font-size:19px; font-variant-numeric:tabular-nums;}
+  .sjs{font-size:16px; margin-top:2px;}
+  .wall{color:var(--red); font-weight:600;}
 
   svg.sec, svg.posts{width:100%; height:auto; display:block; margin:4px 0 6px;}
   .clt{fill:#D9B98A;} .fib{fill:#B89670;} .spc{fill:#8FB3D9;} .tim{fill:#C9A46A; stroke:#8A6A3A; stroke-width:6;}
@@ -117,7 +124,7 @@
 <header>
   <h1>Plant room tarp frame</h1>
   <div class="sub">Cut list and prep, screws, and how it goes up</div>
-  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 26/10/2026 for Tuesday 27/10.</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 26/10/2026 for Tuesday 27/10 (rev 2, same evening: purlins left full length; screws by joint thickness).</div>
   <div class="jump"><a href="#rules">Before you cut</a><a href="#cuts">Cut list</a><a href="#prep">Ends + marks</a><a href="#screws">Screws</a><a href="#up">Going up</a></div>
 </header>
 
@@ -153,10 +160,9 @@
 <div class="row" data-k="c-r"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Rafters: 5 × 4062</div><div class="cut">One from each of the other 5 CRS 4x2s.</div><div class="gets"><b>Keep the 5 offcuts</b> (about 738): Neil may use them for corner braces.</div></div></div>
 <div class="row" data-k="c-s"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Spacers: 10 × 480, or close length</div><div class="cut">Leftover 2x2 from the steel-leg bracing.</div></div></div>
 <div class="row" data-k="c-f"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Fibre pads: 10 × 480 × 50</div><div class="cut">60 mm wood-fibre offcuts, the same size as a spacer.</div></div></div>
-<div class="row" data-k="c-pa"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Purlins A: 6 × 4050</div><div class="cut">CRS battens.</div></div></div>
-<div class="row" data-k="c-pb"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Purlins B: 6 × 4350</div><div class="cut">CRS battens.</div></div></div>
+<div class="row" data-k="c-p"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Purlins: 12 battens, don't cut</div><div class="cut">Leave them full length (4.8 m). Two per row, overlapped on the day.</div><div class="gets">Round the ends (section 2).</div></div></div>
 <div class="row" data-k="c-d"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Diagonals: 2 battens, don't cut</div><div class="cut">Leave them full length. They get cut to fit on the day.</div></div></div>
-  <p class="note">That uses all 8 CRS 4x2s and all 14 CRS battens.</p>
+  <p class="note">That uses all 8 CRS 4x2s. None of the 14 CRS battens get cut tomorrow.</p>
 </div>
 
 <div class="part" id="prep">2. Ends and marks</div>
@@ -167,35 +173,57 @@
 </div>
 <div class="card">
   <h2>Prep</h2>
-<div class="row" data-k="p-round"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Round the purlin ends</div><div class="cut">With the sander, round all four corners at <b>both ends of every purlin</b>. The tarp folds over them at the ends of the building.</div></div></div>
+<div class="row" data-k="p-round"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Round the purlin ends</div><div class="cut">With the sander, round all four corners at <b>both ends of all 12 purlins</b>. The tarp folds over them at the ends of the building.</div></div></div>
 <div class="row" data-k="p-fm"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the front posts</div><div class="cut">From the top: roof line <b>1525</b>, spacer <b>1745 to 2225</b>, screw crosses at <b>1865 · 2025 · 2185</b>.</div></div></div>
 <div class="row" data-k="p-bm"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the back posts</div><div class="cut">From the top: roof line <b>875</b>, spacer <b>1095 to 1575</b>, screw crosses at <b>1215 · 1375 · 1535</b>.</div><div class="gets">Post shorter than 1575? The spacer just stops at the bottom of the post. Leave off any cross that doesn't fit.</div></div></div>
 <div class="row" data-k="p-pad"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Fibre pad on every spacer</div><div class="cut">Two 6×90 screws from the fibre side, about 100 in from each end, heads sunk into the fibre.</div></div></div>
 <div class="row" data-k="p-sm"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the spacers</div><div class="cut">On the face <b>without</b> the pad, mark the wall screws at <b>40 · 200 · 360</b> from the top.</div></div></div>
 <div class="row" data-k="p-rz"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the rafters: post zones</div><div class="cut">Square lines at <b>100 and 200</b> in from <b>both</b> ends. The posts go between them.</div></div></div>
 <div class="row" data-k="p-rp"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Mark the rafters: purlin rows</div><div class="cut">Along one edge, from either end: <b>50 · 840 · 1635 · 2425 · 3220 · 4010</b>. Write TOP on that edge.</div></div></div>
-<div class="row" data-k="p-pd"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Pilot holes in the purlins</div><div class="cut">3 mm, 12 in from each end, in the middle of the batten.</div></div></div>
 <div class="row" data-k="p-stack"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Stack it as a kit</div><div class="cut">Front posts, back posts, rafters, spacers, purlins A, purlins B and the 2 diagonals, together and off the ground.</div></div></div>
   <p class="note">Rafters and posts don't get rounded. The post tops end up just under the rafter, and Neil's foam blocks go on the rafter ends once they're up. The long edges stay as sawn.</p>
 </div>
 
 <div class="part" id="screws">3. Screws (for Neil)</div>
-<p class="partsub">Every joint, the screw, how many. Exact counts, no spares.</p>
+<p class="partsub">For each joint: what the screw goes through, what it goes into, and the lengths that work, so you can pick from what you've got. The bottom of the range is enough grip; the top keeps the point in the timber. Exact counts, no spares.</p>
 <div class="card">
-  <table class="pl">
-    <tr><th>Joint</th><th>Screw</th><th class="r">Qty</th></tr>
-    <tr><td class="l">Fibre pad → spacer<small>Wayne, tomorrow. 2 per spacer.</small></td><td>6 × 90 <small class="chk">probably on site</small></td><td class="r num">20</td></tr>
-    <tr><td class="l">Spacer + pad → wall<small>3 per spacer. 33 into the 60 wall, well short of the inside.</small></td><td>6 × 140 <small class="buy">buy (150 at most)</small></td><td class="r num">30</td></tr>
-    <tr><td class="l">Post → spacer<small>3 per post, on the × marks.</small></td><td>HBS 6 × 160 <small class="have">on site</small></td><td class="r num">30</td></tr>
-    <tr><td class="l">Rafter → post<small>2 each end.</small></td><td>6 × 90 <small class="chk">probably on site</small></td><td class="r num">20</td></tr>
-    <tr><td class="l">Purlins → rafters<small>1 per crossing, 2 at the middle joint.</small></td><td>5 × 60 <small class="chk">check</small></td><td class="r num">36</td></tr>
-    <tr><td class="l">Diagonals → rafters<small>2 each end.</small></td><td>5 × 60 <small class="chk">check</small></td><td class="r num">8</td></tr>
-    <tr><td class="l">Tarp battens → wall<small>Spruce 4x1s, about 600 apart, front and back walls.</small></td><td>batten + 35 <small>5 × 60 for a 25 batten</small></td><td class="r num">30</td></tr>
-    <tr><td class="l">Foam blocks → rafter ends<small>1 per block.</small></td><td>block + 50 <small class="chk">check</small></td><td class="r num">10</td></tr>
-    <tr><td class="l">Corner braces<small>As you build.</small></td><td>6 × 90 or HBS <small>from the boxes</small></td><td class="r">—</td></tr>
-  </table>
-  <p class="note"><b>Totals:</b> 6 × 90: 40 · <b class="buy">6 × 140: 30</b> · HBS 6 × 160: 30 · 5 × 60: 74 · foam-block screws: 10.</p>
-  <p class="note"><b>Don't use the HBS 160s into the wall.</b> Through the 47 spacer and the 60 pad they leave 53 in a 60 wall, and the pad squashes as the screw pulls in, so the point comes out inside the plant room. Drive the 140s snug, not buried.</p>
+    <div class="sj"><div class="sjh"><span>Fibre pad → spacer</span><span class="q">20</span></div>
+      <div class="sjt">Wayne, tomorrow. 2 per spacer. Through the <b>60 pad</b>, into the <b>47 spacer</b>.</div>
+      <div class="sjl">Length that works: <b>80 – 100</b></div>
+      <div class="sjs">6 × 90</div></div>
+    <div class="sj"><div class="sjh"><span>Spacer + pad → wall</span><span class="q">30</span></div>
+      <div class="sjt">3 per spacer. Through the <b>47 spacer + 60 pad</b> (107), into the <b>60 wall</b>. <span class="wall">Point must stay inside the 60 wall.</span></div>
+      <div class="sjl">Length that works: <b>140 – 150</b></div>
+      <div class="sjs">6 × 140 or 150. <b>Or your HBS 6 × 160, driven snug, not pulled in:</b> 53 into the wall, 7 short of the inside face before the pad squashes. Your call.</div></div>
+    <div class="sj"><div class="sjh"><span>Post → spacer</span><span class="q">30</span></div>
+      <div class="sjt">3 per post, on the × marks. Through the <b>95 post</b>, into the <b>47 spacer</b> (the pad and the wall are behind it).</div>
+      <div class="sjl">Length that works: <b>130 – 245</b></div>
+      <div class="sjs">HBS 6 × 160. Anything longer just carries on into the pad and wall.</div></div>
+    <div class="sj"><div class="sjh"><span>Rafter → post</span><span class="q">20</span></div>
+      <div class="sjt">2 each end. Through the <b>47 rafter</b>, into the <b>47 post</b> (side by side).</div>
+      <div class="sjl">Length that works: <b>75 – 90</b></div>
+      <div class="sjs">6 × 90. No longer: the far face of the post is at 94.</div></div>
+    <div class="sj"><div class="sjh"><span>Purlins → rafters</span><span class="q">36</span></div>
+      <div class="sjt">3 per length, one at each rafter it crosses. Through the <b>25 batten</b>, down into the <b>95-deep rafter</b>.</div>
+      <div class="sjl">Length that works: <b>50 – 110</b></div>
+      <div class="sjs">6 × 90 works.</div></div>
+    <div class="sj"><div class="sjh"><span>Diagonals → rafters</span><span class="q">8</span></div>
+      <div class="sjt">2 each end. Through the <b>25 batten</b>, up into the <b>95-deep rafter</b>.</div>
+      <div class="sjl">Length that works: <b>50 – 110</b></div>
+      <div class="sjs">6 × 90 works.</div></div>
+    <div class="sj"><div class="sjh"><span>Tarp battens → wall</span><span class="q">30</span></div>
+      <div class="sjt">About 600 apart, front and back walls. Through the <b>spruce batten</b> (measure it: probably about 20) and the tarp, into the <b>60 wall</b>. <span class="wall">Point must stay inside the 60 wall.</span></div>
+      <div class="sjl">Length that works: <b>batten + 30 to batten + 45</b></div>
+      <div class="sjs">50 – 65 for a 20 batten. <b>Not the 6 × 90s:</b> they'd come out inside.</div></div>
+    <div class="sj"><div class="sjh"><span>Foam blocks → rafter ends</span><span class="q">10</span></div>
+      <div class="sjt">1 per block. Through the <b>block</b> (measure it), into the <b>rafter end grain</b>.</div>
+      <div class="sjl">Length that works: <b>block + 50 or longer</b></div>
+      <div class="sjs">Nothing to come out of: the rafter is 4 m long.</div></div>
+    <div class="sj"><div class="sjh"><span>Corner braces</span><span class="q">—</span></div>
+      <div class="sjt">As you build. Through the <b>47 brace</b>, into the <b>47 post or rafter</b>.</div>
+      <div class="sjl">Length that works: <b>75 – 90</b></div>
+      <div class="sjs">6 × 90.</div></div>
+  <p class="note"><b>From stock:</b> 6 × 90s cover <b>84</b> (20 pads, 20 rafters, 36 purlins, 8 diagonals) plus the braces. HBS 6 × 160: <b>30</b> for the posts, <b>60</b> if they do the wall as well. <b>Still to find:</b> 30 for the tarp battens (about 50–65) and 10 for the foam blocks.</p>
 </div>
 
 <div class="part" id="up">4. Going up (later)</div>
@@ -207,18 +235,18 @@
 <div class="card">
   <h2>Where the frames go</h2>
   <p>Rafter centres at <b class="num">200 · 2125 · 4050 · 6175 · 8300</b>, measured from the outside of the <b>plant end</b> (the end with the narrow window). Each post sits on the <b>plant-end side</b> of its rafter.</p>
-  <p class="note">Check the middle front post is at least 100 clear of the bifold. If it isn't, put that post on the other side of its rafter. The rafter stays at 4050 so the purlin joint still lands on it.</p>
+  <p class="note">These aren't critical. Check the middle front post is at least 100 clear of the bifold; if it isn't, slide that frame along a bit. Just keep the middle rafter inside the purlin overlap (3600 to 4800).</p>
 </div>
 <div class="card">
   <h2>Order of work</h2>
   <ol>
     <li><b>Mark the walls:</b> at each post position, front and back, the spacer goes <b>220 to 700 below the top of the roof panel</b>. The top 220 stays clear for the EPDM.</li>
-    <li><b>Spacers on:</b> pad against the wall, 3 × 6×140 on the marks.</li>
+    <li><b>Spacers on:</b> pad against the wall, 3 wall screws on the marks (140–150, or the HBS 160s driven snug).</li>
     <li><b>Posts on:</b> front posts on the bifold wall, back posts on the back wall. Roof-line mark <b>level with the top of the roof panel</b>, plumb, then 3 × HBS 160 on the × marks.</li>
     <li><b>Rafters on</b> (stand on the roof: chest height at the front, waist height at the back). High end at the front, post zones on the posts. Set the rafter's top edge <b>level with the post top at the corner where the rafter is lowest</b>, so nothing sticks up. 2 × 6×90 each end.</li>
     <li><b>Corner braces</b> where Neil wants them, from the rafter offcuts.</li>
-    <li><b>Purlins on top:</b> one A and one B per row, butted on the middle rafter, ends flush with the ends of the building, on the rafter marks. One 5×60 per crossing, both ends at the joint.</li>
-    <li><b>Diagonals</b> under the rafters, one in each end bay, corner to corner. Cut to fit. 2 × 5×60 each end.</li>
+    <li><b>Purlins on top:</b> two full lengths per row, one flush with each end of the building, on the rafter marks. They <b>overlap side by side for about 1.2 m</b> over the middle rafter. Both sit on the rafter, because it runs under both. Put the second length on the side towards the middle of the rafter. One screw at every rafter each length crosses (3 per length).</li>
+    <li><b>Diagonals</b> under the rafters, one in each end bay, corner to corner. Cut to fit. 2 screws each end.</li>
     <li><b>Foam blocks</b> on all ten rafter ends.</li>
     <li><b>Tarp</b> over, pulled tight front to back. Bottom edges battened to the front and back walls with the spruce 4x1s about 600 apart. <b>Tighten it again after the first rain.</b> Slacken or drop it before a big storm.</li>
   </ol>
