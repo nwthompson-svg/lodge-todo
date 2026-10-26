@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Plant room frames: screws</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey-soft:#EFEDE8; --blue:#3A6FB0; --red:#C0392B;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey-soft:#2C2E31; --blue:#7FA8E0; --red:#E57364;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:18px; line-height:1.4;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .jump{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .jump a{font-size:16px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border-radius:20px; padding:7px 14px; text-decoration:none;}
+  .part{font-size:26px; font-weight:700; letter-spacing:-0.3px; margin:34px 4px 4px;}
+  .partsub{font-size:17px; color:var(--sec); margin:0 4px 6px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 14px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 10px; padding-left:22px;} .card li{margin:5px 0;}
+  .rules{background:var(--amber-soft); border-color:transparent;}
+  .rules h2{color:var(--amber);}
+  .num{font-variant-numeric:tabular-nums; font-weight:700;}
+  .hero{display:flex; gap:10px; margin:6px 0 2px;}
+  .hero div{flex:1; background:var(--grey-soft); border-radius:12px; padding:10px 12px;}
+  .hero b{display:block; font-size:28px; font-variant-numeric:tabular-nums;}
+  .hero span{font-size:15px; color:var(--sec);}
+  .row{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:0.5px solid var(--divider); cursor:pointer;}
+  .row:first-of-type{border-top:0;}
+  .tick{width:26px; height:26px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    border:2px solid var(--muted); display:flex; align-items:center; justify-content:center;}
+  .tick svg{width:14px; height:14px; opacity:0;}
+  .row.done .tick{background:var(--green); border-color:var(--green);}
+  .row.done .tick svg{opacity:1;}
+  .row.done .what{color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px;}
+  .what{flex:1; min-width:0;}
+  .what .hd{font-weight:700;}
+  .what .cut{margin-top:2px;}
+  .what .gets{color:var(--sec); font-size:16px; margin-top:3px;}
+  .pl{width:100%; border-collapse:collapse; font-size:16px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:8px 6px 8px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right;}
+  .pl td:last-child, .pl th:last-child{padding-right:0;}
+  .pl td.l{font-weight:700;}
+  .pl td small{display:block; font-weight:400; color:var(--sec); font-size:13px;}
+  .pl td.pos{font-variant-numeric:tabular-nums; font-weight:700; color:var(--green);}
+  .pl td.pos span{white-space:nowrap;} .pl td.sc{white-space:nowrap;}
+  .tf{font-size:8px; fill:#20211F;}
+  .pl tr[data-k]{cursor:pointer;}
+  .pl tr.done td{color:var(--muted); text-decoration:line-through;}
+  .pl tr.done td.l::before{content:"\2713  "; color:var(--green);}
+  .note{font-size:15px; color:var(--sec); margin-top:10px;}
+  .chg{display:inline-block; font-size:13px; font-weight:700; color:var(--amber); background:var(--amber-soft);
+    border-radius:10px; padding:1px 8px; margin-left:4px; vertical-align:1px;}
+  svg.el{display:block; margin:6px auto 4px; height:330px; width:auto; max-width:100%;}
+  svg.sec{display:block; width:100%; height:auto; margin:4px 0 6px;}
+  .fr{fill:none; stroke:var(--ink); stroke-width:22;}
+  .glz{fill:var(--grey-soft);}
+  .s60{fill:var(--green);} .s70{fill:var(--blue);} .st{fill:var(--card); stroke:var(--amber); stroke-width:14;}
+  .pt{font-size:118px; fill:var(--sec); font-variant-numeric:tabular-nums;}
+  .ed{font-size:118px; fill:var(--ink); font-weight:700;}
+  .key{display:flex; gap:14px; flex-wrap:wrap; font-size:15px; color:var(--sec);}
+  .key i{display:inline-block; width:13px; height:13px; border-radius:50%; vertical-align:-1px; margin-right:5px;}
+  .cltf{fill:#D9B98A;} .ply{fill:#C69C5D;} .tb{fill:#7FB3E0;} .jst{fill:#C9A46A; opacity:.55;}
+  .frm{fill:var(--grey-soft); stroke:var(--ink); stroke-width:1.2;}
+  .ln{stroke:var(--sec); stroke-width:0.8; stroke-dasharray:3 2;}
+  .dm{stroke:var(--ink); stroke-width:0.7;}
+  .tx{font-size:9px; fill:var(--ink);} .txs{font-size:8px; fill:var(--sec);} .txb{font-size:10px; font-weight:700; fill:var(--ink);}
+  .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
+  .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
+  .sig small{display:block; font-size:14px; color:var(--muted);}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+
+<div class="wrap">
+
+<header>
+  <h1>Plant room frames: screws</h1>
+  <div class="sub">What to get out, and where every screw goes</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 26/10/2026.</div>
+  <div class="jump"><a href="#getout">Get out</a><a href="#method">Method</a><a href="#small">Small window</a><a href="#big">Big window</a><a href="#bifold">Bifold</a></div>
+</header>
+
+<div class="card">
+  <h2>The job</h2>
+  <p>Drill and screw the three plant room frames into the CLT: the <b>small window</b> at the plant end, the <b>big window</b> at the office end and the <b>bifold door</b> in the front wall.</p>
+  <p>It's the <b>same method and the same positions as the Lodge</b>. There's one change: <b>the bifold head takes 60s, not 70s</b>.</p>
+  <div class="hero">
+    <div><b>37</b><span>4.5 × 60</span></div>
+    <div><b>13</b><span>4.5 × 70</span></div>
+    <div><b>7</b><span>3.5 × 32 self-tap</span></div>
+  </div>
+</div>
+
+<div class="card rules" id="getout">
+  <h2>Get out first</h2>
+  <div class="row" data-k="g60"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">37 × 4.5 × 60</div><div class="cut">A4 stainless pan-head Torx T25 (Swiftfix box).</div><div class="gets">On paper the box has about 35 left, which is 2 short. Count them. If you're short, a 70 can go in a window jamb (2 places), but never in a head. Or order more of the same.</div></div></div>
+  <div class="row" data-k="g70"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">13 × 4.5 × 70</div><div class="cut">Same type. The bifold jambs and base.</div><div class="gets">Plenty left in the box (about 133).</div></div></div>
+  <div class="row" data-k="g32"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">7 × 3.5 × 32 self-tappers</div><div class="cut">Pozi. Both windows, frame into the cill.</div><div class="gets">Plenty left (about 87).</div></div></div>
+  <div class="row" data-k="gdr"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Drills and bits</div><div class="cut">9.5 step drill · 5.0 cobalt · 3.0 long-series · long T25 bit (50–75) · wax.</div></div></div>
+  <div class="row" data-k="gpk"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Packers</div><div class="cut">FUX packers 1–6 mm, plus the black caps for the access holes later.</div></div></div>
+</div>
+
+<div class="card" id="method">
+  <h2>Method: same on every frame</h2>
+  <ul>
+    <li><b>Positions:</b> first screw <b>150</b> from each corner, the rest evenly spaced, never more than 600 apart. The numbers are measured <b>from the corner</b>: jambs up from the bottom, head and base from the left, looking from inside.</li>
+    <li><b>Access hole:</b> <b>9.5 step drill</b> through the face of the frame. The pan head goes in and bears on the <b>inner</b> wall of the frame. A black cap covers the hole later. Use the long T25 bit.</li>
+    <li><b>5.0 clearance</b> through the aluminium <b>and the plastic insert</b> in the middle of the frame (the frame's own thermal break). The thread must not bite either. No countersinking anywhere.</li>
+    <li><b>Pilots:</b> none into the CLT (wax the screw, drive on the clutch). <b>3.0 long-series into ply only</b>, which means the base screws. Set a depth stop on the 5.0 at the frame plus the 25 thermal-break strip under it.</li>
+    <li>Wax every thread. <b>Snug, never cranked.</b> The packers set the height; the screws only hold it.</li>
+    <li>Seal any hole that goes through the frame's plastic insert. Keep 20 off any cut edge of the CLT.</li>
+  </ul>
+</div>
+
+<div class="card rules">
+  <h2>Plant room vs the Lodge</h2>
+  <ul>
+    <li><b>Bifold head: 4.5 × 60, not 70.</b> The plant room roof is only <b>60</b> thick (the Lodge roof is 100). A 70 can come out through the top of the roof.</li>
+    <li>Window heads stay 60s. They stay inside the roof.</li>
+    <li>Jambs and bases are the same as the Lodge. But the frames sit 40 into the wall here (47.5 on the Lodge), so every jamb and head screw is <b>7.5 nearer the outside face</b> of the CLT. On the first hole of each edge, check it's at least 20 in from the outside face.</li>
+    <li><b>Small window:</b> rip Wall 7 and cut the floor slot 13 longer before the walls go up (see the strips page). Otherwise the 932 won't go in.</li>
+  </ul>
+</div>
+
+<div class="part" id="small">Small window (932)</div>
+<p class="partsub">Plant end, left gable. Frame 932 wide × 2459 high. <b>19 screws.</b> Viewed from inside.</p>
+<div class="card">
+  <svg class="el" viewBox="-470 -300 1542 3089" role="img" aria-label="Small window (932) fixing positions, viewed from inside"><rect x="60" y="60" width="812" height="2339" class="glz"/><rect x="0" y="0" width="932" height="2459" class="fr"/><circle cx="0" cy="2309" r="34" class="s60"/><circle cx="932" cy="2309" r="34" class="s60"/><text x="-70" y="2349" class="pt" text-anchor="end">150</text><circle cx="0" cy="1769" r="34" class="s60"/><circle cx="932" cy="1769" r="34" class="s60"/><text x="-70" y="1809" class="pt" text-anchor="end">690</text><circle cx="0" cy="1229" r="34" class="s60"/><circle cx="932" cy="1229" r="34" class="s60"/><text x="-70" y="1269" class="pt" text-anchor="end">1230</text><circle cx="0" cy="690" r="34" class="s60"/><circle cx="932" cy="690" r="34" class="s60"/><text x="-70" y="730" class="pt" text-anchor="end">1769</text><circle cx="0" cy="150" r="34" class="s60"/><circle cx="932" cy="150" r="34" class="s60"/><text x="-70" y="190" class="pt" text-anchor="end">2309</text><circle cx="150" cy="0" r="34" class="s60"/><text x="150" y="-80" class="pt" text-anchor="middle">150</text><circle cx="466" cy="0" r="34" class="s60"/><text x="466" y="-80" class="pt" text-anchor="middle">466</text><circle cx="782" cy="0" r="34" class="s60"/><text x="782" y="-80" class="pt" text-anchor="middle">782</text><circle cx="150" cy="2459" r="34" class="s60"/><text x="150" y="2629" class="pt" text-anchor="middle">150</text><circle cx="190" cy="2389" r="26" class="st"/><circle cx="466" cy="2459" r="34" class="s60"/><text x="466" y="2629" class="pt" text-anchor="middle">466</text><circle cx="506" cy="2389" r="26" class="st"/><circle cx="782" cy="2459" r="34" class="s60"/><text x="782" y="2629" class="pt" text-anchor="middle">782</text><circle cx="822" cy="2389" r="26" class="st"/><text x="466.0" y="-200" class="ed" text-anchor="middle">HEAD</text><text x="466.0" y="2759" class="ed" text-anchor="middle">BASE</text></svg>
+  <div class="key"><span><i style="background:var(--green)"></i>4.5 × 60</span><span><i style="background:var(--blue)"></i>4.5 × 70</span><span><i style="background:var(--card);border:2px solid var(--amber)"></i>3.5 × 32 self-tap</span></div>
+</div>
+<div class="card">
+  <h2>Positions from the corner (mm)</h2>
+  <table class="pl">
+    <tr><th>Edge</th><th class="r">No.</th><th>Screw</th><th>Positions</th></tr>
+    <tr data-k="small-jamb"><td class="l">Each jamb<small>Up from the bottom.</small></td><td class="r num">5</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>690 ·</span> <span>1230 ·</span> <span>1769 ·</span> <span>2309</span></td></tr><tr data-k="small-head"><td class="l">Head<small>From the left.</small></td><td class="r num">3</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>466 ·</span> <span>782</span></td></tr><tr data-k="small-base"><td class="l">Base<small>From the left. Down through the 25 thermal-break strip into the ply flap. 3.0 pilot into the ply.</small></td><td class="r num">3</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>466 ·</span> <span>782</span></td></tr><tr data-k="small-st"><td class="l">Self-tappers<small>Frame into the cill, on the outside half. 40 along from each base screw.</small></td><td class="r num">3</td><td class="sc">3.5 × 32 self-tap</td><td class="pos"><span>190 ·</span> <span>506 ·</span> <span>822</span></td></tr>
+  </table>
+  <p class="note">Jambs: 540 apart. Head and base: 316 apart. Tap a row when that edge is done.</p>
+</div>
+<div class="part" id="big">Big window (1552)</div>
+<p class="partsub">Office end, right gable. Frame 1552 wide × 2459 high. <b>22 screws.</b> Viewed from inside.</p>
+<div class="card">
+  <svg class="el" viewBox="-470 -300 2162 3089" role="img" aria-label="Big window (1552) fixing positions, viewed from inside"><rect x="60" y="60" width="1432" height="2339" class="glz"/><rect x="0" y="0" width="1552" height="2459" class="fr"/><circle cx="0" cy="2309" r="34" class="s60"/><circle cx="1552" cy="2309" r="34" class="s60"/><text x="-70" y="2349" class="pt" text-anchor="end">150</text><circle cx="0" cy="1769" r="34" class="s60"/><circle cx="1552" cy="1769" r="34" class="s60"/><text x="-70" y="1809" class="pt" text-anchor="end">690</text><circle cx="0" cy="1229" r="34" class="s60"/><circle cx="1552" cy="1229" r="34" class="s60"/><text x="-70" y="1269" class="pt" text-anchor="end">1230</text><circle cx="0" cy="690" r="34" class="s60"/><circle cx="1552" cy="690" r="34" class="s60"/><text x="-70" y="730" class="pt" text-anchor="end">1769</text><circle cx="0" cy="150" r="34" class="s60"/><circle cx="1552" cy="150" r="34" class="s60"/><text x="-70" y="190" class="pt" text-anchor="end">2309</text><circle cx="150" cy="0" r="34" class="s60"/><text x="150" y="-80" class="pt" text-anchor="middle">150</text><circle cx="567" cy="0" r="34" class="s60"/><text x="567" y="-80" class="pt" text-anchor="middle">567</text><circle cx="985" cy="0" r="34" class="s60"/><text x="985" y="-80" class="pt" text-anchor="middle">985</text><circle cx="1402" cy="0" r="34" class="s60"/><text x="1402" y="-80" class="pt" text-anchor="middle">1402</text><circle cx="150" cy="2459" r="34" class="s60"/><text x="150" y="2629" class="pt" text-anchor="middle">150</text><circle cx="190" cy="2389" r="26" class="st"/><circle cx="567" cy="2459" r="34" class="s60"/><text x="567" y="2629" class="pt" text-anchor="middle">567</text><circle cx="607" cy="2389" r="26" class="st"/><circle cx="985" cy="2459" r="34" class="s60"/><text x="985" y="2629" class="pt" text-anchor="middle">985</text><circle cx="1025" cy="2389" r="26" class="st"/><circle cx="1402" cy="2459" r="34" class="s60"/><text x="1402" y="2629" class="pt" text-anchor="middle">1402</text><circle cx="1442" cy="2389" r="26" class="st"/><text x="776.0" y="-200" class="ed" text-anchor="middle">HEAD</text><text x="776.0" y="2759" class="ed" text-anchor="middle">BASE</text></svg>
+  <div class="key"><span><i style="background:var(--green)"></i>4.5 × 60</span><span><i style="background:var(--blue)"></i>4.5 × 70</span><span><i style="background:var(--card);border:2px solid var(--amber)"></i>3.5 × 32 self-tap</span></div>
+</div>
+<div class="card">
+  <h2>Positions from the corner (mm)</h2>
+  <table class="pl">
+    <tr><th>Edge</th><th class="r">No.</th><th>Screw</th><th>Positions</th></tr>
+    <tr data-k="big-jamb"><td class="l">Each jamb<small>Up from the bottom.</small></td><td class="r num">5</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>690 ·</span> <span>1230 ·</span> <span>1769 ·</span> <span>2309</span></td></tr><tr data-k="big-head"><td class="l">Head<small>From the left.</small></td><td class="r num">4</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>567 ·</span> <span>985 ·</span> <span>1402</span></td></tr><tr data-k="big-base"><td class="l">Base<small>From the left. Down through the 25 thermal-break strip into the ply flap. 3.0 pilot into the ply.</small></td><td class="r num">4</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>567 ·</span> <span>985 ·</span> <span>1402</span></td></tr><tr data-k="big-st"><td class="l">Self-tappers<small>Frame into the cill, on the outside half. 40 along from each base screw.</small></td><td class="r num">4</td><td class="sc">3.5 × 32 self-tap</td><td class="pos"><span>190 ·</span> <span>607 ·</span> <span>1025 ·</span> <span>1442</span></td></tr>
+  </table>
+  <p class="note">Jambs: 540 apart. Head and base: 417 apart. Tap a row when that edge is done.</p>
+</div>
+<div class="part" id="bifold">Bifold door (1263)</div>
+<p class="partsub">Front wall, office. Frame 1263 wide × 2541 high. <b>16 screws.</b> Viewed from inside.</p>
+<div class="card">
+  <svg class="el" viewBox="-470 -300 1873 3171" role="img" aria-label="Bifold door (1263) fixing positions, viewed from inside"><rect x="60" y="60" width="1143" height="2421" class="glz"/><rect x="0" y="0" width="1263" height="2541" class="fr"/><circle cx="0" cy="2391" r="34" class="s70"/><circle cx="1263" cy="2391" r="34" class="s70"/><text x="-70" y="2431" class="pt" text-anchor="end">150</text><circle cx="0" cy="1831" r="34" class="s70"/><circle cx="1263" cy="1831" r="34" class="s70"/><text x="-70" y="1871" class="pt" text-anchor="end">710</text><circle cx="0" cy="1270" r="34" class="s70"/><circle cx="1263" cy="1270" r="34" class="s70"/><text x="-70" y="1310" class="pt" text-anchor="end">1271</text><circle cx="0" cy="710" r="34" class="s70"/><circle cx="1263" cy="710" r="34" class="s70"/><text x="-70" y="750" class="pt" text-anchor="end">1831</text><circle cx="0" cy="150" r="34" class="s70"/><circle cx="1263" cy="150" r="34" class="s70"/><text x="-70" y="190" class="pt" text-anchor="end">2391</text><circle cx="150" cy="0" r="34" class="s60"/><text x="150" y="-80" class="pt" text-anchor="middle">150</text><circle cx="632" cy="0" r="34" class="s60"/><text x="632" y="-80" class="pt" text-anchor="middle">632</text><circle cx="1113" cy="0" r="34" class="s60"/><text x="1113" y="-80" class="pt" text-anchor="middle">1113</text><circle cx="150" cy="2541" r="34" class="s70"/><text x="150" y="2711" class="pt" text-anchor="middle">150</text><circle cx="632" cy="2541" r="34" class="s70"/><text x="632" y="2711" class="pt" text-anchor="middle">632</text><circle cx="1113" cy="2541" r="34" class="s70"/><text x="1113" y="2711" class="pt" text-anchor="middle">1113</text><text x="631.5" y="-200" class="ed" text-anchor="middle">HEAD</text><text x="631.5" y="2841" class="ed" text-anchor="middle">BASE</text></svg>
+  <div class="key"><span><i style="background:var(--green)"></i>4.5 × 60</span><span><i style="background:var(--blue)"></i>4.5 × 70</span></div>
+</div>
+<div class="card">
+  <h2>Positions from the corner (mm)</h2>
+  <table class="pl">
+    <tr><th>Edge</th><th class="r">No.</th><th>Screw</th><th>Positions</th></tr>
+    <tr data-k="bifold-jamb"><td class="l">Each jamb<small>Up from the bottom.</small></td><td class="r num">5</td><td class="sc">4.5 × 70</td><td class="pos"><span>150 ·</span> <span>710 ·</span> <span>1271 ·</span> <span>1831 ·</span> <span>2391</span></td></tr><tr data-k="bifold-head"><td class="l">Head<span class="chg">not 70</span><small>From the left.</small></td><td class="r num">3</td><td class="sc">4.5 × 60</td><td class="pos"><span>150 ·</span> <span>632 ·</span> <span>1113</span></td></tr><tr data-k="bifold-base"><td class="l">Base<small>From the left. Down through the thermal-break strip into the ply ledge. 3.0 pilot into the ply.</small></td><td class="r num">3</td><td class="sc">4.5 × 70</td><td class="pos"><span>150 ·</span> <span>632 ·</span> <span>1113</span></td></tr>
+  </table>
+  <p class="note">Jambs: 560 apart. Head and base: 482 apart. Tap a row when that edge is done.</p>
+</div>
+
+<button class="reset" id="reset" type="button">Clear all ticks</button>
+<p class="sig">Lord Claude<small>Neil's mate</small></p>
+
+</div>
+<script>
+(function(){
+  var KEY='lh-po-screws-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var all=document.querySelectorAll('[data-k]');
+  Array.prototype.forEach.call(all,function(r){
+    var k=r.getAttribute('data-k');
+    if(st[k]) r.classList.add('done');
+    r.addEventListener('click',function(){ r.classList.toggle('done'); st[k]=r.classList.contains('done'); save(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every tick on this page?')) return;
+    st={}; save(); Array.prototype.forEach.call(all,function(r){ r.classList.remove('done'); });
+  });
+})();
+</script>
+</body>
+</html>

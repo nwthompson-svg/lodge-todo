@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Plant room frames: strips</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey-soft:#EFEDE8; --blue:#3A6FB0; --red:#C0392B;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey-soft:#2C2E31; --blue:#7FA8E0; --red:#E57364;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:18px; line-height:1.4;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .jump{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .jump a{font-size:16px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border-radius:20px; padding:7px 14px; text-decoration:none;}
+  .part{font-size:26px; font-weight:700; letter-spacing:-0.3px; margin:34px 4px 4px;}
+  .partsub{font-size:17px; color:var(--sec); margin:0 4px 6px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 14px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 10px; padding-left:22px;} .card li{margin:5px 0;}
+  .rules{background:var(--amber-soft); border-color:transparent;}
+  .rules h2{color:var(--amber);}
+  .num{font-variant-numeric:tabular-nums; font-weight:700;}
+  .hero{display:flex; gap:10px; margin:6px 0 2px;}
+  .hero div{flex:1; background:var(--grey-soft); border-radius:12px; padding:10px 12px;}
+  .hero b{display:block; font-size:28px; font-variant-numeric:tabular-nums;}
+  .hero span{font-size:15px; color:var(--sec);}
+  .row{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:0.5px solid var(--divider); cursor:pointer;}
+  .row:first-of-type{border-top:0;}
+  .tick{width:26px; height:26px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    border:2px solid var(--muted); display:flex; align-items:center; justify-content:center;}
+  .tick svg{width:14px; height:14px; opacity:0;}
+  .row.done .tick{background:var(--green); border-color:var(--green);}
+  .row.done .tick svg{opacity:1;}
+  .row.done .what{color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px;}
+  .what{flex:1; min-width:0;}
+  .what .hd{font-weight:700;}
+  .what .cut{margin-top:2px;}
+  .what .gets{color:var(--sec); font-size:16px; margin-top:3px;}
+  .pl{width:100%; border-collapse:collapse; font-size:16px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:8px 6px 8px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right;}
+  .pl td:last-child, .pl th:last-child{padding-right:0;}
+  .pl td.l{font-weight:700;}
+  .pl td small{display:block; font-weight:400; color:var(--sec); font-size:13px;}
+  .pl td.pos{font-variant-numeric:tabular-nums; font-weight:700; color:var(--green);}
+  .pl td.pos span{white-space:nowrap;} .pl td.sc{white-space:nowrap;}
+  .tf{font-size:8px; fill:#20211F;}
+  .pl tr[data-k]{cursor:pointer;}
+  .pl tr.done td{color:var(--muted); text-decoration:line-through;}
+  .pl tr.done td.l::before{content:"\2713  "; color:var(--green);}
+  .note{font-size:15px; color:var(--sec); margin-top:10px;}
+  .chg{display:inline-block; font-size:13px; font-weight:700; color:var(--amber); background:var(--amber-soft);
+    border-radius:10px; padding:1px 8px; margin-left:4px; vertical-align:1px;}
+  svg.el{display:block; margin:6px auto 4px; height:330px; width:auto; max-width:100%;}
+  svg.sec{display:block; width:100%; height:auto; margin:4px 0 6px;}
+  .fr{fill:none; stroke:var(--ink); stroke-width:22;}
+  .glz{fill:var(--grey-soft);}
+  .s60{fill:var(--green);} .s70{fill:var(--blue);} .st{fill:var(--card); stroke:var(--amber); stroke-width:14;}
+  .pt{font-size:118px; fill:var(--sec); font-variant-numeric:tabular-nums;}
+  .ed{font-size:118px; fill:var(--ink); font-weight:700;}
+  .key{display:flex; gap:14px; flex-wrap:wrap; font-size:15px; color:var(--sec);}
+  .key i{display:inline-block; width:13px; height:13px; border-radius:50%; vertical-align:-1px; margin-right:5px;}
+  .cltf{fill:#D9B98A;} .ply{fill:#C69C5D;} .tb{fill:#7FB3E0;} .jst{fill:#C9A46A; opacity:.55;}
+  .frm{fill:var(--grey-soft); stroke:var(--ink); stroke-width:1.2;}
+  .ln{stroke:var(--sec); stroke-width:0.8; stroke-dasharray:3 2;}
+  .dm{stroke:var(--ink); stroke-width:0.7;}
+  .tx{font-size:9px; fill:var(--ink);} .txs{font-size:8px; fill:var(--sec);} .txb{font-size:10px; font-weight:700; fill:var(--ink);}
+  .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
+  .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
+  .sig small{display:block; font-size:14px; color:var(--muted);}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+
+<div class="wrap">
+
+<header>
+  <h1>Plant room frames: strips</h1>
+  <div class="sub">What to cut, and what goes under each frame</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 26/10/2026.</div>
+  <div class="jump"><a href="#rules">Before you cut</a><a href="#cuts">Cut list</a><a href="#bifold">Bifold</a><a href="#windows">Windows</a><a href="#diff">vs the Lodge</a></div>
+</header>
+
+<div class="card">
+  <h2>The job</h2>
+  <p>Cut and build the strips that go <b>under the three plant room frames</b>: the <b>small window</b> (932) at the plant end, the <b>big window</b> (1552) at the office end and the <b>bifold door</b> (1263) in the front wall.</p>
+  <p>Same rule as the Lodge: <b>everything finishes flush with the outside face of the CLT.</b> The plant room frames sit 7.5 further out than the Lodge's, so anything that sits up inside the floor slot comes <b>7.5 narrower</b>.</p>
+  <div class="hero">
+    <div><b>8</b><span>ply strips (18)</span></div>
+    <div><b>5</b><span>thermal break (25)</span></div>
+    <div><b>3</b><span>birch bits (25)</span></div>
+  </div>
+</div>
+
+<div class="card rules" id="rules">
+  <h2>Before you cut</h2>
+  <ul>
+    <li><b>Small window: the floor slot is 13 short, like the wall.</b> When Wall 7 is ripped and moved 13 towards the back wall, also cut <b>13 more off the north end of the slot in the floor</b> (the end nearest the back wall), right through, 42.5 in from the gable face. Then the slot should measure <b class="num">938</b> along its inner edge and <b class="num">978</b> at the face. The frame sits down in that slot. <b>Do it before the gable goes up if you can</b>: it's a cut right through the 60 floor.</li>
+    <li><b>Measure a thermal-break board first.</b> You had them at 1200 × 1025 (the label says 1220 × 1005). Everything below fits a 1200 length.</li>
+    <li><b>Cut every ply strip across the sheet, 1220 long</b>, so the grain runs across the strip. Never rip lengthways.</li>
+    <li>Saw cut: <b>3</b> on ply, <b>2</b> on thermal break.</li>
+    <li><b>Thermal break:</b> from the piece of board 2 you kept back (about 400 wide). The five strips use about 240 of it.</li>
+    <li><b>Ply:</b> 18 mm marine ply (sheet 2). If sheet 2 is now only 1098 wide (a 120 came off it for the bridge roof), see the note under the cut list.</li>
+    <li><b>Birch:</b> the 405 × 560 piece of 25 mm birch, if it's still about.</li>
+  </ul>
+</div>
+
+<div class="part" id="cuts">1. Cut list</div>
+<p class="partsub">Strips first, then cut each strip into the pieces shown.</p>
+<div class="card">
+  <h2>18 mm ply</h2>
+  <div class="row" data-k="s1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 1: 120 wide → 700</div><div class="gets">Bifold, layer 1.</div></div></div>
+  <div class="row" data-k="s2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 2: 120 wide → 700</div><div class="gets">Bifold, layer 2.</div></div></div>
+  <div class="row" data-k="s3"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 3: 120 wide → 563 + 563</div><div class="gets">One for each bifold layer.</div></div></div>
+  <div class="row" data-k="s4"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 4: 100 wide → 1062</div><div class="gets">Big window flap (long piece).</div></div></div>
+  <div class="row" data-k="s5"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 5: 100 wide → 510</div><div class="gets">Big window flap (short piece). 1062 + 510 = 1572.</div></div></div>
+  <div class="row" data-k="s6"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 6: 100 wide → 952</div><div class="gets">Small window flap. One piece.</div></div></div>
+  <div class="row" data-k="s7"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 7: 40 wide → 900</div><div class="gets">Bifold 40 layer.</div></div></div>
+  <div class="row" data-k="s8"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip 8: 40 wide → 363</div><div class="gets">Bifold 40 layer. 900 + 363 = 1263.</div></div></div>
+  <p class="note">If sheet 2 is 1098 wide, the strips come out 1098 long and the two 563s won't fit on one strip. Cut them from a strip each: nine strips.</p>
+</div>
+<div class="card">
+  <h2>Thermal break, 25 thick</h2>
+  <div class="row" data-k="t1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip T1: 42.5 wide → 932</div><div class="gets">Small window. One piece.</div></div></div>
+  <div class="row" data-k="t2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip T2: 42.5 wide → 1100</div><div class="gets">Big window (long piece).</div></div></div>
+  <div class="row" data-k="t3"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip T3: 42.5 wide → 452</div><div class="gets">Big window (short piece). 1100 + 452 = 1552.</div></div></div>
+  <div class="row" data-k="t4"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip T4: 50 wide → 763</div><div class="gets">Bifold. Cut at 50; trim on the dry fit (section 2).</div></div></div>
+  <div class="row" data-k="t5"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Strip T5: 50 wide → 500</div><div class="gets">Bifold. 500 + 763 = 1263.</div></div></div>
+</div>
+<div class="card">
+  <h2>25 mm birch, 70 wide</h2>
+  <div class="row" data-k="b1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Rip 3 × 70 → 560 · 143 · 560</div><div class="cut">From the 405 × 560 piece.</div><div class="gets">Bifold. Lay them 560 + 143 + 560 (short one in the middle). It only takes squash, so the grain doesn't matter.</div></div></div>
+</div>
+
+<div class="part" id="bifold">2. Bifold door (1263)</div>
+<p class="partsub">Front wall. The same strips as the two Lodge bifolds, cut at the Lodge widths.</p>
+<div class="card">
+  <table class="pl">
+    <tr><th>Layer</th><th>Pieces, left to right (from inside)</th></tr>
+    <tr data-k="bf-1"><td class="l">Ply 120 × 18, layer 1</td><td>700 + 563</td></tr>
+    <tr data-k="bf-2"><td class="l">Ply 120 × 18, layer 2</td><td>563 + 700 <small>joints end up 137 apart</small></td></tr>
+    <tr data-k="bf-3"><td class="l">Ply 40 × 18</td><td>900 + 363</td></tr>
+    <tr data-k="bf-4"><td class="l">Birch 70 × 25</td><td>560 + 143 + 560</td></tr>
+    <tr data-k="bf-5"><td class="l">Thermal break 50 × 25</td><td>500 + 763</td></tr>
+  </table>
+  <ul style="margin-top:12px">
+    <li><b>Put it together like the Lodge bifolds</b>, so it finishes in the same place on the outside face of the CLT.</li>
+    <li><b>Anything glued under the floor:</b> keep the Lodge width and push it back tight to the joist, as on the Lodge. The joist is 100 in from the outside face on both buildings, so it lines up the same.</li>
+    <li><b>Anything that sits up inside the floor slot, or is rebated to take the frame:</b> comes <b>7.5 narrower</b> here. Dry-fit it and take the 7.5 off its <b>outside edge</b>, so it still finishes flush and any rebate stays under the frame. The slot is 40 deep here, against 47.5 on the Lodge.</li>
+    <li>No joint within 300 of either end. The door's weight lands on the bottom corner at the hinge side.</li>
+  </ul>
+</div>
+
+<div class="part" id="windows">3. The two windows</div>
+<p class="partsub">Small window (932) at the plant end, big window (1552) at the office end. The same build on both, and the same as the Lodge windows.</p>
+<div class="card">
+  <table class="pl">
+    <tr><th>Window</th><th>Ply flap 100 × 18</th><th>Thermal break 42.5 × 25</th></tr>
+    <tr data-k="w-small"><td class="l">Small (932)</td><td>952 <small>one piece</small></td><td>932 <small>one piece</small></td></tr>
+    <tr data-k="w-big"><td class="l">Big (1552)</td><td>1062 + 510 = 1572</td><td>1100 + 452 = 1552</td></tr>
+  </table>
+  <svg class="sec" viewBox="-150 -78 300 216" role="img" aria-label="Section through a plant room window threshold"><rect x="-150" y="0" width="150" height="60" class="cltf"/><rect x="-150" y="60" width="92.5" height="62" class="jst"/><rect x="-57.5" y="60" width="100" height="18" class="ply"/><rect x="0" y="35" width="42.5" height="25" class="tb"/><rect x="2.5" y="-70" width="70" height="105" class="frm"/><line x1="42.5" y1="-78" x2="42.5" y2="124" class="ln"/><line x1="-150" y1="0" x2="140" y2="0" class="ln"/><text x="-146" y="28" class="tf">CLT floor (60)</text><text x="-146" y="104" class="tf">joist ends here</text><text x="37" y="-30" class="tx" text-anchor="middle">frame</text><text x="21" y="51" class="tf" text-anchor="middle">TB 42.5</text><text x="-52" y="73" class="tf">ply flap 100 × 18</text><text x="42.5" y="134" class="txs" text-anchor="middle">outside face of the CLT</text><text x="-146" y="-4" class="txs">floor surface</text><text x="-146" y="-62" class="txb">INSIDE</text><text x="146" y="-62" class="txb" text-anchor="end">OUTSIDE</text><line x1="-57.5" y1="90" x2="0" y2="90" class="dm"/><line x1="-57.5" y1="85" x2="-57.5" y2="95" class="dm"/><line x1="0" y1="85" x2="0" y2="95" class="dm"/><text x="-29" y="100" class="tx" text-anchor="middle">57.5 under</text><line x1="0" y1="90" x2="42.5" y2="90" class="dm"/><line x1="42.5" y1="85" x2="42.5" y2="95" class="dm"/><text x="21" y="100" class="tx" text-anchor="middle">42.5 slot</text><text x="47" y="74" class="txs">all flush</text><line x1="85" y1="0" x2="85" y2="35" class="dm"/><line x1="80" y1="0" x2="90" y2="0" class="dm"/><line x1="80" y1="35" x2="90" y2="35" class="dm"/><text x="92" y="21" class="tx">35 down</text><text x="76" y="52" class="txs">frame 30 past</text></svg>
+  <ol>
+    <li><b>Ply flap, one layer.</b> Glue it (PU, full area) and screw it up into the underside of the floor. Push it back <b>tight against the joist ends</b>: its front edge then lands <b>flush with the outside face of the CLT</b>. Centre it on the opening so it runs <b>10 past each end of the frame</b>. <b>Screws no longer than 70</b>: the floor is only 60 thick.</li>
+    <li><b>Thermal break</b> on the flap, filling the floor slot from its inner edge out to the outside face: <b>42.5 wide</b>, flush. Cut it to the <b>same length as the frame</b>, no longer: the inner edge of the slot is only 6 longer than the frame.</li>
+    <li><b>Check:</b> the frame sits on the thermal break with its bottom <b>35 below the floor surface</b> (25 up from the underside of the CLT). It stands 30 past the outside face (22.5 on the Lodge), out over the cill.</li>
+  </ol>
+</div>
+
+<div class="card rules" id="diff">
+  <h2>Plant room vs the Lodge</h2>
+  <ul>
+    <li><b>The walls are 60 thick, not 100.</b> The frames sit <b>40</b> into the wall, not 47.5, and the floor slot is 7.5 shallower to match (42.5 at the windows, 40 at the bifold).</li>
+    <li><b>The outside face stays the line.</b> Everything finishes flush with it, as on the Lodge. So what's under the floor keeps its width, and what's in the slot loses 7.5.</li>
+    <li><b>Windows:</b> flap 100 (joist ends to the outside face, the same on both buildings) and thermal break 42.5 (the Lodge's 50 filled a 50 slot). The flap length is the frame plus 20.</li>
+    <li>The joists are 100 in from the edge on both buildings.</li>
+  </ul>
+</div>
+
+<button class="reset" id="reset" type="button">Clear all ticks</button>
+<p class="sig">Lord Claude<small>Neil's mate</small></p>
+
+</div>
+<script>
+(function(){
+  var KEY='lh-po-strips-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var all=document.querySelectorAll('[data-k]');
+  Array.prototype.forEach.call(all,function(r){
+    var k=r.getAttribute('data-k');
+    if(st[k]) r.classList.add('done');
+    r.addEventListener('click',function(){ r.classList.toggle('done'); st[k]=r.classList.contains('done'); save(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every tick on this page?')) return;
+    st={}; save(); Array.prototype.forEach.call(all,function(r){ r.classList.remove('done'); });
+  });
+})();
+</script>
+</body>
+</html>
