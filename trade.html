@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Your trade, the money, and a stove business</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#5E5E59; --muted:#8A8882;
+    --green:#2F7F52; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#9A5A08; --amber-soft:#FBEEDC; --amber-line:#F0D2A8;
+    --grey-soft:#EFEDE8; --grey-bar:#C9C6BF; --blue:#2C5E8C; --blue-soft:#E3EDF7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#3A3D42;
+      --ink:#ECEBE6; --sec:#C2C1BB; --muted:#9A9993;
+      --green:#6FCB95; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#F0B464; --amber-soft:#3C2E18; --amber-line:#5A4422;
+      --grey-soft:#2C2E31; --grey-bar:#5E5D58; --blue:#8DB8E3; --blue-soft:#1E2E40;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:19px; line-height:1.45;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 90px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 4px;}
+  h1{font-size:30px; font-weight:650; letter-spacing:-0.3px; margin:0; line-height:1.15;}
+  .sub{font-size:19px; color:var(--sec); margin-top:6px; font-weight:500;}
+  .meta{font-size:16px; color:var(--sec); margin-top:10px;}
+  .card{background:var(--card); border:1px solid var(--divider); border-radius:16px; padding:18px 18px 16px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:700; color:var(--sec); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.5px;}
+  .card h3{font-size:21px; font-weight:700; margin:2px 0 8px; line-height:1.25;}
+  .card p{margin:0 0 12px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 12px; padding-left:22px;} .card li{margin:6px 0;}
+  .card ul:last-child, .card ol:last-child{margin-bottom:0;}
+  .fine{font-size:16px; color:var(--sec);}
+  .hear{font-size:16px; font-weight:700; color:var(--sec); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:2px;}
+  .v{display:inline-block; font-size:16px; font-weight:700; border-radius:8px; padding:3px 10px; margin:0 0 10px; border:1px solid transparent;}
+  .v::before{content:"Verdict: "; font-weight:600;}
+  .v-yes{background:var(--green-soft); color:var(--green); border-color:var(--green-line);}
+  .v-part{background:var(--amber-soft); color:var(--amber); border-color:var(--amber-line);}
+  .v-no{background:var(--grey-soft); color:var(--ink); border-color:var(--grey-bar);}
+  .grey{background:var(--grey-soft); border-radius:12px; padding:12px 14px; margin:12px 0 0; font-size:17px;}
+  .grey b.h{display:block; font-size:16px; text-transform:uppercase; letter-spacing:0.4px; color:var(--sec); margin-bottom:4px;}
+  .one{background:var(--green-soft); border-radius:12px; padding:12px 14px; margin:0 0 12px; font-size:20px; font-weight:650; line-height:1.3;}
+  .inpart{font-size:17px; color:var(--sec); margin:16px 4px 4px;}
+  .inpart b{color:var(--ink);}
+  a{color:var(--green);}
+  .short ol{padding-left:24px;} .short li{margin:8px 0;}
+  .src{font-size:16px;} .src li{margin:4px 0; overflow-wrap:anywhere;}
+  details{margin:10px 0 0;} details summary{cursor:pointer; font-weight:650; font-size:17px; color:var(--green); padding:6px 0;}
+  details[open] summary{margin-bottom:6px;}
+
+  /* navigation */
+  .nav{position:sticky; top:0; z-index:8; background:var(--bg); padding:8px 0 8px; margin-top:6px; border-bottom:1px solid var(--divider);}
+  .reads{display:flex; gap:6px;}
+  .reads button{flex:1; border:1px solid var(--divider); background:var(--card); color:var(--sec); font:inherit; font-size:16px; font-weight:650;
+    border-radius:12px; padding:8px 8px; cursor:pointer; line-height:1.2; min-height:44px;}
+  .reads button[aria-selected="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+  .parts{display:flex; gap:6px; margin-top:6px;}
+  .parts button{flex:1; border:1px solid var(--divider); background:var(--card); color:var(--sec); font:inherit; font-size:16px; font-weight:600;
+    border-radius:10px; padding:7px 4px; cursor:pointer; min-height:44px; line-height:1.15;}
+  .parts button[aria-selected="true"]{background:var(--green-soft); border-color:var(--green-line); color:var(--green);}
+  .parts button .tick{font-weight:800;}
+  .part[hidden]{display:none;}
+  .part, .tool{scroll-margin-top:118px;}
+  .next{display:block; width:100%; margin:16px 0 0; border:0; background:var(--green); color:#fff; font:inherit; font-size:18px; font-weight:700;
+    border-radius:14px; padding:14px 16px; cursor:pointer; min-height:52px;}
+  @media (prefers-color-scheme: dark){ .next{color:#10221A;} }
+
+  /* bars */
+  .bars{margin:6px 0 12px;}
+  .bar{display:grid; grid-template-columns:1fr; gap:3px; margin:9px 0;}
+  .bar .lab{display:flex; justify-content:space-between; font-size:17px;}
+  .bar .lab b{font-variant-numeric:tabular-nums;}
+  .bar .track{height:14px; background:var(--grey-soft); border-radius:7px; overflow:hidden;}
+  .bar .fill{height:100%; background:var(--green); border-radius:7px;}
+  .bar .fill.alt{background:var(--amber);}
+
+  /* market blocks */
+  .mk{border:1px solid var(--divider); border-radius:12px; padding:12px 14px; margin:10px 0;}
+  .mk b{display:block; font-size:19px;}
+  .mk .tag{display:inline-block; font-size:16px; font-weight:700; border-radius:8px; padding:1px 9px; margin:4px 0 4px;}
+  .tag.quiet{background:var(--grey-soft); color:var(--ink);} .tag.steady{background:var(--blue-soft); color:var(--blue);} .tag.tight{background:var(--amber-soft); color:var(--amber);}
+
+  /* tables */
+  table.t{width:100%; border-collapse:collapse; font-size:16px; margin:6px 0 12px;}
+  .t th{font-size:16px; color:var(--sec); text-align:left; font-weight:650; padding:0 6px 6px 0; vertical-align:bottom;}
+  .t td{padding:8px 6px 8px 0; border-top:1px solid var(--divider); vertical-align:top;}
+  .t td.r, .t th.r{text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; padding-right:0; padding-left:8px;}
+
+  /* routes */
+  .route{border:1px solid var(--divider); border-radius:12px; padding:12px 14px; margin:10px 0;}
+  .route b.n{display:block; font-size:19px; margin-bottom:4px;}
+  .route dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 10px; font-size:17px;}
+  .route dt{color:var(--sec); font-weight:600;} .route dd{margin:0;}
+
+  /* months strip */
+  .months{display:grid; grid-template-columns:repeat(12,1fr); gap:3px; margin:8px 0 6px;}
+  .months span{font-size:16px; text-align:center; padding:8px 0; border-radius:6px; font-weight:700;}
+  .months .st{background:var(--amber-soft); color:var(--amber);} .months .sn{background:var(--blue-soft); color:var(--blue);}
+  .legend{font-size:16px; color:var(--sec);} .legend i{display:inline-block; width:12px; height:12px; border-radius:3px; margin:0 5px 0 0; vertical-align:-1px;}
+
+  /* stairs */
+  .stair{border-left:4px solid var(--green); padding:2px 0 2px 12px; margin:12px 0;}
+  .stair b{display:block;}
+
+  /* tools */
+  .tool{border:2px solid var(--green-line);}
+  .note{font-size:16px; color:var(--sec); margin:2px 0 10px;}
+  .fld{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--divider);}
+  .fld:first-of-type{border-top:0;}
+  .fld label{font-size:17px; flex:1; min-width:0;}
+  .fld label small{display:block; font-size:16px; color:var(--sec);}
+  .step{display:flex; align-items:center; flex:0 0 auto;}
+  .step button{width:44px; height:44px; border:1px solid var(--divider); background:var(--grey-soft); color:var(--ink); font-size:22px; font-weight:700; cursor:pointer; line-height:1;}
+  .step button:first-child{border-radius:10px 0 0 10px;} .step button:last-child{border-radius:0 10px 10px 0;}
+  .step input{width:84px; height:44px; border:1px solid var(--divider); border-left:0; border-right:0; text-align:center; font:inherit; font-size:18px; font-weight:700;
+    background:var(--card); color:var(--ink); font-variant-numeric:tabular-nums; -moz-appearance:textfield; border-radius:0;}
+  .step input::-webkit-outer-spin-button, .step input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+  select{font:inherit; font-size:18px; height:44px; border:1px solid var(--divider); border-radius:10px; background:var(--card); color:var(--ink); padding:0 10px;}
+  .seg{display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 4px;}
+  .seg button{border:1px solid var(--divider); background:var(--card); color:var(--sec); font:inherit; font-size:16px; font-weight:650; border-radius:10px; padding:8px 12px; min-height:44px; cursor:pointer;}
+  .seg button[aria-pressed="true"]{background:var(--green-soft); border-color:var(--green-line); color:var(--green);}
+  .seg button[aria-pressed="true"]::before{content:"✓ ";}
+  .chk{display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-top:1px solid var(--divider); font-size:17px;}
+  .chk input{width:24px; height:24px; margin-top:2px; accent-color:var(--green); flex:0 0 auto;}
+  .chk small{display:block; font-size:16px; color:var(--sec);}
+  .grp{font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; color:var(--sec); margin:14px 0 2px;}
+  .out{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;}
+  .tile{background:var(--grey-soft); border-radius:12px; padding:12px 12px 10px;}
+  .tile.g{background:var(--green-soft);}
+  .tile .n{font-size:25px; font-weight:800; letter-spacing:-0.4px; line-height:1.1; font-variant-numeric:tabular-nums;}
+  .tile.g .n{color:var(--green);}
+  .tile .l{font-size:16px; color:var(--sec); margin-top:4px; line-height:1.25;}
+  .tile.wide{grid-column:1 / -1;}
+  .verdict{background:var(--card); border:1px solid var(--divider); border-radius:12px; padding:12px 14px; margin-top:12px; font-size:19px; font-weight:650;}
+  .ex{display:inline-block; font-size:16px; font-weight:700; background:var(--amber-soft); color:var(--amber); border-radius:8px; padding:2px 9px; margin:0 0 8px;}
+  .ex[hidden]{display:none;}
+  .yr{display:flex; align-items:center; justify-content:center; gap:10px; margin:14px 0 4px;}
+  .yr button{width:48px; height:44px; border:1px solid var(--divider); background:var(--card); color:var(--ink); border-radius:10px; font-size:20px; font-weight:700; cursor:pointer;}
+  .yr b{font-size:20px; min-width:90px; text-align:center;}
+  .flag{font-size:16px; font-weight:700; display:block; margin-top:4px;}
+  .flag.over{color:var(--amber);}
+  .clear{display:inline-block; margin-top:12px; background:none; border:1px solid var(--divider); color:var(--sec); font:inherit; font-size:16px; border-radius:16px; padding:8px 14px; cursor:pointer; min-height:44px;}
+  .prompt{background:var(--grey-soft); border-radius:12px; padding:12px 14px; margin:10px 0; font-size:17px; overflow-wrap:anywhere;}
+  .cp{display:inline-block; margin-top:8px; border:0; background:var(--green-soft); color:var(--green); font:inherit; font-size:16px; font-weight:650; border-radius:16px; padding:8px 14px; cursor:pointer; min-height:40px;}
+  .sig{font-size:19px; margin:20px 4px 0;} .sig small{display:block; font-size:16px; color:var(--sec);}
+  .top{display:block; text-align:right; font-size:16px; color:var(--sec); margin-top:12px;}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+<div class="wrap">
+
+<header>
+  <h1>Your trade, the money, and a stove business</h1>
+  <div class="sub">Read 1 is the three ten-minute parts. Read 2 is extra, if you want it.</div>
+  <div class="meta">Put together for Rich, 27/10/2026. Figures as at October 2026; tax figures change at Budgets. Sources at the bottom of each read.</div>
+</header>
+
+<section class="card">
+  <h2>From Claude</h2>
+  <p>Rich, I'm Claude, an AI Neil uses for research. Neil prompted me to put together a page of information for you. He didn't write it. I researched it and made this page.</p>
+  <p>What I know about you comes from Neil: your rate (£30 an hour is what you charge him, so on that number he isn't a neutral party; I've written it straight anyway), his build diary, a few of his notes, and things you've told him. I don't know your clients, your days or your household, so where a sum needs those, there's a box for you to fill in.</p>
+  <p class="fine">Nothing you type leaves this phone. Neil can't see it.</p>
+</section>
+
+<section class="card short">
+  <h2>The short version</h2>
+  <ol>
+    <li>Stone and old-building work round here is short of skilled people. New-house building isn't; it's quiet.</li>
+    <li>£30 an hour is about the top of what a sub gets for brick or stone here. The extra money is in pricing whole jobs, and that brings costs a sub doesn't carry.</li>
+    <li>Read 1 lays out the ways people with your skills earn more, side by side, including staying as you are.</li>
+    <li>Read 2 works one through: keeping your stone work and adding a stove business in your company over the winter. At today's average prices it pays about a stone day. Priced above average, it pays more, and it builds a round of customers that's worth something.</li>
+  </ol>
+</section>
+
+<nav class="nav" id="nav" aria-label="Reads and parts">
+  <div class="reads" role="tablist">
+    <button type="button" role="tab" data-read="1" aria-selected="true">Read 1 · Your trade</button>
+    <button type="button" role="tab" data-read="2" aria-selected="false">Read 2 · Stoves</button>
+  </div>
+  <div class="parts" role="tablist">
+    <button type="button" role="tab" data-part="1" aria-selected="true">1 Market</button>
+    <button type="button" role="tab" data-part="2" aria-selected="false">2 Money</button>
+    <button type="button" role="tab" data-part="3" aria-selected="false">3 Moves</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- =================== READ 1 · PART 1 =================== -->
+<section class="part" id="r1-1" data-read="1" data-part="1">
+  <p class="inpart"><b>Read 1 · Part 1, the market.</b> Is there really a shortage? Where's the work? Does the trade fade?</p>
+
+  <div class="card">
+    <div class="hear">You'll hear</div>
+    <h3>"There's a shortage of bricklayers"</h3>
+    <span class="v v-part">Partly</span>
+    <p>Fewer people are coming into the trade. Bricklaying apprentice starts in England fell by more than a third in three years:</p>
+    <div class="bars" aria-label="Bricklaying apprentice starts, England">
+      <div class="bar"><div class="lab"><span>2021/22</span><b>3,130 starts</b></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
+      <div class="bar"><div class="lab"><span>2024/25</span><b>1,910 starts</b></div><div class="track"><div class="fill" style="width:61%"></div></div></div>
+    </div>
+    <p>About 50 people a year start a stonemason apprenticeship in the whole of England.</p>
+    <p>But building new houses is quiet right now. Brick deliveries were down 23% on a year in July, and brick factories are laying people off. So it's a slow squeeze on skilled people, not a boom.</p>
+    <p class="fine">Most of the loudest "shortage" talk comes from people with something to gain: training bodies, housebuilders wanting visas, robot makers. That doesn't make it wrong. It's why this part checks the numbers.</p>
+  </div>
+
+  <div class="card">
+    <h3>It's three markets, not one</h3>
+    <div class="mk"><b>New houses</b><span class="tag quiet">Quiet</span><div>Shrinking. Boom and bust. Where timber frames and robots turn up first.</div></div>
+    <div class="mk"><b>Repairs and extensions</b><span class="tag steady">Steady</span><div>The biggest slice of building round here, about a quarter of it. Down a bit this year too.</div></div>
+    <div class="mk"><b>Stone and old buildings</b><span class="tag tight">Tight</span><div>South West heritage firms report more skills shortages than the national average (32% against 25%), and 22% have turned work down.</div></div>
+    <p>New estate walling draws on the same scarce skills as old-building work.</p>
+  </div>
+
+  <div class="card">
+    <div class="hear">You'll hear</div>
+    <h3>"Bricklaying's dying out"</h3>
+    <span class="v v-no">Not for stone</span>
+    <p>The government's own projection has bricklaying jobs falling 6% by 2035, before counting retirements. Timber frame is about 12–15% of new homes in England (it's over 90% in Scotland). Bricklaying robots exist, in trials.</p>
+    <p>Old walls, lime work and listed repairs can't be made in a factory or by a robot.</p>
+  </div>
+
+  <div class="card">
+    <div class="hear">You'll hear</div>
+    <h3>"The ones who set themselves up right will get the best work"</h3>
+    <span class="v v-part">Partly, not proven</span>
+    <p>37% of stonemasonry firms always charge extra for heritage skill. But 55% of South West heritage firms charge nothing extra for it.</p>
+    <div class="grey"><b class="h">One way to read it</b>Either clients round here won't pay more, or nobody's asking them to. The numbers can't tell you which. Historic England expects old-building skills to hit "a crisis point in the next 10–20 years".</div>
+  </div>
+
+  <div class="card">
+    <h2>This part in one line</h2>
+    <p class="one">New houses are quiet. Stone and old buildings round here are short of skilled people, and most firms aren't charging extra for that.</p>
+    <p class="fine">People who change their price usually do it on the next job, not the one they're on.</p>
+    <button class="next" type="button" data-go="r1-2">Next: Part 2, the money →</button>
+  </div>
+</section>
+
+<!-- =================== READ 1 · PART 2 =================== -->
+<section class="part" id="r1-2" data-read="1" data-part="2" hidden>
+  <p class="inpart"><b>Read 1 · Part 2, the money.</b> Why does £30 sound a lot but not go far? Where does it sit? What does it leave you?</p>
+
+  <div class="card">
+    <h3>What's happened since 2000</h3>
+    <div class="bars" aria-label="How many times higher than in 2000">
+      <div class="bar"><div class="lab"><span>Shop prices</span><b>×2.0</b></div><div class="track"><div class="fill" style="width:57%"></div></div></div>
+      <div class="bar"><div class="lab"><span>Average pay</span><b>×2.4</b></div><div class="track"><div class="fill" style="width:69%"></div></div></div>
+      <div class="bar"><div class="lab"><span>Bricks</span><b>×3.4</b></div><div class="track"><div class="fill alt" style="width:97%"></div></div></div>
+      <div class="bar"><div class="lab"><span>A Somerset house</span><b>×3.5</b></div><div class="track"><div class="fill alt" style="width:100%"></div></div></div>
+    </div>
+    <p>Pay kept up with the shops. It didn't keep up with houses. If you own your home, that went your way.</p>
+    <div class="grey"><b class="h">One way to read it</b>Since 2000 the amount of money in the economy has grown about 3.4 times. Thirteen years of near-zero interest rates, and £895bn created by the Bank of England, pushed up the price of things people own. The Bank's own research says so, and also says most people benefited overall. Some people call it debasement. Gold tells the same story, louder.</div>
+  </div>
+
+  <div class="card">
+    <div class="hear">You'll hear</div>
+    <h3>"A postman used to be able to buy a house"</h3>
+    <span class="v v-yes">Holds up</span>
+    <p>In 2000 the average Somerset house cost about 4.6 years of a postman's pay. Now it's about 8.5. For an employed bricklayer it was 4.9 years then, and it's 8.5 now.</p>
+  </div>
+
+  <div class="card tool" id="t1">
+    <h2>Your hour, then and now</h2>
+    <p class="note">Put in what you were charging an hour in a year you remember.</p>
+    <span class="ex" id="t1ex">Showing the Examples, not you</span>
+    <div class="fld"><label for="t1y">The year</label>
+      <select id="t1y"><option>1996</option><option selected>2000</option><option>2005</option><option>2010</option><option>2015</option><option>2020</option></select></div>
+    <div class="fld"><label for="t1a">Your rate then<small>£ an hour</small></label><div class="step" data-for="t1a" data-step="1"><button type="button" aria-label="less">−</button><input id="t1a" inputmode="decimal" type="number" value="10"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="t1b">Your rate now<small>£ an hour</small></label><div class="step" data-for="t1b" data-step="1"><button type="button" aria-label="less">−</button><input id="t1b" inputmode="decimal" type="number" value="30"><button type="button" aria-label="more">+</button></div></div>
+    <div class="out">
+      <div class="tile"><div class="n" id="t1o1">£0</div><div class="l" id="t1l1">your rate then, in today's money (shop prices)</div></div>
+      <div class="tile"><div class="n" id="t1o2">£0</div><div class="l" id="t1l2">the same, if it had kept up with average pay</div></div>
+      <div class="tile"><div class="n" id="t1o3">0</div><div class="l" id="t1l3">hours of your work to earn a Somerset house then</div></div>
+      <div class="tile g"><div class="n" id="t1o4">0</div><div class="l">hours to earn one now, at your rate now</div></div>
+    </div>
+    <p class="note" id="t1yrs" style="margin-top:10px"></p>
+    <p class="fine">For comparison, a 1999 outer-London bricklayer's day was £100–£110.</p>
+  </div>
+
+  <div class="card">
+    <div class="hear">You'll hear</div>
+    <h3>"£30 an hour is too low for what you do"</h3>
+    <span class="v v-no">Not for labour-only. Partly for the rest.</span>
+    <p>For advertised labour-only brick and stone work round here, £30 an hour for 8 paid hours is at the top. Agency adverts this month run £24–£28 an hour. A Bristol brick-and-stone job pays £250 for a longer day.</p>
+    <p>Price guides put a tradesman's day to a homeowner at about £220–£350. That figure already includes the firm's van, insurance, quoting time, unpaid days and profit. As an illustration (not any real firm), a £300 day might split like this:</p>
+    <table class="t">
+      <tr><td>The tradesman's day</td><td class="r">£240</td></tr>
+      <tr><td>Van, tools, insurance</td><td class="r">£25</td></tr>
+      <tr><td>Quoting, unpaid days, chasing money</td><td class="r">£20</td></tr>
+      <tr><td>The firm's profit</td><td class="r">£15</td></tr>
+    </table>
+    <p>Running a job, teaching a lad and looking after the client are real value. The market pays for them as a site role, or as the margin of whoever prices the job, not as a higher sub rate.</p>
+  </div>
+
+  <div class="card">
+    <h3>What £30 leaves</h3>
+    <p>At £30 for 8 hours, 205 paid days a year, and about £7,500 of van, tools and insurance, you take home about <b>£34,100 a year after tax and National Insurance. That's £2,840 a month</b>, with nothing going into a pension. Part 3 lets you put in your own days.</p>
+    <p>CIS takes 20% as you go. On those numbers that's about £2,300 a year more than you'd owe, and it comes back after your tax return.</p>
+    <p class="fine">From April 2027, if your turnover (everything customers pay you) was over £30,000, HMRC wants quarterly updates through software (Making Tax Digital). These are rough sums for a sole trader in England, 2026/27. Your accountant can run your real figures.</p>
+  </div>
+
+  <div class="card">
+    <h2>This part in one line</h2>
+    <p class="one">£30 kept up with the shops, not with houses. It's the top of what a sub gets, and near the bottom of what price guides say a client pays.</p>
+    <p class="fine">People who change their price usually do it on the next job, not the one they're on. Part 3 puts this next to what a household needs, and the ways people close the gap.</p>
+    <button class="next" type="button" data-go="r1-3">Next: Part 3, the moves →</button>
+  </div>
+</section>
+
+<!-- =================== READ 1 · PART 3 =================== -->
+<section class="part" id="r1-3" data-read="1" data-part="3" hidden>
+  <p class="inpart"><b>Read 1 · Part 3, the moves.</b> What does the house need? What are the ways people with your skills earn more? How do they move when money's tight?</p>
+
+  <div class="card tool" id="t2">
+    <h2>Your number</h2>
+    <span class="ex" id="t2ex">Showing the Examples, not you</span>
+    <div class="grp">Your work</div>
+    <div class="fld"><label for="w_rate">£ an hour</label><div class="step" data-for="w_rate" data-step="1"><button type="button" aria-label="less">−</button><input id="w_rate" type="number" inputmode="decimal" value="30"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="w_hrs">Paid hours a day</label><div class="step" data-for="w_hrs" data-step="0.5"><button type="button" aria-label="less">−</button><input id="w_hrs" type="number" inputmode="decimal" value="8"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="w_days">Paid days a year<small>weekends included</small></label><div class="step" data-for="w_days" data-step="5"><button type="button" aria-label="less">−</button><input id="w_days" type="number" inputmode="numeric" value="205"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="w_cost">Van, tools, insurance<small>£ a year</small></label><div class="step" data-for="w_cost" data-step="500"><button type="button" aria-label="less">−</button><input id="w_cost" type="number" inputmode="numeric" value="7500"><button type="button" aria-label="more">+</button></div></div>
+    <div class="out"><div class="tile g wide"><div class="n" id="w_out">£0</div><div class="l">your work brings in, a month after tax (sole trader, 2026/27)</div></div></div>
+
+    <div class="grp">Your house</div>
+    <div class="note">Who brings money in?</div>
+    <div class="seg" id="h_earn"><button type="button" data-v="1" aria-pressed="true">Just me</button><button type="button" data-v="2" aria-pressed="false">Two of us</button></div>
+    <div class="fld" id="h_otherrow" hidden><label for="h_other">Other take-home<small>£ a month</small></label><div class="step" data-for="h_other" data-step="50"><button type="button" aria-label="less">−</button><input id="h_other" type="number" inputmode="numeric" value="0"><button type="button" aria-label="more">+</button></div></div>
+    <div class="note">Your home</div>
+    <div class="seg" id="h_home"><button type="button" data-v="own" aria-pressed="false">Own it outright</button><button type="button" data-v="mort" aria-pressed="true">Mortgage</button><button type="button" data-v="rent" aria-pressed="false">Rent</button></div>
+    <div class="fld" id="h_homerow"><label for="h_homec">Mortgage or rent<small>£ a month</small></label><div class="step" data-for="h_homec" data-step="25"><button type="button" aria-label="less">−</button><input id="h_homec" type="number" inputmode="numeric" value="900"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="h_bills">Bills<small>council tax, energy, water, a month</small></label><div class="step" data-for="h_bills" data-step="25"><button type="button" aria-label="less">−</button><input id="h_bills" type="number" inputmode="numeric" value="500"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="h_food">Food<small>a month</small></label><div class="step" data-for="h_food" data-step="25"><button type="button" aria-label="less">−</button><input id="h_food" type="number" inputmode="numeric" value="800"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="h_car">Car<small>a month</small></label><div class="step" data-for="h_car" data-step="25"><button type="button" aria-label="less">−</button><input id="h_car" type="number" inputmode="numeric" value="400"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="h_else">Everything else<small>clothes, phones, kids, days out, a month</small></label><div class="step" data-for="h_else" data-step="25"><button type="button" aria-label="less">−</button><input id="h_else" type="number" inputmode="numeric" value="900"><button type="button" aria-label="more">+</button></div></div>
+
+    <div class="grp">The postman's list (tick what you'd want)</div>
+    <label class="chk"><input type="checkbox" id="a_hol"><span>A week away<small>about £250 a month</small></span></label>
+    <label class="chk"><input type="checkbox" id="a_pen"><span>A pension<small>£400 a month (£500 with the tax relief); over 20 years at 4% growth that's roughly £110,000 in today's money</small></span></label>
+    <label class="chk"><input type="checkbox" id="a_buf"><span>A rainy-day fund<small>£300 a month; 3–6 months of bills is the usual guide</small></span></label>
+
+    <div class="verdict" id="h_verdict">…</div>
+    <p class="fine" style="margin-top:10px">For comparison, the Joseph Rowntree Foundation's 2026 minimum for a family of four is £77,400 a year of pay before tax.</p>
+    <p class="fine">Nothing you type leaves this phone. Neil can't see it. <button type="button" class="clear" data-clear>Clear my numbers</button></p>
+  </div>
+
+  <div class="card">
+    <h3>Ways people with your skills earn more</h3>
+    <p class="note">Side by side, in no order. "What it pays" uses your numbers above where it can.</p>
+    <div class="route"><b class="n">Stay as you are</b><dl><dt>Pays</dt><dd>No change.</dd><dt>Takes</dt><dd>Nothing new.</dd><dt>Give up</dt><dd>Nothing, but there's no pension unless you start one.</dd><dt>Risk</dt><dd>It all rests on you being able to work.</dd></dl></div>
+    <div class="route"><b class="n">More paid days</b><dl><dt>Pays</dt><dd><span id="r_more">+£0</span> a year after tax for 20 more days.</dd><dt>Takes</dt><dd>Weekends or longer weeks.</dd><dt>Give up</dt><dd>Time at home.</dd><dt>Risk</dt><dd>Wearing yourself out.</dd></dl></div>
+    <div class="route"><b class="n">Price work and measured stone</b><dl><dt>Pays</dt><dd>Estimate: rebuilding dry stone at £60–£100 a square metre, about 3–5 m² a day, is roughly £180–£500 a day (middle about £300). For mortared rubble, the middle is about £240.</dd><dt>Takes</dt><dd>Confidence pricing your own output.</dd><dt>Give up</dt><dd>The safety of a day rate.</dd><dt>Risk</dt><dd>A slow wall or bad stone loses money.</dd></dl></div>
+    <div class="route"><b class="n">A site role</b><dl><dt>Pays</dt><dd>£250–£270 a day on commercial contracts in the South West. Employed site supervisors' middle pay is £45,500.</dd><dt>Takes</dt><dd>Paperwork, a supervisor's card.</dd><dt>Give up</dt><dd>Some hands-on work.</dd><dt>Risk</dt><dd>Big sites, travel.</dd></dl></div>
+    <div class="route"><b class="n">A salaried job</b><dl><dt>Pays</dt><dd>Examples: a housing-association multi-trade job at £36,490; a National Trust building tradesperson at £27,612. Employed bricklayers' middle pay is £33,011. All come with a pension, paid holidays and sick pay.</dd><dt>Takes</dt><dd>An application.</dd><dt>Give up</dt><dd>The day rate.</dd><dt>Risk</dt><dd>Less money, more security.</dd></dl></div>
+    <div class="route"><b class="n">Your own customers</b><dl><dt>Pays</dt><dd>On its own, about +£3,900 a year (at £300 a day over about 190 paid days once quoting takes its share, with £10,000 of costs). The bigger money is the margin on materials and on other people's hours.</dd><dt>Takes</dt><dd>Quoting, insurance, chasing money. VAT once your turnover passes £90,000.</dd><dt>Give up</dt><dd>Evenings on paperwork.</dd><dt>Risk</dt><dd>Slow payers. Mistakes come out of your pocket. Work you meet through another firm's client is that firm's work.</dd></dl></div>
+    <div class="route"><b class="n">A second pair of hands</b><dl><dt>Pays</dt><dd>Thin on a labourer: one costs £140–£160 a day and is charged at £150–£200. An apprentice costs less with the 2026 support: training free for 16–24-year-olds, a £2,000 hiring payment, CITB grants if you're registered, no employer National Insurance under 25.</dd><dt>Takes</dt><dd>Being an employer: insurance, holiday pay, payroll.</dd><dt>Risk</dt><dd>Quiet weeks still cost wages.</dd></dl></div>
+    <div class="route"><b class="n">Stoves</b><dl><dt>Pays</dt><dd>About a stone day at average prices, more if priced above average.</dd><dt>Takes</dt><dd>A second trade you've already trained for. Read 2 works it through.</dd></dl></div>
+  </div>
+
+  <div class="card">
+    <h3>How people make a move when money's tight</h3>
+    <ul>
+      <li>People who've put their price up usually did it on a new job, never on one they were already on.</li>
+      <li>They had the next job lined up before they said a number.</li>
+      <li>They built a buffer first. Three to six months of bills is the usual guide, often built from extra days.</li>
+      <li>They tried one job of their own alongside the day job.</li>
+      <li>Some applied for CIS gross payment status. You need £30,000 of construction turnover after materials, and your returns in on time. It stops the 20% being taken, but the first January after, the tax comes all at once, plus half of next year's in advance. On the Part 2 numbers that's about £11,400. People who managed it put money aside every week.</li>
+    </ul>
+    <details><summary>Small print for jobs straight for a homeowner</summary>
+      <ul class="fine">
+        <li>A written quote saves arguments.</li>
+        <li>If the job was agreed in the customer's home, they can cancel within 14 days, unless they've asked in writing for you to start sooner.</li>
+        <li>Listed walls need consent before work starts.</li>
+        <li>Garden walls over 1 m next to a road, or 2 m elsewhere, may need planning permission.</li>
+        <li>Work on a wall shared with a neighbour has its own rules (party walls).</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="card">
+    <h3>How tradespeople word it</h3>
+    <div class="prompt">"My day rate from [month] is £___. Happy to keep this job at the old rate till it's done."</div>
+    <div class="prompt">"For the wall, start to finish, it's £___. That includes the lime, the scaffold and clearing up. I can start on the ___."</div>
+    <div class="prompt">When they mention a cheaper quote: "That's fair to check. Have a look whether theirs includes the scaffold and the lime. Here's everything that's in mine."</div>
+    <p class="fine">The Federation of Master Builders' advice (May 2026): explain what's behind the difference rather than dropping the price.</p>
+  </div>
+
+  <div class="card">
+    <h3>Three questions only you can answer</h3>
+    <ul>
+      <li>What does the house actually need each month? (the box above)</li>
+      <li>How many days did I really get paid last year? (the box above)</li>
+      <li>Which of these would I still enjoy doing in ten years' time?</li>
+    </ul>
+    <details><summary>If you want to dig further with an AI</summary>
+      <p class="fine">Fill in the gaps, then paste one into ChatGPT, Claude or similar.</p>
+      <div class="prompt"><span class="pt">I'm a [bricklayer and stonemason] near [your area], working labour-only at £[rate] an hour. Ask me questions one at a time to work out what my real yearly take-home is after costs and tax, and what I'd need to charge to reach £[amount] a month.</span><br><button type="button" class="cp">Copy</button></div>
+      <div class="prompt"><span class="pt">Ask me questions one at a time to help me weigh up staying labour-only, a site supervisor role, and pricing my own jobs. I'm a [trade] with [years] years' experience near [area].</span><br><button type="button" class="cp">Copy</button></div>
+      <div class="prompt"><span class="pt">Help me write a short price list and a written quote template for [type of job] that I can hand to a homeowner, so I don't have to say the price out loud.</span><br><button type="button" class="cp">Copy</button></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>This part in one line</h2>
+    <p class="one">There's no single answer. There are a handful of ways, each with a price, and the numbers are yours to change.</p>
+    <button class="next" type="button" data-go="r2-1">Read 2: the stove business (extra) →</button>
+  </div>
+
+  <div class="card src">
+    <details><summary>Sources for Read 1</summary>
+      <ul>
+        <li>Apprentice starts: DfE apprenticeships data, 2021/22–2024/25. <a href="https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/ad4defbb-f81a-4ee1-aef7-91486e0a909f">explore-education-statistics.service.gov.uk</a></li>
+        <li>Brick deliveries: DBT building materials, September 2026. <a href="https://www.gov.uk/government/statistics/building-materials-and-components-statistics-september-2026/construction-building-materials-commentary-september-2026">gov.uk</a></li>
+        <li>Workforce outlook: CITB Construction Workforce Outlook 2026–2030. <a href="https://www.citb.co.uk/cwo/reports/cwo_report_united_kingdom.pdf">citb.co.uk</a></li>
+        <li>Heritage skills: Historic England Skills Needs Analysis 2024. <a href="https://historicengland.org.uk/images-books/publications/skills-needs-analysis-2024-repair-maintenance-retrofit-traditional-pre1919-buildings/skills-needs-analysis-2024-report/">historicengland.org.uk</a></li>
+        <li>Jobs projection: Construction Jobs Plan, 19/10/2026. <a href="https://www.gov.uk/government/publications/construction-jobs-plan">gov.uk</a></li>
+        <li>Timber frame share: Timber Development UK (secondary). <a href="https://timberdevelopment.uk/slow-progress-for-timber-frame-amid-structural-challenges/">timberdevelopment.uk</a></li>
+        <li>Prices and pay: ONS CPI (D7BT), average weekly earnings (KAB9), ASHE Table 14; brick prices ONS EW6C. <a href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7bt/mm23">ons.gov.uk</a></li>
+        <li>House prices: HM Land Registry UK House Price Index, Somerset. <a href="https://www.gov.uk/government/collections/uk-house-price-index-reports">gov.uk</a></li>
+        <li>Money and QE: Bank of England. <a href="https://www.bankofengland.co.uk/monetary-policy/quantitative-easing">bankofengland.co.uk</a>; Quarterly Bulletin 2012 Q3. <a href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/2012/the-distributional-effects-of-asset-purchases.pdf">pdf</a></li>
+        <li>Self-employed pay: Hudson Contract pay trends. <a href="https://www.hudsoncontract.co.uk/construction-pay-trends/">hudsoncontract.co.uk</a></li>
+        <li>Adverts read 25–26/10/2026, e.g. site agent, Bridgwater <a href="https://www.reed.co.uk/jobs/site-agent/57494435">reed.co.uk</a>; assistant site manager, Bristol <a href="https://www.theconstructionindex.co.uk/construction-jobs/view/-/assistant-site-manager-584/199022">theconstructionindex.co.uk</a>; multi-trade, Bath <a href="https://www.reed.co.uk/jobs/multi-trade-operative/57383420">reed.co.uk</a>; National Trust, Warminster <a href="https://www.reed.co.uk/jobs/building-tradesperson/57491276">reed.co.uk</a>. Client day rates come from price guides (secondary).</li>
+        <li>Dry stone prices: Dry Stone Walling Association. <a href="https://www.dswa.org.uk/frequently-asked-questions/">dswa.org.uk</a>. Output per day: TCV Conservation Handbooks.</li>
+        <li>Tax: <a href="https://www.gov.uk/income-tax-rates">income tax</a>, <a href="https://www.gov.uk/self-employed-national-insurance-rates">self-employed NI</a>, <a href="https://www.gov.uk/what-you-must-do-as-a-cis-subcontractor/gross-payment-status">CIS gross payment status</a>, <a href="https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax">Making Tax Digital</a> (gov.uk).</li>
+        <li>Minimum Income Standard 2026: Joseph Rowntree Foundation. <a href="https://www.jrf.org.uk/income-savings-and-debt/a-minimum-income-standard-for-the-united-kingdom-in-2026">jrf.org.uk</a></li>
+        <li>Apprentices: <a href="https://www.gov.uk/government/news/2000-boost-for-small-businesses-who-take-on-young-apprentices">gov.uk £2,000 payment</a>; <a href="https://www.citb.co.uk/funding-support/grants/apprenticeship-grants">CITB grants</a>.</li>
+        <li>Pricing advice: FMB, May 2026. <a href="https://www.fmb.org.uk/resource/how-builders-can-raise-prices-without-losing-work.html">fmb.org.uk</a>. Cancellation rights: Consumer Contracts Regulations 2013. <a href="https://www.legislation.gov.uk/uksi/2013/3134/contents">legislation.gov.uk</a></li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- =================== READ 2 · PART 1 =================== -->
+<section class="part" id="r2-1" data-read="2" data-part="1" hidden>
+  <p class="inpart"><b>Read 2 · Part 1, the market.</b> Who's buying stoves? What are the rules? Where do the jobs come from?</p>
+
+  <div class="card">
+    <h2>Read 2, the stove business</h2>
+    <p>While putting this together I found Neil's notes from September, when he looked at a stove business himself, with you and your lad in mind for the fitting. It didn't add up for him as an employer paying crews. As your own business, with you doing the work in your own company, it's a different sum.</p>
+    <p>You've got the HETAS training, and you've already got a limited company: Neil's seen invoices from you self-employed and from the company. So this read treats it as two businesses side by side: the stone and brick you've always done, as yourself, and a stove business you trained for separately, in your company.</p>
+  </div>
+
+  <div class="card">
+    <h3>What homeowners pay for</h3>
+    <p>From Neil's build diary and his notes: you glazed the last window on the Lodge, boarded and taped the gable, and laid and backfilled the long cable trench on the digger, "totally clean and tidy". The diary calls you "an absolute legend". His notes add: you run your own jobs, work alongside your son, turn up when you say, are good to have in a house, and keep it clean.</p>
+    <p>In surveys, the things homeowners fear most when they let a tradesman in are no-shows (62%) and poor work (55%).</p>
+  </div>
+
+  <div class="card">
+    <h3>Who's buying</h3>
+    <p>About 1 home in 10 in England has a wood burner, and 1 detached house in 5. In the old Mendip area, 1 home in 10 heats with oil alone, three times the England rate.</p>
+    <p>In a 15-mile patch of mid-Somerset (about 100,000 homes), that's roughly <b>15,000 stoves</b>. About 1,100 are fitted or replaced each year, and there are about 12,700 sweeps (estimates). 40 installs a year would be under 4% of the local work.</p>
+    <p class="fine">Stove sales jumped 40% in 2022 when energy prices spiked. Nothing's been published since 2023, and there's no sign yet of a 2026 rush.</p>
+  </div>
+
+  <div class="card">
+    <div class="hear">You'll hear</div>
+    <h3>"Wood burners are being banned"</h3>
+    <span class="v v-no">Not for fitting or using them</span>
+    <p>New stoves must meet the Ecodesign standard. Every install is notified to building control. Your HETAS ticket lets you do that yourself, but only while your registration is current. A carbon monoxide alarm goes in with it.</p>
+    <p>Defra's 2026 plan: cleaner new stoves, coming in 3–5 years after the law is made. It doesn't propose banning fitting or using them in the countryside, and the government hasn't answered yet. New houses get heat pumps from 2027; stoves are still allowed as extra heat.</p>
+    <p class="one" style="margin-top:4px">A slow squeeze on what can be sold, not on fitting.</p>
+  </div>
+
+  <div class="card">
+    <h3>The year in two halves</h3>
+    <div class="months" aria-label="Stoves from September to February, stone from March to August">
+      <span class="sn">J</span><span class="sn">F</span><span class="st">M</span><span class="st">A</span><span class="st">M</span><span class="st">J</span><span class="st">J</span><span class="st">A</span><span class="sn">S</span><span class="sn">O</span><span class="sn">N</span><span class="sn">D</span>
+    </div>
+    <div class="legend"><i style="background:var(--blue-soft)"></i>Stoves (the company) &nbsp; <i style="background:var(--amber-soft)"></i>Stone (as yourself)</div>
+    <p style="margin-top:10px">Stoves have a rush from September to Christmas and are quieter in summer. Stone is spring and summer. Stove work can also fill winter days that stone work loses to frost and rain. Stone stays the main trade, with fewer days of it in the stove months.</p>
+  </div>
+
+  <div class="card">
+    <h3>Where the jobs come from</h3>
+    <p>Seven in ten homeowners hire someone they know or were recommended. For a fitter, marketing isn't standing in a kitchen selling. It's four jobs, mostly done once:</p>
+    <ol>
+      <li>A free Google profile with your phone number and area.</li>
+      <li>A photo of every finished hearth.</li>
+      <li>On handover day: "If you're happy with it, would you mind leaving a review? I'll text you the link."</li>
+      <li>Getting on the lists of people who already meet stove buyers: showrooms that sell without fitting, online stove sellers, sweeps, builders' merchants.</li>
+    </ol>
+    <p>Those lists bring steady fit-only work at about today's day rate. The better-paid jobs come from your own name. Lead websites charge £5–£45 a lead, shared with other trades.</p>
+    <div class="grey"><b class="h">One way to read it</b>The fitters who are busy all year aren't necessarily better at the job. They're easier to find.</div>
+    <p style="margin-top:12px">A friend in the trade may be able to help with prices on stoves.</p>
+  </div>
+
+  <div class="card">
+    <h2>This part in one line</h2>
+    <p class="one">Steady, local, seasonal, and won by being easy to find and trusted, not by hard selling.</p>
+    <button class="next" type="button" data-go="r2-2">Next: Part 2, the money →</button>
+  </div>
+</section>
+
+<!-- =================== READ 2 · PART 2 =================== -->
+<section class="part" id="r2-2" data-read="2" data-part="2" hidden>
+  <p class="inpart"><b>Read 2 · Part 2, the money.</b> What does one job make? How do you price it? What about VAT? What could a year look like?</p>
+
+  <div class="card">
+    <h3>One job, in pounds</h3>
+    <table class="t">
+      <tr><th>Job</th><th class="r">Charge</th><th class="r">Left</th><th class="r">Per day</th></tr>
+      <tr><td>Stove supplied and fitted, 9 m liner</td><td class="r">£2,400</td><td class="r">£800</td><td class="r">~£430</td></tr>
+      <tr><td>The same, priced at £2,700</td><td class="r">£2,700</td><td class="r">£1,100</td><td class="r">~£595</td></tr>
+      <tr><td>Fit-only (they've got the stove)</td><td class="r">£1,350</td><td class="r">£350</td><td class="r">~£190</td></tr>
+      <tr><td>Opening up a fireplace (extra)</td><td class="r">£900</td><td class="r">£395</td><td class="r">~£265</td></tr>
+      <tr><td>A sweep or service visit</td><td class="r">£80</td><td class="r">£80</td><td class="r">~£320</td></tr>
+    </table>
+    <p class="fine">"Left" is after the stove, liner and fittings, a helper and the van. "Per day" is per day of your time, including the survey and paperwork (a visit a quarter of a day). Costs include VAT, because a company under the VAT limit can't claim it back: stove £600, liner and fittings £822, a helper at £110 a day. Somerset jobs average about £2,400. Online sellers advertise a 5 kW stove fitted from about £2,000.</p>
+    <p>Opening up a fireplace pays about a stone day on its own. Its value is that it wins you the whole job, the kind a plain fitter has to turn down.</p>
+  </div>
+
+  <div class="card">
+    <h3>Pricing the fire, not your hours</h3>
+    <p>"Why should I make money on someone else's stove?" The customer pays a margin on the stove whoever supplies it. The only question is whether it goes to a shop, or to the person who has to come back and put it right if it goes wrong. The law puts that on whoever supplied it.</p>
+    <p>And what's the job worth to them? A fire going before Christmas, fitted by someone who turns up, keeps the house clean and does it right first time.</p>
+    <p>Plenty of tradesmen hate saying a big number out loud. The usual way round it is paper: a printed price list ("A stove fitted with a stone hearth, from £___") and a written quote, so the page says the price.</p>
+    <p class="fine">Every £100 on the price of a supply-and-fit job is £100 of profit; at 20 jobs a year, £2,000. FMB advice: when a customer mentions a cheaper quote, explain what's in yours rather than dropping it.</p>
+  </div>
+
+  <div class="card">
+    <h3>VAT, plainly</h3>
+    <p>Wood-burning stoves aren't zero-rated. A VAT-registered fitter has to add 20% to a homeowner's bill. A company whose turnover (everything customers pay it) stays under £90,000 in any 12 months doesn't, so it can charge less, or keep more.</p>
+    <p>Pass £90,000 in any rolling 12 months and you must register within 30 days. Your stone work as yourself and the stove company are two businesses, each with its own limit, as long as they're really separate: their own bank accounts, invoices from the right one, their own customers.</p>
+    <p class="fine">HMRC can treat a split that's only on paper as one business. Your accountant can check how yours is set up.</p>
+  </div>
+
+  <div class="card tool" id="t3">
+    <h2>Your two businesses, year by year</h2>
+    <span class="ex" id="t3ex">Showing the Examples, not you</span>
+    <div class="fld"><label for="s_jobs">Stoves supplied and fitted<small>jobs a year</small></label><div class="step" data-for="s_jobs" data-step="1"><button type="button" aria-label="less">−</button><input id="s_jobs" type="number" inputmode="numeric" value="20"><button type="button" aria-label="more">+</button></div></div>
+    <div class="fld"><label for="s_price">Your price for one<small>£, all in</small></label><div class="step" data-for="s_price" data-step="50"><button type="button" aria-label="less">−</button><input id="s_price" type="number" inputmode="numeric" value="2400"><button type="button" aria-label="more">+</button></div></div>
+    <div class="note">A helper on stove jobs?</div>
+    <div class="seg" id="s_help"><button type="button" data-v="1" aria-pressed="true">Yes</button><button type="button" data-v="0" aria-pressed="false">No, on my own</button></div>
+    <details><summary>Change the assumptions</summary>
+      <div class="fld"><label for="s_fit">Fit-only jobs<small>a year</small></label><div class="step" data-for="s_fit" data-step="1"><button type="button" aria-label="less">−</button><input id="s_fit" type="number" inputmode="numeric" value="5"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_fitp">Fit-only price<small>£</small></label><div class="step" data-for="s_fitp" data-step="50"><button type="button" aria-label="less">−</button><input id="s_fitp" type="number" inputmode="numeric" value="1350"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_open">Fireplace openings<small>a year</small></label><div class="step" data-for="s_open" data-step="1"><button type="button" aria-label="less">−</button><input id="s_open" type="number" inputmode="numeric" value="5"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_openp">Opening price<small>£, extra</small></label><div class="step" data-for="s_openp" data-step="50"><button type="button" aria-label="less">−</button><input id="s_openp" type="number" inputmode="numeric" value="900"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_new">New sweep customers<small>a year, on top of your own installs</small></label><div class="step" data-for="s_new" data-step="5"><button type="button" aria-label="less">−</button><input id="s_new" type="number" inputmode="numeric" value="30"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_visit">Sweep or service visit<small>£</small></label><div class="step" data-for="s_visit" data-step="5"><button type="button" aria-label="less">−</button><input id="s_visit" type="number" inputmode="numeric" value="80"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_vpc">Visits per customer<small>a year</small></label><div class="step" data-for="s_vpc" data-step="0.1"><button type="button" aria-label="less">−</button><input id="s_vpc" type="number" inputmode="decimal" value="1.3"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_stove">Stove cost<small>£, with VAT</small></label><div class="step" data-for="s_stove" data-step="25"><button type="button" aria-label="less">−</button><input id="s_stove" type="number" inputmode="numeric" value="600"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_kit">Liner and fittings<small>£, with VAT</small></label><div class="step" data-for="s_kit" data-step="25"><button type="button" aria-label="less">−</button><input id="s_kit" type="number" inputmode="numeric" value="822"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_fixed">Company running costs<small>£ a year: HETAS, insurance, van share, adverts, books</small></label><div class="step" data-for="s_fixed" data-step="250"><button type="button" aria-label="less">−</button><input id="s_fixed" type="number" inputmode="numeric" value="7000"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_stone">Your stone day rate<small>£</small></label><div class="step" data-for="s_stone" data-step="10"><button type="button" aria-label="less">−</button><input id="s_stone" type="number" inputmode="numeric" value="240"><button type="button" aria-label="more">+</button></div></div>
+      <div class="fld"><label for="s_scost">Stone running costs<small>£ a year</small></label><div class="step" data-for="s_scost" data-step="250"><button type="button" aria-label="less">−</button><input id="s_scost" type="number" inputmode="numeric" value="5000"><button type="button" aria-label="more">+</button></div></div>
+      <div class="note">Stove work fills winter days stone loses to weather?</div>
+      <div class="seg" id="s_fill"><button type="button" data-v="0" aria-pressed="true">No</button><button type="button" data-v="20" aria-pressed="false">About 20 days</button></div>
+      <div class="note">Share it with a partner who does the books?</div>
+      <div class="seg" id="s_share"><button type="button" data-v="0" aria-pressed="true">No</button><button type="button" data-v="1" aria-pressed="false">Yes</button></div>
+      <p class="fine">"Yes" pays them £5,000 a year for the books and gives them half the company's shares (married or civil partners; assumes they've little other income).</p>
+      <div class="note">What if the work drops by a third?</div>
+      <div class="seg" id="s_drop"><button type="button" data-v="0" aria-pressed="true">No</button><button type="button" data-v="1" aria-pressed="false">Yes</button></div>
+    </details>
+    <div class="yr"><button type="button" id="yprev" aria-label="Previous year">◀</button><b id="ylab">Year 1</b><button type="button" id="ynext" aria-label="Next year">▶</button></div>
+    <div class="out">
+      <div class="tile"><div class="n" id="o_turn">£0</div><div class="l">company turnover<span class="flag" id="o_flag"></span></div></div>
+      <div class="tile"><div class="n" id="o_prof">£0</div><div class="l">company profit</div></div>
+      <div class="tile"><div class="n" id="o_round">0</div><div class="l">sweep and service customers at the start of the year</div></div>
+      <div class="tile"><div class="n" id="o_sdays">0</div><div class="l">stone days left (out of 205<span id="o_fillnote"></span>)</div></div>
+      <div class="tile g wide"><div class="n" id="o_you">£0</div><div class="l" id="o_youl">your take-home for the year, both businesses, after tax</div></div>
+      <div class="tile wide" id="o_hhrow" hidden><div class="n" id="o_hh">£0</div><div class="l">the household's, with your partner's wage and shares</div></div>
+      <div class="tile"><div class="n" id="o_pday">£0</div><div class="l">a day on stove work (company profit ÷ your stove days)</div></div>
+      <div class="tile"><div class="n" id="o_vs">£0</div><div class="l" id="o_vsl">against labour-only</div></div>
+    </div>
+    <p class="fine" style="margin-top:10px">Assumes all the company's profit is paid out to you as dividends (leaving some in changes the tax), a customer round where 85 in 100 stay each year, a stove job taking 1.85 of your days and a quarter-day per sweep. These are rough sums, England 2026/27. Your accountant can run your real figures. <button type="button" class="clear" data-clear>Clear my numbers</button></p>
+  </div>
+
+  <div class="card">
+    <h2>This part in one line</h2>
+    <p class="one">At average prices, about a stone day. Priced above average, with the round building, roughly £5,000–£12,000 a year more once it's going, and something that's worth having.</p>
+    <button class="next" type="button" data-go="r2-3">Next: Part 3, the business →</button>
+  </div>
+</section>
+
+<!-- =================== READ 2 · PART 3 =================== -->
+<section class="part" id="r2-3" data-read="2" data-part="3" hidden>
+  <p class="inpart"><b>Read 2 · Part 3, the business.</b> How do businesses like this usually start? What's the company for? What makes it worth something?</p>
+
+  <div class="card">
+    <h3>How businesses like this usually start</h3>
+    <div class="stair"><b>A first winter</b>HETAS registration current, insurance checked, a free Google profile, a photo of every job, and a deposit when a stove is ordered so the customer's money buys it. A handful of installs alongside the stone work.</div>
+    <div class="stair"><b>Years 1–2</b>Stoves in winter, stone in summer. Every install joins the round of sweeps and services.</div>
+    <div class="stair"><b>Years 3–5</b>The round grows, and maybe a second pair of hands. Somewhere near £90,000 of turnover comes a choice: register for VAT and grow, or hold the volume and lift the price.</div>
+    <p class="fine">Rough running costs: public liability and tools insurance a few hundred pounds a year; HETAS registration about £450 a year (an estimate; the fee isn't published); a Google profile is free, a simple website a few hundred pounds.</p>
+  </div>
+
+  <div class="card">
+    <h3>Running both</h3>
+    <ul>
+      <li>People who run two trades usually keep a fixed share of days for their main firm, and tell them early.</li>
+      <li>Your lad's arrangements with anyone else he works for are his own. Other firms' customers and prices stay theirs.</li>
+      <li>Scaffold or a tower, when a chimney needs it, is £400–£1,500. It goes in the price.</li>
+      <li>If the job was agreed at a survey in the customer's home, they can cancel within 14 days. Get it in writing if they want you to start sooner.</li>
+      <li>If you supply the stove, putting faults right is on you (Consumer Rights Act 2015).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Your limited company, honestly</h3>
+    <table class="t">
+      <tr><th>Profit a year</th><th>On your own</th><th>Shared with a partner who works in it</th></tr>
+      <tr><td>£40,000</td><td>about £1,450 worse than sole trader</td><td>about £2,900 better</td></tr>
+      <tr><td>£60,000</td><td>about level</td><td>about £4,100 better</td></tr>
+      <tr><td>£100,000</td><td>about £4,250 worse</td><td>about £8,200 better</td></tr>
+    </table>
+    <p class="fine">Assumes cheap books (about £300 a year), all profit paid out, and a partner with little other income. Married or civil partners need proper ordinary shares for this. A sole trader can also pay a partner a fair wage for real work, so much of that gain is the wage. Your accountant sets the real split.</p>
+    <p>What the company is really for: a separate business with its own VAT limit; something you can sell or hand on (a company sells as shares, so the name, phone number and customers go with it); keeping money in for lean months; paying into a pension.</p>
+  </div>
+
+  <div class="card">
+    <h3>What makes it worth something</h3>
+    <p>Buyers pay for what keeps going without you: a round of sweep and service customers, a second fitter who can run jobs, clean accounts, and a name and reviews the business owns.</p>
+    <p>Stove businesses for sale ask roughly half to one-and-a-bit times a year's profit. Owner-run ones with a good service round ask up to about three times. It takes three to ten years.</p>
+    <p>If your lad might take it on one day, an accountant can show you how to give him a share early, while it's worth little.</p>
+  </div>
+
+  <div class="card">
+    <h3>The risks, straight</h3>
+    <ul>
+      <li>Work swings with energy prices.</li>
+      <li>Online packages cap what plain jobs fetch.</li>
+      <li>You sign off the safety. Devon &amp; Somerset had the most chimney fires in England in 2024/25.</li>
+      <li>The rules slowly tighten.</li>
+      <li>Someone has to answer the phone and go and look.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Three questions only you can answer</h3>
+    <ul>
+      <li>Which showrooms, sellers and sweeps round here would put my name on their list?</li>
+      <li>What would I charge for a fire with a stone hearth, if I priced the fire and not my hours?</li>
+      <li>Who would keep the diary and the books: someone at home, a bookkeeper, or an app?</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>That's everything</h2>
+    <p class="one">Two businesses, side by side: the stone you've always done, and a winter trade you've trained for that can build into something.</p>
+    <button class="next" type="button" data-go="r1-1">Back to the start ↑</button>
+  </div>
+
+  <div class="card src">
+    <details><summary>Sources for Read 2</summary>
+      <ul>
+        <li>Homes with wood burners: Horsfall et al. 2025, EPC analysis. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7618568/">pmc.ncbi.nlm.nih.gov</a>. Oil heating: Census 2021 (TS046), Nomis.</li>
+        <li>Local market size: estimates from the above, households (Census 2021) and a 15-year stove life; local install counts aren't published.</li>
+        <li>Sales trend: Stove Industry Association (secondary).</li>
+        <li>Rules: Defra consultation on domestic solid fuel burning, 2026. <a href="https://consult.defra.gov.uk/domestic-burning/consultation-on-solid-fuel-burning">consult.defra.gov.uk</a>; HETAS <a href="https://www.hetas.co.uk/">hetas.co.uk</a>.</li>
+        <li>Prices and timings: installer price guides (Squote <a href="https://squote.app/knowledge/costs/wood-burner-installation-pricing-guide">squote.app</a>; Checkatrade Somerset; MyBuilder), published installer price lists; sweeps in Wells, Frome and Shepton (secondary).</li>
+        <li>VAT: <a href="https://www.gov.uk/guidance/vat-on-energy-saving-materials-and-heating-equipment-notice-7086">VAT Notice 708/6</a>; <a href="https://www.gov.uk/vat-registration/when-to-register">when to register</a> (gov.uk).</li>
+        <li>How homeowners hire: Checkatrade survey 2024 (secondary); fears: Which? Trusted Traders survey (2018, via ITV). Lead costs: <a href="https://whito.co.uk/trades/research/uk-trade-directory-costs/">whito.co.uk</a>.</li>
+        <li>Company tax: <a href="https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax/rates-and-allowances-corporation-tax">corporation tax</a>, <a href="https://www.gov.uk/tax-on-dividends">dividends</a> (gov.uk). Sums are this page's own.</li>
+        <li>Business value: business-for-sale listings (secondary); <a href="https://hiltonsmythe.com/selling-a-business/heating-ventilation-air-conditioning/">Hilton Smythe</a>.</li>
+        <li>Consumer law: <a href="https://www.legislation.gov.uk/ukpga/2015/15/contents">Consumer Rights Act 2015</a>; <a href="https://www.legislation.gov.uk/uksi/2013/3134/contents">Consumer Contracts Regulations 2013</a>.</li>
+        <li>Chimney fires: fire and rescue statistics 2024/25 (secondary).</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<div class="sig">Claude<small>The AI Neil uses for research. Put together 27/10/2026.</small></div>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const KEY='lh-trade-v1';
+let st={}; try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+const save=()=>{ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} };
+const gbp=n=>(n<0?'−':'')+'£'+Math.round(Math.abs(n)).toLocaleString('en-GB');
+const num=id=>{ const v=parseFloat($(id).value); return isFinite(v)?v:0; };
+
+// ---------- tax, England 2026/27 ----------
+const PA=12570, BAND=37700, HIGHER_TOP=112570;
+function paFor(total){ return total>100000 ? Math.max(0, PA-(total-100000)/2) : PA; }
+function incomeTax(taxable){ // taxable = income above allowance
+  const t=Math.max(0,taxable);
+  return Math.min(t,BAND)*0.20 + Math.max(0,Math.min(t,HIGHER_TOP)-BAND)*0.40 + Math.max(0,t-HIGHER_TOP)*0.45;
+}
+function class4(p){ return Math.max(0,Math.min(p,PA+BAND)-PA)*0.06 + Math.max(0,p-PA-BAND)*0.02; }
+function soleTake(p){ p=Math.max(0,p); const pa=paFor(p); return p - incomeTax(p-pa) - class4(p); }
+function personTax(nondiv, div){
+  const pa=paFor(nondiv+div);
+  const tnd=Math.max(0,nondiv-pa);
+  const it=incomeTax(tnd);
+  const paLeft=Math.max(0,pa-nondiv);
+  const d=Math.max(0,div-paLeft);
+  const bandLeft=Math.max(0,BAND-tnd);
+  const allow=Math.min(500,d), d2=d-allow, band2=Math.max(0,bandLeft-allow);
+  const basic=Math.min(d2,band2), higher=d2-basic;
+  return it + basic*0.1075 + higher*0.3575;
+}
+function corpTax(x){
+  if(x<=0) return 0;
+  if(x<=50000) return x*0.19;
+  if(x>=250000) return x*0.25;
+  return x*0.25-(250000-x)*3/200;
+}
+
+// ---------- steppers ----------
+document.querySelectorAll('.step').forEach(s=>{
+  const inp=$(s.dataset.for), step=parseFloat(s.dataset.step)||1;
+  const [minus,plus]=s.querySelectorAll('button');
+  const fix=v=>Math.max(0, Math.round(v*100)/100);
+  minus.addEventListener('click',()=>{ inp.value=fix(num(inp.id)-step); inp.dispatchEvent(new Event('input',{bubbles:true})); });
+  plus.addEventListener('click',()=>{ inp.value=fix(num(inp.id)+step); inp.dispatchEvent(new Event('input',{bubbles:true})); });
+});
+function seg(id, cb){
+  const box=$(id);
+  box.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    box.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b?'true':'false'));
+    cb(b.dataset.v, true);
+  }));
+}
+function segSet(id,v){ $(id).querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x.dataset.v===String(v)?'true':'false')); }
+function segGet(id){ const b=$(id).querySelector('button[aria-pressed="true"]'); return b?b.dataset.v:null; }
+
+// ---------- tool 1: then and now ----------
+const CPI={1996:68.8,2000:72.7,2005:78.1,2010:89.4,2015:100,2020:108.7}, CPI_NOW=144.1;
+const AWE={2000:313,2005:382,2010:444,2015:482,2020:547}, AWE_NOW=757;
+const HPI={1996:52467,2000:80321,2005:165777,2010:175694,2015:191583,2020:232073}, HPI_NOW=280003;
+const T1=['t1y','t1a','t1b'];
+if(st.t1){ T1.forEach(k=>{ if(st.t1[k]!=null) $(k).value=st.t1[k]; }); }
+function t1(fromUser){
+  const y=+$('t1y').value, a=num('t1a'), b=num('t1b');
+  $('t1o1').textContent = a? '£'+(a*CPI_NOW/CPI[y]).toFixed(2) : '£0';
+  if(AWE[y]){ $('t1o2').textContent = a? '£'+(a*AWE_NOW/AWE[y]).toFixed(2) : '£0'; $('t1l2').textContent='the same, if it had kept up with average pay'; }
+  else { $('t1o2').textContent='–'; $('t1l2').textContent='average-pay figures start in 2000'; }
+  const hThen=a? HPI[y]/a : 0, hNow=b? HPI_NOW/b : 0;
+  $('t1o3').textContent = Math.round(hThen).toLocaleString('en-GB');
+  $('t1l3').textContent = 'hours of your work to earn a Somerset house in '+y;
+  $('t1o4').textContent = Math.round(hNow).toLocaleString('en-GB');
+  const yr=h=>(h/1640).toFixed(1);
+  $('t1yrs').textContent = (a&&b)? 'That\'s about '+yr(hThen)+' years of full-time work then (8 hours × 205 days), and '+yr(hNow)+' now.' : '';
+  if(fromUser){ st.t1={}; T1.forEach(k=>st.t1[k]=$(k).value); st.t1e=true; save(); }
+  $('t1ex').hidden=!!st.t1e;
+}
+T1.forEach(k=>$(k).addEventListener('input',()=>t1(true)));
+$('t1y').addEventListener('change',()=>t1(true));
+
+// ---------- tool 2: your number ----------
+const T2=['w_rate','w_hrs','w_days','w_cost','h_other','h_homec','h_bills','h_food','h_car','h_else'];
+const T2C=['a_hol','a_pen','a_buf'];
+if(st.t2){ T2.forEach(k=>{ if(st.t2[k]!=null) $(k).value=st.t2[k]; }); T2C.forEach(k=>{ if(st.t2[k]!=null) $(k).checked=st.t2[k]; }); if(st.t2.earn) segSet('h_earn',st.t2.earn); if(st.t2.home) segSet('h_home',st.t2.home); }
+function workProfit(extraDays){ return num('w_rate')*num('w_hrs')*(num('w_days')+(extraDays||0)) - num('w_cost'); }
+function workTake(){ return soleTake(workProfit(0)); }
+function t2(fromUser){
+  const earn=segGet('h_earn'), home=segGet('h_home');
+  $('h_otherrow').hidden = earn!=='2';
+  $('h_homerow').hidden = home==='own';
+  const wt=workTake();
+  $('w_out').textContent = gbp(wt/12);
+  let need = (home==='own'?0:num('h_homec')) + num('h_bills') + num('h_food') + num('h_car') + num('h_else');
+  if($('a_hol').checked) need+=250; if($('a_pen').checked) need+=400; if($('a_buf').checked) need+=300;
+  const other = earn==='2'? num('h_other') : 0;
+  const fromWork = need-other, bring=wt/12, gap=bring-fromWork;
+  $('h_verdict').textContent = 'The house needs '+gbp(need)+' a month after tax'+(other?' ('+gbp(fromWork)+' of it from your work)':'')+'. Your work brings in '+gbp(bring)+'. That\'s '+gbp(Math.abs(gap))+' a month '+(gap>=0?'spare.':'short.');
+  $('r_more').textContent = '+'+gbp(soleTake(workProfit(20))-wt);
+  if(fromUser){ st.t2={earn,home}; T2.forEach(k=>st.t2[k]=$(k).value); T2C.forEach(k=>st.t2[k]=$(k).checked); st.t2e=true; save(); }
+  $('t2ex').hidden=!!st.t2e;
+  t3(false);
+}
+T2.forEach(k=>$(k).addEventListener('input',()=>t2(true)));
+T2C.forEach(k=>$(k).addEventListener('change',()=>t2(true)));
+seg('h_earn',()=>t2(true)); seg('h_home',()=>t2(true));
+
+// ---------- tool 3: two businesses ----------
+const T3=['s_jobs','s_price','s_fit','s_fitp','s_open','s_openp','s_new','s_visit','s_vpc','s_stove','s_kit','s_fixed','s_stone','s_scost'];
+const T3S=['s_help','s_fill','s_share','s_drop'];
+if(st.t3){ T3.forEach(k=>{ if(st.t3[k]!=null) $(k).value=st.t3[k]; }); T3S.forEach(k=>{ if(st.t3[k]!=null) segSet(k,st.t3[k]); }); }
+let year=1;
+function model(){
+  const drop = segGet('s_drop')==='1' ? 2/3 : 1;
+  const S=num('s_jobs')*drop, P=num('s_price'), F=num('s_fit')*drop, PF=num('s_fitp'), O=num('s_open')*drop, PO=num('s_openp');
+  const NEW=num('s_new')*drop, VISIT=num('s_visit'), VPC=num('s_vpc');
+  const STOVE=num('s_stove'), KIT=num('s_kit'), FIXED=num('s_fixed'), STONE=num('s_stone'), SCOST=num('s_scost');
+  const help = segGet('s_help')==='1', fill=+segGet('s_fill'), share=segGet('s_share')==='1', PW=5000;
+  const HELPER=110, RET=0.85;
+  let cust=0; const rows=[];
+  for(let y=1;y<=5;y++){
+    const visits=cust*VPC;
+    const turn=S*P+F*PF+O*PO+visits*VISIT;
+    const mats=S*(STOVE+KIT)+F*KIT+O*300;
+    const helperCost= help ? ((S+F)*1.25+O*1.5)*HELPER : 0;
+    const youOnJob = help ? 1.85 : 2.6;   // your days per stove job (incl. survey + paperwork)
+    const youOnOpen = help ? 1.5 : 2.5;
+    const cost=mats+helperCost+(S+F+O)*40+FIXED+(share?PW:0);
+    const prof=turn-cost;
+    const sdays=(S+F)*youOnJob+O*youOnOpen+visits*0.25;
+    const stoneDays=Math.max(0,205+fill-sdays);
+    const stoneProfit=stoneDays*STONE-SCOST;
+    const ct=corpTax(prof), div=Math.max(0,prof-ct);
+    const dYou= share? div/2 : div, dP=div-dYou;
+    const you = stoneProfit + dYou - personTax(Math.max(0,stoneProfit),dYou) - class4(Math.max(0,stoneProfit));
+    const hh = you + (share? (PW + dP - personTax(PW,dP)) : 0);
+    rows.push({turn,prof,cust,stoneDays,you,hh,pday: sdays? prof/sdays : 0});
+    cust=cust*RET+S+F+O+NEW;
+  }
+  return rows;
+}
+function t3(fromUser){
+  const r=model()[year-1];
+  $('ylab').textContent='Year '+year;
+  $('o_turn').textContent=gbp(r.turn);
+  const over=r.turn>=90000;
+  $('o_flag').textContent= over? 'over the £90,000 limit: VAT registration due' : 'under the £90,000 limit';
+  $('o_flag').className='flag'+(over?' over':'');
+  $('o_prof').textContent=gbp(r.prof);
+  $('o_round').textContent=Math.round(r.cust).toLocaleString('en-GB');
+  $('o_sdays').textContent=Math.round(r.stoneDays);
+  $('o_fillnote').textContent= segGet('s_fill')==='20' ? ', plus 20 winter days' : '';
+  $('o_you').textContent=gbp(r.you)+' · '+gbp(r.you/12)+'/m';
+  const share=segGet('s_share')==='1';
+  $('o_hhrow').hidden=!share;
+  $('o_hh').textContent=gbp(r.hh);
+  $('o_pday').textContent=gbp(r.pday);
+  const mine=!!st.t2e, base= mine? workTake() : 34126;
+  const compare = share? r.hh : r.you;
+  $('o_vs').textContent=(compare-base>=0?'+':'')+gbp(compare-base);
+  $('o_vsl').textContent= (share?'the household ':'you ')+'against labour-only ('+gbp(base)+(mine?', your Read 1 figure)':', the £30 × 8 × 205 example)');
+  if(fromUser){ st.t3={}; T3.forEach(k=>st.t3[k]=$(k).value); T3S.forEach(k=>st.t3[k]=segGet(k)); st.t3e=true; save(); }
+  $('t3ex').hidden=!!st.t3e;
+}
+T3.forEach(k=>$(k).addEventListener('input',()=>t3(true)));
+T3S.forEach(k=>seg(k,()=>t3(true)));
+$('yprev').addEventListener('click',()=>{ year=Math.max(1,year-1); t3(false); });
+$('ynext').addEventListener('click',()=>{ year=Math.min(5,year+1); t3(false); });
+
+// ---------- clear ----------
+document.querySelectorAll('[data-clear]').forEach(b=>b.addEventListener('click',()=>{
+  const keep={tab:st.tab, done:st.done};
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  st=keep; save(); location.reload();
+}));
+
+// ---------- copy ----------
+function copyText(t,btn){
+  const done=()=>{ const o=btn.textContent; btn.textContent='Copied'; setTimeout(()=>btn.textContent=o,1500); };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,()=>fallback(t,done)); } else fallback(t,done);
+}
+function fallback(t,done){ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){} ta.remove(); }
+document.querySelectorAll('.prompt .cp').forEach(b=>b.addEventListener('click',()=>copyText(b.parentNode.querySelector('.pt').textContent,b)));
+
+// ---------- navigation ----------
+const LABELS={1:['1 Market','2 Money','3 Moves'],2:['1 Market','2 Money','3 Business']};
+st.done=st.done||{};
+function show(id, scroll){
+  if(!$(id)) id='r1-1';
+  const [r,p]=id.slice(1).split('-');
+  document.querySelectorAll('.part').forEach(s=>s.hidden = s.id!==id);
+  document.querySelectorAll('.reads button').forEach(b=>b.setAttribute('aria-selected', b.dataset.read===r?'true':'false'));
+  document.querySelectorAll('.parts button').forEach((b,i)=>{
+    const pid='r'+r+'-'+(i+1);
+    b.setAttribute('aria-selected', b.dataset.part===p?'true':'false');
+    b.innerHTML = LABELS[r][i] + (st.done[pid]?' <span class="tick" aria-label="read">✓</span>':'');
+  });
+  st.tab=id; save();
+  try{ history.replaceState(null,'','#'+id); }catch(e){}
+  if(scroll){ const n=$('nav'); window.scrollTo({top: n.getBoundingClientRect().top + window.scrollY - 2, behavior:'auto'}); }
+}
+document.querySelectorAll('.reads button').forEach(b=>b.addEventListener('click',()=>show('r'+b.dataset.read+'-1',true)));
+document.querySelectorAll('.parts button').forEach(b=>b.addEventListener('click',()=>{ const r=document.querySelector('.reads button[aria-selected="true"]').dataset.read; show('r'+r+'-'+b.dataset.part,true); }));
+document.querySelectorAll('.next').forEach(b=>b.addEventListener('click',()=>{ const cur=b.closest('.part').id; st.done[cur]=true; show(b.dataset.go,true); }));
+
+// ---------- start ----------
+t1(false); t2(false); t3(false);
+const fromHash=(location.hash||'').replace('#','');
+show(/^r[12]-[123]$/.test(fromHash)? fromHash : (st.tab||'r1-1'), false);
+})();
+</script>
+</body>
+</html>
