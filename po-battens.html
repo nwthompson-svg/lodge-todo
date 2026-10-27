@@ -96,8 +96,8 @@
 
 <header>
   <h1>Plant room battens</h1>
-  <div class="sub">The 4×1 rows and over/unders, plus two Lodge pieces</div>
-  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 27/10/2026.</div>
+  <div class="sub">The 4×1 rows and over/unders, plus the four Lodge roof-edge pieces</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 27/10/2026 (rev 2, lengths double-checked).</div>
   <div class="jump"><a href="#short">The 2.4s</a><a href="#boards">Boards</a><a href="#lodge">Lodge roof edge</a><a href="#list">What you're making</a></div>
 </header>
 
@@ -122,7 +122,7 @@
 <div class="card">
   <h2>The four 2.4s</h2>
   <div id="shortrows"></div>
-  <p style="margin-top:10px;">Measure 3 and 4 first: they need to be at least <span class="num">2294</span> long for both pieces. Touch up the paint on every new cut end.</p>
+  <p style="margin-top:10px;">Measure 3 and 4 first: they need to be at least <span class="num">2294</span> long for both pieces. There's room to square up a bad end first. Touch up the paint on every new cut end.</p>
 </div>
 
 <!-- ================= BOARDS ================= -->
@@ -142,7 +142,8 @@
 <div class="card rules">
   <h2>Measure before you cut</h2>
   <ul>
-    <li>Each side gets <b>a 2610 at the left-hand block end</b> and <b>a 2210 at the right-hand block end</b>.</li>
+    <li>Each side gets <b>a 2610 at the left-hand (west) block end</b> and <b>a 2210 at the right-hand (east) block end</b>.</li>
+    <li><b>Careful on the north side:</b> facing the building from the north, the left-hand block is on <b>your right</b>. The longer gap is always the 2610 end.</li>
     <li><b>25 gap</b> to the 3.6, and finish <b>25 back</b> from the outside of the end insulation.</li>
     <li>So measure from the end of the 3.6 to the outside face of the insulation, and <b>take off 50</b>. It should come out about 2610 and about 2210. If it doesn't, cut to your tape and tell Neil.</li>
   </ul>
@@ -152,10 +153,10 @@
   <h2>The four Lodge pieces</h2>
   <table class="pl">
     <tr><th>Piece</th><th>Where</th><th class="r">Length</th><th>From</th></tr>
-    <tr><td class="l">North, left</td><td>Left-hand block end</td><td class="r num">2610</td><td>Board 11</td></tr>
-    <tr><td class="l">South, left</td><td>Left-hand block end</td><td class="r num">2610</td><td>Board 12</td></tr>
-    <tr><td class="l">North, right</td><td>Right-hand block end</td><td class="r num">2210</td><td>2.4 no. 1</td></tr>
-    <tr><td class="l">South, right</td><td>Right-hand block end</td><td class="r num">2210</td><td>2.4 no. 2</td></tr>
+    <tr><td class="l">North, west</td><td>Left-hand block end</td><td class="r num">2610</td><td>Board 11</td></tr>
+    <tr><td class="l">South, west</td><td>Left-hand block end</td><td class="r num">2610</td><td>Board 12</td></tr>
+    <tr><td class="l">North, east</td><td>Right-hand block end</td><td class="r num">2210</td><td>2.4 no. 1</td></tr>
+    <tr><td class="l">South, east</td><td>Right-hand block end</td><td class="r num">2210</td><td>2.4 no. 2</td></tr>
   </table>
   <p style="margin-top:12px;">The two 2610s are fresh: paint them like the other Lodge over/unders.</p>
 </div>
@@ -193,14 +194,14 @@
   var TICK='<div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
   var R='<span class="tag rip">RIP</span>', N='<span class="tag norip">DON\'T RIP</span>', L='<span class="tag lodge">LODGE</span>';
   var shorts=[
-    ['1','Cut to 2210 '+L,'Lodge roof edge, north, right-hand block end. Measure first (section 3).'],
-    ['2','Cut to 2210 '+L,'Lodge roof edge, south, right-hand block end. Measure first (section 3).'],
+    ['1','Cut to 2210 '+L,'Lodge roof edge, north, right-hand (east) block end. Measure first (section 3).'],
+    ['2','Cut to 2210 '+L,'Lodge roof edge, south, right-hand (east) block end. Measure first (section 3).'],
     ['3','1311 + 980','PS-OU (bifold) · PW-OU (plant-end window). About 100 left.'],
     ['4','1311 + 980','PS-OU (bifold) · PW-OU (plant-end window). About 100 left.']
   ];
   var boards=[
     ['1','4590 '+R,'PN-1 ×2'],
-    ['2','4590 '+R,'PN-1, then cut one down to PN-2 3880. The off-cut (about 707) → one 701.'],
+    ['2','4590 '+R,'PN-1, then cut one down to PN-2 3880. The off-cut (about 707) → one 701. Cut the 3880 accurately: only 6 to spare for the 701.'],
     ['3','4590 '+R,'PN-1 ×2'],
     ['4','4132 '+R,'PS-1 ×2'],
     ['5','4132 '+R,'PS-1, then cut one down to PS-2 3017. The off-cut → one 701.'],
@@ -209,8 +210,8 @@
     ['8','3880 '+R+' · 701 '+R,'PN-2 ×2 · 701 ×2'],
     ['9','3017 '+R+' · 1600 '+N,'PS-2 ×2 · PE-OU'],
     ['10','3017 '+R+' · 1600 '+N,'PS-2 ×2 · PE-OU'],
-    ['11','2610 '+N+' '+L+' · 1776 '+R,'Lodge roof edge, north, left (measure first, section 3) · PW-1 ×2'],
-    ['12','2610 '+N+' '+L+' · 1776 '+R,'Lodge roof edge, south, left (measure first, section 3) · PW-1 ×2'],
+    ['11','2610 '+N+' '+L+' · 1776 '+R,'Lodge roof edge, north, left-hand (west) block end (measure first, section 3) · PW-1 ×2'],
+    ['12','2610 '+N+' '+L+' · 1776 '+R,'Lodge roof edge, south, left-hand (west) block end (measure first, section 3) · PW-1 ×2'],
     ['13','1776 '+R+' · 1156 '+R+' · 1156 '+R,'PW-1, then cut one down to PE-1 1156 · PE-1 ×4'],
     ['14','701 '+R+' · 701 '+R,'701 ×4. Keep the rest of the board (about 3.3 m).']
   ];
