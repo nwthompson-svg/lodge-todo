@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFAF8">
+<meta name="robots" content="noindex">
+<title>Plant room roof: solar mounting blocks</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#FBFAF8; --card:#FFFFFF; --divider:#E4E1DB;
+    --ink:#20211F; --sec:#6F6F6A; --muted:#A8A6A0;
+    --green:#2F8F5B; --green-soft:#DFF1E5; --green-line:#B9DEC6;
+    --amber:#D98A1F; --amber-soft:#FBEEDC;
+    --grey-soft:#EFEDE8; --blue:#3A6FB0; --red:#C0392B;
+    --wood:#F1E4CC; --clt:#D9B98A; --pir:#F3E3A6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17181A; --card:#202225; --divider:#33363A;
+      --ink:#ECEBE6; --sec:#B5B4AE; --muted:#80807A;
+      --green:#5CBF86; --green-soft:#1F3A2B; --green-line:#2F5A3F;
+      --amber:#E8A24A; --amber-soft:#3C2E18;
+      --grey-soft:#2C2E31; --blue:#7FA8E0; --red:#E57364;
+      --wood:#3A3226; --clt:#8A6E48; --pir:#6B6034;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; font-size:18px; line-height:1.4;}
+  .wrap{max-width:560px; margin:0 auto; padding:0 16px 80px;}
+  header{padding:max(26px,env(safe-area-inset-top)) 4px 6px;}
+  h1{font-size:32px; font-weight:600; letter-spacing:-0.4px; margin:0; line-height:1.15;}
+  .sub{font-size:20px; color:var(--sec); margin-top:4px; font-weight:500;}
+  .meta{font-size:16px; color:var(--muted); margin-top:10px;}
+  .jump{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .jump a{font-size:16px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border-radius:20px; padding:7px 14px; text-decoration:none;}
+  .part{font-size:26px; font-weight:700; letter-spacing:-0.3px; margin:34px 4px 4px;}
+  .partsub{font-size:17px; color:var(--sec); margin:0 4px 6px;}
+  .card{background:var(--card); border:0.5px solid var(--divider); border-radius:16px;
+    padding:18px 18px 14px; margin:14px 0;}
+  .card h2{font-size:16px; font-weight:600; color:var(--muted); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.4px;}
+  .card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:0 0 10px; padding-left:22px;} .card li{margin:5px 0;}
+  .rules{background:var(--amber-soft); border-color:transparent;}
+  .rules h2{color:var(--amber);}
+  .num{font-variant-numeric:tabular-nums; font-weight:700;}
+  .hero{display:flex; gap:10px; margin:6px 0 2px;}
+  .hero div{flex:1; background:var(--grey-soft); border-radius:12px; padding:10px 12px;}
+  .hero b{display:block; font-size:24px; font-variant-numeric:tabular-nums;}
+  .hero span{font-size:15px; color:var(--sec);}
+
+  .pl{width:100%; border-collapse:collapse; font-size:16px;}
+  .pl th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .pl td{padding:8px 6px 8px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .pl td.r, .pl th.r{text-align:right;}
+  .pl td:last-child, .pl th:last-child{padding-right:0;}
+  .pl td.l{font-weight:700; white-space:nowrap;}
+  .mk{color:var(--green); font-size:19px;}
+  .pl td small{display:block; font-weight:400; color:var(--sec); font-size:13px; white-space:normal;}
+  .pl tr[data-k]{cursor:pointer;}
+  .pl tr.done td{color:var(--muted); text-decoration:line-through;}
+  .pl tr.done td.l::before{content:"✓ "; color:var(--green);}
+  .pl tr.done .mk{color:var(--muted);}
+  .note{font-size:15px; color:var(--sec); margin-top:10px;}
+  .key{display:flex; gap:14px; flex-wrap:wrap; font-size:15px; color:var(--sec); margin-top:6px;}
+  .key i{display:inline-block; width:14px; height:14px; border-radius:3px; vertical-align:-2px; margin-right:5px;}
+  ol.cl8{list-style:none; padding-left:0; margin:6px 0 0;}
+  ol.cl8 li{display:flex; gap:10px; align-items:flex-start; margin:7px 0;}
+  ol.cl8 li b.n{flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--green); color:#fff;
+    font-size:15px; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+
+  .zoomwrap{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .zoomwrap svg.plan{width:100%; height:auto; display:block;}
+  .zoomwrap.big svg.plan{width:200%;}
+  .zbtn{display:inline-block; margin-top:8px; font-size:15px; font-weight:600; color:var(--green); background:var(--green-soft);
+    border:0; border-radius:18px; padding:6px 14px; font-family:inherit; cursor:pointer;}
+  svg.det{width:88%; max-width:320px; height:auto; display:block; margin:0 auto 14px;}
+  svg.sec{width:100%; height:auto; display:block; margin:6px 0;}
+
+  .t{font-family:inherit; fill:var(--ink);}
+  .roof{fill:var(--wood); stroke:var(--ink); stroke-width:22;}
+  .wall{fill:var(--sec); fill-opacity:.32;}
+  .ws{font-size:185px; fill:var(--sec);}
+  .beam{fill:var(--red); fill-opacity:.22; stroke:var(--red); stroke-width:10; stroke-dasharray:60 40;}
+  .bm{font-size:185px; fill:var(--red); font-weight:600;}
+  .pv{fill:var(--blue); fill-opacity:.06; stroke:var(--blue); stroke-width:14; stroke-dasharray:110 70;}
+  .pvl{font-size:200px; fill:var(--blue); font-weight:600;}
+  .cl{stroke:var(--green); stroke-width:10; stroke-dasharray:120 50 20 50;}
+  .blk{fill:var(--green); stroke:var(--ink); stroke-width:16;}
+  .bn{fill:var(--card); stroke:var(--green); stroke-width:22;}
+  .bnt{font-size:270px; font-weight:800; fill:var(--green);}
+  .dim{stroke:var(--ink); stroke-width:12;} .dimb{stroke:var(--ink); stroke-width:20;}
+  .ext{stroke:var(--sec); stroke-width:7;}
+  .dn{font-size:265px; font-weight:700;}
+  .lab{font-size:230px; font-weight:600; fill:var(--sec); letter-spacing:8px;}
+  .na{fill:none; stroke:var(--sec); stroke-width:24; stroke-linecap:round; stroke-linejoin:round;}
+  .nal{font-size:230px; font-weight:700; fill:var(--sec);}
+  .sbk{fill:var(--ink);} .sbw{fill:var(--card); stroke:var(--ink); stroke-width:12;}
+  .sbl{font-size:210px; fill:var(--sec);}
+
+  .blk2{fill:var(--green); fill-opacity:.35; stroke:var(--ink); stroke-width:4;}
+  .scr{fill:var(--ink);}
+  .dim2{stroke:var(--ink); stroke-width:2.5;}
+  .ext2{stroke:var(--sec); stroke-width:1.2; stroke-dasharray:5 4;}
+  .d2{font-size:44px; font-weight:700;} .d3{font-size:38px; font-weight:700;}
+  .d4{font-size:30px; font-weight:600; fill:var(--sec); letter-spacing:3px;}
+  .d5{font-size:32px; font-weight:700;}
+
+  .cltf{fill:var(--clt);} .lay{stroke:var(--card); stroke-width:1.2; stroke-opacity:.7;}
+  .foil{stroke:#9AA3AD; stroke-width:3;}
+  .pir{fill:var(--pir); stroke:var(--sec); stroke-width:1;}
+  .blks{fill:var(--green); fill-opacity:.45; stroke:var(--ink); stroke-width:2.5;}
+  .sc{fill:var(--ink);}
+  .epdm{stroke:var(--ink); stroke-width:5;}
+  .ghost{fill:none; stroke:var(--blue); stroke-width:2.5; stroke-dasharray:8 6;}
+  .ghostl{stroke:var(--blue); stroke-width:3; stroke-dasharray:8 6;}
+  .ldr{fill:none; stroke:var(--sec); stroke-width:1.8;}
+  .cn{fill:var(--green);} .cnt{font-size:32px; font-weight:800; fill:#fff;}
+
+  .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
+    font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
+  .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
+  .sig small{display:block; font-size:14px; color:var(--muted);}
+</style>
+</head>
+<body>
+<script>
+// Back bar — shown only when this page is open full-screen inside the installed app
+// (no browser bar to go back with). In a browser tab, or inside the app's page viewer, it stays hidden.
+(function(){
+  var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  if (window.top !== window || !app) return;
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:sticky;top:0;z-index:9;display:flex;align-items:center;background:var(--card);border-bottom:0.5px solid var(--divider);padding:max(8px,env(safe-area-inset-top)) 12px 8px;';
+  bar.innerHTML = '<button type="button" style="border:0;background:var(--green-soft);color:var(--green);font:inherit;font-size:18px;font-weight:600;min-height:44px;padding:0 16px 0 10px;border-radius:22px;display:flex;align-items:center;gap:4px;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back to the to-do</button>';
+  bar.firstChild.onclick = function(){ if (history.length > 1) history.back(); else location.href = './'; };
+  document.body.insertBefore(bar, document.body.firstChild);
+})();
+</script>
+
+<div class="wrap">
+
+<header>
+  <h1>Plant room roof: solar mounting blocks</h1>
+  <div class="sub">Where the six blocks go, and how to fit them</div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 31/10/2026.</div>
+  <div class="jump"><a href="#rules">Before you start</a><a href="#plan">Plan</a><a href="#pos">Positions</a><a href="#mark">Mark out</a><a href="#fit">Fit</a><a href="#block">The block</a></div>
+</header>
+
+<div class="card">
+  <h2>The job</h2>
+  <p>Six timber blocks go into the <b>plant room roof</b>, on the foil, <b>before the insulation</b>. Later the solar panel frame screws down through the EPDM into them. The insulation is too soft to take a screw, so the blocks are the only solid places the frame can fix to.</p>
+  <div class="hero">
+    <div><b>6</b><span>blocks</span></div>
+    <div><b>150 × 350</b><span>long side front to back</span></div>
+    <div><b>50 max</b><span>screw into the CLT</span></div>
+  </div>
+</div>
+
+<div class="card rules" id="rules">
+  <h2>Before you start</h2>
+  <ul>
+    <li><b>Measure from the bare CLT edges</b> of the roof: the <b>plant end</b> (small-window end) and the <b>front</b> (bifold side). Not from any insulation, battens or cladding.</li>
+    <li><b>Check the roof:</b> <b class="num">8400</b> long and <b class="num">3396</b> front to back. If either is out by more than 10, stop and message Neil.</li>
+    <li>The <b>long side of every block runs front to back</b>.</li>
+    <li>Each block is <b>as tall as the insulation at that spot</b>. The boards are tapered, so cut each block against the board that goes there. Top flush, within 2.</li>
+    <li><b>Screws: no more than 50 into the CLT.</b> The roof is only 60 thick and the underside is the ceiling. A tip coming through shows inside.</li>
+    <li><b>Blocks 5 and 6 (office end): wait for Neil's OK.</b> He may put a second roof beam along that line instead, like the one at 5850.</li>
+    <li><b>Photo and measure every block</b> and send them to Neil <b>before the EPDM goes on</b>. Once it's covered, nobody can find them.</li>
+  </ul>
+</div>
+
+<div class="part" id="plan">1. Plan</div>
+<p class="partsub">The roof from above, drawn to scale and turned to fit the phone: <b>plant end at the bottom, bifold side on the right</b>. Hold it as if you're standing at the plant end, looking along the roof.</p>
+<div class="card">
+  <div class="zoomwrap" id="zw">
+<svg viewBox="-750 -1000 5750 11300" class="plan" role="img" aria-label="Roof plan, to scale, with the six block positions">
+<rect x="0" y="0" width="3396" height="8400" class="roof"/>
+<rect x="714" y="171" width="2382" height="8058" class="pv"/>
+<text x="1905.0" y="7420" class="t pvl" text-anchor="middle">solar panels go</text>
+<text x="1905.0" y="7660" class="t pvl" text-anchor="middle">about here, later</text>
+<rect x="0" y="0" width="60" height="8400" class="wall"/>
+<rect x="3336" y="0" width="60" height="3008" class="wall"/>
+<rect x="3336" y="4278" width="60" height="4122" class="wall"/>
+<rect x="60" y="0" width="1099" height="60" class="wall"/>
+<rect x="2692" y="0" width="644" height="60" class="wall"/>
+<rect x="60" y="8340" width="1706.5" height="60" class="wall"/>
+<rect x="2704.5" y="8340" width="631.5" height="60" class="wall"/>
+<rect x="60" y="4695" width="1719" height="60" class="wall"/>
+<rect x="2692" y="4695" width="644" height="60" class="wall"/>
+<text transform="translate(3226,3643.0) rotate(90)" class="t ws" text-anchor="middle">bifold</text>
+<text x="1925.5" y="410" class="t ws" text-anchor="middle">1552 window</text>
+<text x="2235.5" y="8120" class="t ws" text-anchor="middle">932 window</text>
+<text x="2235.5" y="4605" class="t ws" text-anchor="middle">partition door</text>
+<text x="200" y="4605" class="t ws">partition</text>
+<rect x="60" y="2527.5" width="3276" height="45.0" class="beam"/>
+<text x="200" y="2460" class="t bm">roof beam 5850</text>
+<line x1="-260" y1="6617" x2="3656" y2="6617" class="cl"/>
+<line x1="-260" y1="4200" x2="3656" y2="4200" class="cl"/>
+<line x1="-260" y1="1783" x2="3656" y2="1783" class="cl"/>
+<line x1="2616" y1="-260" x2="2616" y2="8660" class="cl"/>
+<line x1="1226" y1="-260" x2="1226" y2="8660" class="cl"/>
+<rect x="2441.0" y="6542.0" width="350.0" height="150.0" class="blk"/>
+<circle cx="2616" cy="6257" r="200" class="bn"/>
+<text x="2616" y="6355" class="t bnt" text-anchor="middle">1</text>
+<rect x="1051.0" y="6542.0" width="350.0" height="150.0" class="blk"/>
+<circle cx="1226" cy="6257" r="200" class="bn"/>
+<text x="1226" y="6355" class="t bnt" text-anchor="middle">2</text>
+<rect x="2441.0" y="4125.0" width="350.0" height="150.0" class="blk"/>
+<circle cx="2616" cy="3840" r="200" class="bn"/>
+<text x="2616" y="3938" class="t bnt" text-anchor="middle">3</text>
+<rect x="1051.0" y="4125.0" width="350.0" height="150.0" class="blk"/>
+<circle cx="1226" cy="3840" r="200" class="bn"/>
+<text x="1226" y="3938" class="t bnt" text-anchor="middle">4</text>
+<rect x="2441.0" y="1708.0" width="350.0" height="150.0" class="blk"/>
+<circle cx="2616" cy="1423" r="200" class="bn"/>
+<text x="2616" y="1521" class="t bnt" text-anchor="middle">5</text>
+<rect x="1051.0" y="1708.0" width="350.0" height="150.0" class="blk"/>
+<circle cx="1226" cy="1423" r="200" class="bn"/>
+<text x="1226" y="1521" class="t bnt" text-anchor="middle">6</text>
+<line x1="3776" y1="0" x2="3776" y2="8400" class="dim"/>
+<line x1="3436" y1="8400" x2="3846" y2="8400" class="ext"/>
+<line x1="3706" y1="8400" x2="3846" y2="8400" class="dimb"/>
+<text x="3926" y="8495" class="t dn">0</text>
+<line x1="3436" y1="6617" x2="3846" y2="6617" class="ext"/>
+<line x1="3706" y1="6617" x2="3846" y2="6617" class="dimb"/>
+<text x="3926" y="6712" class="t dn">1783</text>
+<line x1="3436" y1="4200" x2="3846" y2="4200" class="ext"/>
+<line x1="3706" y1="4200" x2="3846" y2="4200" class="dimb"/>
+<text x="3926" y="4295" class="t dn">4200</text>
+<line x1="3436" y1="1783" x2="3846" y2="1783" class="ext"/>
+<line x1="3706" y1="1783" x2="3846" y2="1783" class="dimb"/>
+<text x="3926" y="1878" class="t dn">6617</text>
+<line x1="3436" y1="0" x2="3846" y2="0" class="ext"/>
+<line x1="3706" y1="0" x2="3846" y2="0" class="dimb"/>
+<text x="3926" y="95" class="t dn">8400</text>
+<line x1="0" y1="8780" x2="3396" y2="8780" class="dim"/>
+<line x1="3396" y1="8440" x2="3396" y2="8850" class="ext"/>
+<line x1="3396" y1="8710" x2="3396" y2="8850" class="dimb"/>
+<text x="3396" y="9110" class="t dn" text-anchor="middle">0</text>
+<line x1="2616" y1="8440" x2="2616" y2="8850" class="ext"/>
+<line x1="2616" y1="8710" x2="2616" y2="8850" class="dimb"/>
+<text x="2616" y="9110" class="t dn" text-anchor="middle">780</text>
+<line x1="1226" y1="8440" x2="1226" y2="8850" class="ext"/>
+<line x1="1226" y1="8710" x2="1226" y2="8850" class="dimb"/>
+<text x="1226" y="9110" class="t dn" text-anchor="middle">2170</text>
+<line x1="0" y1="8440" x2="0" y2="8850" class="ext"/>
+<line x1="0" y1="8710" x2="0" y2="8850" class="dimb"/>
+<text x="0" y="9110" class="t dn" text-anchor="middle">3396</text>
+<text x="1698.0" y="-380" class="t lab" text-anchor="middle">OFFICE END</text>
+<text x="1698.0" y="9480" class="t lab" text-anchor="middle">PLANT END</text>
+<text transform="translate(-390,4200.0) rotate(-90)" class="t lab" text-anchor="middle">BACK (hedge side)</text>
+<text transform="translate(4726,4200.0) rotate(90)" class="t lab" text-anchor="middle">FRONT (bifold side)</text>
+<path d="M 200 -760 L -420 -760 M -280 -870 L -420 -760 L -280 -650" class="na"/>
+<text x="-600" y="-680" class="t nal" text-anchor="middle">N</text>
+<rect x="0" y="9850" width="1000" height="100" class="sbk"/><rect x="1000" y="9850" width="1000" height="100" class="sbw"/>
+<text x="0" y="10210" class="t sbl" text-anchor="middle">0</text>
+<text x="1000" y="10210" class="t sbl" text-anchor="middle">1 m</text>
+<text x="2000" y="10210" class="t sbl" text-anchor="middle">2 m</text>
+<text x="2350" y="9950" class="t sbl">to scale</text>
+</svg>
+  </div>
+  <button class="zbtn" id="zb" type="button">Zoom in</button>
+  <div class="key"><span><i style="background:var(--green)"></i>block</span><span><i style="background:var(--sec);opacity:.5"></i>walls below</span><span><i style="background:var(--red);opacity:.5"></i>roof beam (for reference)</span><span><i style="border:2px dashed var(--blue)"></i>panels, later</span></div>
+  <p class="note">Numbers <b>down the right</b> are measured <b>from the plant-end edge</b>. Numbers <b>along the bottom</b> are measured <b>back from the front edge</b>. Every number is a block <b>centre</b>. The green dashed lines are the centre lines.</p>
+</div>
+
+<div class="part" id="pos">2. Positions</div>
+<div class="card" data-group="pos">
+  <h2>Block centres</h2>
+  <table class="pl">
+    <tr><th>Block</th><th class="r">From plant end</th><th class="r">From front</th></tr>
+<tr data-k="b1"><td class="l">1. Plant end, front<small>edges 1708–1858 across, 605–955 back</small></td><td class="r num"><b class="mk">1783</b></td><td class="r num"><b class="mk">780</b></td></tr>
+<tr data-k="b2"><td class="l">2. Plant end, back<small>edges 1708–1858 across, 1995–2345 back</small></td><td class="r num"><b class="mk">1783</b></td><td class="r num"><b class="mk">2170</b></td></tr>
+<tr data-k="b3"><td class="l">3. Middle, front<small>edges 4125–4275 across, 605–955 back</small></td><td class="r num"><b class="mk">4200</b></td><td class="r num"><b class="mk">780</b></td></tr>
+<tr data-k="b4"><td class="l">4. Middle, back<small>edges 4125–4275 across, 1995–2345 back</small></td><td class="r num"><b class="mk">4200</b></td><td class="r num"><b class="mk">2170</b></td></tr>
+<tr data-k="b5"><td class="l">5. Office end, front<small>edges 6542–6692 across, 605–955 back</small></td><td class="r num"><b class="mk">6617</b></td><td class="r num"><b class="mk">780</b></td></tr>
+<tr data-k="b6"><td class="l">6. Office end, back<small>edges 6542–6692 across, 1995–2345 back</small></td><td class="r num"><b class="mk">6617</b></td><td class="r num"><b class="mk">2170</b></td></tr>
+  </table>
+  <p class="note">The layout is the same from both ends: blocks 5 and 6 sit <b>1783</b> from the office-end edge, and 3 and 4 are on the middle of the roof (<b>4200</b> from both ends). From the back edge, the front blocks are <b>2616</b> to centre and the back blocks <b>1226</b>.</p>
+</div>
+
+<div class="part" id="mark">3. Mark out</div>
+<div class="card">
+  <ol>
+    <li>On the foil, mark a line <b class="num">780</b> back from the front edge. Measure at both ends and join the marks with a straight batten.</li>
+    <li>Mark a second line <b class="num">2170</b> back from the front edge the same way.</li>
+    <li>Along both lines, mark <b class="num">1783</b>, <b class="num">4200</b> and <b class="num">6617</b> from the plant-end edge.</li>
+    <li><b>Check from the other end:</b> the marks should read 1783, 4200 and 6617 from the office-end edge too. If they're out by more than 10, stop and message Neil.</li>
+    <li>Each cross is the <b>centre</b> of a block. Set the block on it, long side front to back.</li>
+  </ol>
+</div>
+
+<div class="part" id="fit">4. Fit</div>
+<div class="card">
+  <ol>
+    <li><b>Make six blocks, 150 × 350</b>, from treated timber. Two 6×2 offcuts glued and screwed together give 94, then cut down to height.</li>
+    <li><b>Height:</b> the same as the insulation board that sits there. If the board is thicker than your block, add a packer, glued and screwed.</li>
+    <li><b>Bed each block on the foil</b> on a bead of the insulation glue (the PU foam), on its marks.</li>
+    <li><b>Six screws per block</b>, 6 mm, in the pattern in section 5. Screw length = block height + 40 to 50 (table below). If you only have longer ones, counterbore.</li>
+    <li><b>Fit the insulation round tight</b> and foam any gap.</li>
+    <li><b>Check the top is flush</b> with a straight edge across the block and the boards either side.</li>
+    <li><b>Photo each block</b> from above with a tape showing both distances. Send them to Neil.</li>
+    <li>The <b>EPDM goes over the top as normal</b>. Don't cut it at the blocks.</li>
+  </ol>
+  <table class="pl">
+    <tr><th>Block height</th><th class="r">Screw</th><th class="r">Into the CLT</th></tr>
+    <tr><td>50–60</td><td class="r num">6 × 100</td><td class="r">40–50</td></tr>
+    <tr><td>70–80</td><td class="r num">6 × 120</td><td class="r">40–50</td></tr>
+    <tr><td>90–100</td><td class="r num">6 × 140</td><td class="r">40–50</td></tr>
+    <tr><td>110</td><td class="r num">6 × 160</td><td class="r">50</td></tr>
+  </table>
+</div>
+
+<div class="part" id="block">5. The block</div>
+<p class="partsub">One block from above, the same way round as the plan (back on the left, front on the right), then cut through front to back. Both to scale.</p>
+<div class="card">
+<svg viewBox="-345 -215 725 445" class="det" role="img" aria-label="One block from above, screw positions">
+<rect x="-175" y="-75" width="350" height="150" class="blk2"/>
+<circle cx="-120" cy="-35" r="9" class="scr"/>
+<circle cx="-120" cy="35" r="9" class="scr"/>
+<circle cx="0" cy="-35" r="9" class="scr"/>
+<circle cx="0" cy="35" r="9" class="scr"/>
+<circle cx="120" cy="-35" r="9" class="scr"/>
+<circle cx="120" cy="35" r="9" class="scr"/>
+<line x1="-175" y1="-125" x2="175" y2="-125" class="dim2"/><line x1="-175" y1="-145" x2="-175" y2="-105" class="dim2"/><line x1="175" y1="-145" x2="175" y2="-105" class="dim2"/>
+<text x="0" y="-145" class="t d2" text-anchor="middle">350</text>
+<line x1="-175" y1="125" x2="175" y2="125" class="dim2"/>
+<line x1="-175" y1="105" x2="-175" y2="145" class="dim2"/>
+<line x1="-120" y1="105" x2="-120" y2="145" class="dim2"/>
+<line x1="0" y1="105" x2="0" y2="145" class="dim2"/>
+<line x1="120" y1="105" x2="120" y2="145" class="dim2"/>
+<line x1="175" y1="105" x2="175" y2="145" class="dim2"/>
+<text x="-147.5" y="190" class="t d3" text-anchor="middle">55</text>
+<text x="-60.0" y="190" class="t d3" text-anchor="middle">120</text>
+<text x="60.0" y="190" class="t d3" text-anchor="middle">120</text>
+<text x="147.5" y="190" class="t d3" text-anchor="middle">55</text>
+<line x1="225" y1="-75" x2="225" y2="75" class="dim2"/>
+<line x1="205" y1="-75" x2="245" y2="-75" class="dim2"/>
+<line x1="205" y1="-35" x2="245" y2="-35" class="dim2"/>
+<line x1="205" y1="35" x2="245" y2="35" class="dim2"/>
+<line x1="205" y1="75" x2="245" y2="75" class="dim2"/>
+<text x="260" y="-41" class="t d3">40</text><text x="260" y="14" class="t d3">70</text><text x="260" y="69" class="t d3">40</text>
+<text transform="translate(-235,0) rotate(-90)" class="t d4" text-anchor="middle">BACK</text>
+<text transform="translate(-290,0) rotate(-90)" class="t d3" text-anchor="middle">150</text>
+<line x1="-262" y1="-75" x2="-262" y2="75" class="dim2"/><line x1="-282" y1="-75" x2="-242" y2="-75" class="dim2"/><line x1="-282" y1="75" x2="-242" y2="75" class="dim2"/>
+<text transform="translate(345,0) rotate(90)" class="t d4" text-anchor="middle">FRONT</text>
+</svg>
+<svg viewBox="-250 -105 860 440" class="sec" role="img" aria-label="Section through a block, to scale">
+<rect x="-100" y="82" width="550" height="60" class="cltf"/>
+<line x1="-100" y1="102" x2="450" y2="102" class="lay"/><line x1="-100" y1="122" x2="450" y2="122" class="lay"/>
+<line x1="-100" y1="81" x2="450" y2="81" class="foil"/>
+<rect x="-100" y="0" width="100" height="80" class="pir"/><rect x="350" y="0" width="100" height="80" class="pir"/>
+<rect x="0" y="0" width="350" height="80" class="blks"/>
+<rect x="52" y="0" width="6" height="127" class="sc"/>
+<path d="M 47 0 L 63 0 L 58 7 L 52 7 Z" class="sc"/>
+<rect x="172" y="0" width="6" height="127" class="sc"/>
+<path d="M 167 0 L 183 0 L 178 7 L 172 7 Z" class="sc"/>
+<rect x="292" y="0" width="6" height="127" class="sc"/>
+<path d="M 287 0 L 303 0 L 298 7 L 292 7 Z" class="sc"/>
+<line x1="-100" y1="-2" x2="450" y2="-2" class="epdm"/>
+<rect x="125" y="-12" width="100" height="8" class="ghost"/>
+<line x1="175" y1="-12" x2="175" y2="50" class="ghostl"/>
+<line x1="-150" y1="82" x2="-150" y2="127" class="dim2"/>
+<line x1="-170" y1="82" x2="-130" y2="82" class="dim2"/>
+<line x1="-170" y1="127" x2="-130" y2="127" class="dim2"/>
+<line x1="-130" y1="127" x2="290" y2="127" class="ext2"/>
+<text x="-180" y="116.5" class="t d5" text-anchor="end">45</text>
+<line x1="500" y1="0" x2="500" y2="80" class="dim2"/><line x1="500" y1="82" x2="500" y2="142" class="dim2"/>
+<line x1="480" y1="0" x2="520" y2="0" class="dim2"/>
+<line x1="480" y1="80" x2="520" y2="80" class="dim2"/>
+<line x1="480" y1="82" x2="520" y2="82" class="dim2"/>
+<line x1="480" y1="142" x2="520" y2="142" class="dim2"/>
+<text x="535" y="52.0" class="t d5">80*</text>
+<text x="535" y="124" class="t d5">60</text>
+<line x1="0" y1="267" x2="350" y2="267" class="dim2"/><line x1="0" y1="247" x2="0" y2="287" class="dim2"/><line x1="350" y1="247" x2="350" y2="287" class="dim2"/>
+<text x="175" y="322" class="t d5" text-anchor="middle">350</text>
+<line x1="-60" y1="-38" x2="-60" y2="-4" class="ldr"/>
+<circle cx="-60" cy="-62" r="25" class="cn"/>
+<text x="-60" y="-51" class="t cnt" text-anchor="middle">1</text>
+<line x1="175" y1="-38" x2="175" y2="-14" class="ldr"/>
+<circle cx="175" cy="-62" r="25" class="cn"/>
+<text x="175" y="-51" class="t cnt" text-anchor="middle">7</text>
+<line x1="400" y1="-38" x2="400" y2="30" class="ldr"/>
+<circle cx="400" cy="-62" r="25" class="cn"/>
+<text x="400" y="-51" class="t cnt" text-anchor="middle">2</text>
+<line x1="280" y1="-38" x2="280" y2="30" class="ldr"/>
+<circle cx="280" cy="-62" r="25" class="cn"/>
+<text x="280" y="-51" class="t cnt" text-anchor="middle">3</text>
+<line x1="-60" y1="181" x2="-60" y2="81" class="ldr"/>
+<circle cx="-60" cy="205" r="25" class="cn"/>
+<text x="-60" y="216" class="t cnt" text-anchor="middle">4</text>
+<line x1="100" y1="181" x2="100" y2="112" class="ldr"/>
+<circle cx="100" cy="205" r="25" class="cn"/>
+<text x="100" y="216" class="t cnt" text-anchor="middle">5</text>
+<line x1="245" y1="181" x2="295" y2="121" class="ldr"/>
+<circle cx="245" cy="205" r="25" class="cn"/>
+<text x="245" y="216" class="t cnt" text-anchor="middle">8</text>
+<line x1="400" y1="181" x2="400" y2="142" class="ldr"/>
+<circle cx="400" cy="205" r="25" class="cn"/>
+<text x="400" y="216" class="t cnt" text-anchor="middle">6</text>
+</svg>
+  <ol class="cl8">
+    <li><b class="n">1</b><span><b>EPDM</b> over the top. Not cut.</span></li>
+    <li><b class="n">2</b><span><b>Insulation</b>, tapered boards, tight round the block.</span></li>
+    <li><b class="n">3</b><span><b>Block</b>, top flush with the insulation.</span></li>
+    <li><b class="n">4</b><span><b>Foil</b> (vapour membrane). The block sits on it, on a bead of glue.</span></li>
+    <li><b class="n">5</b><span><b>CLT roof</b>, 60 thick.</span></li>
+    <li><b class="n">6</b><span><b>Ceiling</b>: the underside you see from inside. Nothing comes through.</span></li>
+    <li><b class="n">7</b><span><b>Later:</b> the frame's foot screws through the EPDM into the block (dashed blue).</span></li>
+    <li><b class="n">8</b><span><b>Screws</b>, six per block: 40 to 50 into the CLT, so at least 10 left.</span></li>
+  </ol>
+  <p class="note">* Drawn with 80 of insulation. Yours will be 50 to 110, depending on where the block sits on the taper.</p>
+</div>
+
+<button class="reset" id="reset" type="button">Clear all ticks</button>
+<p class="sig">Lord Claude<small>Neil's mate</small></p>
+
+</div>
+<script>
+(function(){
+  var KEY='lh-po-solar-blocks-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var all=document.querySelectorAll('[data-k]');
+  Array.prototype.forEach.call(all,function(r){
+    var k=r.getAttribute('data-k');
+    if(st[k]) r.classList.add('done');
+    r.addEventListener('click',function(){ r.classList.toggle('done'); st[k]=r.classList.contains('done'); save(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every tick on this page?')) return;
+    st={}; save(); Array.prototype.forEach.call(all,function(r){ r.classList.remove('done'); });
+  });
+  var zw=document.getElementById('zw'), zb=document.getElementById('zb');
+  zb.addEventListener('click',function(){
+    var big=zw.classList.toggle('big'); zb.textContent= big ? 'Zoom out' : 'Zoom in';
+  });
+})();
+</script>
+</body>
+</html>
