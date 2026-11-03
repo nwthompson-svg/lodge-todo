@@ -80,6 +80,12 @@
     border:0; border-radius:18px; padding:6px 14px; font-family:inherit; cursor:pointer;}
   svg.det{width:88%; max-width:320px; height:auto; display:block; margin:0 auto 14px;}
   svg.sec{width:100%; height:auto; display:block; margin:6px 0;}
+  a.shot{display:block; border:0.5px solid var(--divider); border-radius:10px; overflow:hidden;}
+  a.shot img{display:block; width:100%; height:auto;}
+  .opt{width:100%; border-collapse:collapse; font-size:15px; margin-top:12px;}
+  .opt th{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; text-align:left; font-weight:600; padding:0 6px 6px 0;}
+  .opt td{padding:7px 6px 7px 0; border-top:0.5px solid var(--divider); vertical-align:top;}
+  .opt td:first-child{color:var(--sec); white-space:nowrap;}
 
   .t{font-family:inherit; fill:var(--ink);}
   .roof{fill:var(--wood); stroke:var(--ink); stroke-width:22;}
@@ -89,6 +95,8 @@
   .bm{font-size:185px; fill:var(--red); font-weight:600;}
   .pv{fill:var(--blue); fill-opacity:.06; stroke:var(--blue); stroke-width:14; stroke-dasharray:110 70;}
   .pvl{font-size:200px; fill:var(--blue); font-weight:600;}
+  .pvb{fill:var(--amber); fill-opacity:.12; stroke:var(--amber); stroke-width:22;}
+  .pvr{stroke:var(--amber); stroke-width:26;}
   .cl{stroke:var(--green); stroke-width:10; stroke-dasharray:120 50 20 50;}
   .blk{fill:var(--green); stroke:var(--ink); stroke-width:16;}
   .bn{fill:var(--card); stroke:var(--green); stroke-width:22;}
@@ -147,8 +155,8 @@
 <header>
   <h1>Plant room roof: solar mounting blocks</h1>
   <div class="sub">Where the six blocks go, and how to fit them</div>
-  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 31/10/2026.</div>
-  <div class="jump"><a href="#rules">Before you start</a><a href="#plan">Plan</a><a href="#pos">Positions</a><a href="#mark">Mark out</a><a href="#fit">Fit</a><a href="#block">The block</a></div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 31/10/2026. Panel options added 03/11/2026.</div>
+  <div class="jump"><a href="#rules">Before you start</a><a href="#plan">Plan</a><a href="#pos">Positions</a><a href="#mark">Mark out</a><a href="#fit">Fit</a><a href="#block">The block</a><a href="#options">Panel options</a></div>
 </header>
 
 <div class="card">
@@ -181,9 +189,15 @@
   <div class="zoomwrap" id="zw">
 <svg viewBox="-750 -1000 5750 11300" class="plan" role="img" aria-label="Roof plan, to scale, with the six block positions">
 <rect x="0" y="0" width="3396" height="8400" class="roof"/>
+<rect x="714" y="5490.228008098" width="2382" height="2253.543983804" class="pvb"/>
+<line x1="714" y1="6617" x2="3096" y2="6617" class="pvr"/>
+<rect x="714" y="3073.228008098" width="2382" height="2253.543983804" class="pvb"/>
+<line x1="714" y1="4200" x2="3096" y2="4200" class="pvr"/>
+<rect x="714" y="656.2280080979999" width="2382" height="2253.543983804" class="pvb"/>
+<line x1="714" y1="1783" x2="3096" y2="1783" class="pvr"/>
 <rect x="714" y="171" width="2382" height="8058" class="pv"/>
-<text x="1905.0" y="7420" class="t pvl" text-anchor="middle">solar panels go</text>
-<text x="1905.0" y="7660" class="t pvl" text-anchor="middle">about here, later</text>
+<text x="1905.0" y="7420" class="t pvl" text-anchor="middle">panels, later:</text>
+<text x="1905.0" y="7660" class="t pvl" text-anchor="middle">2 options</text>
 <rect x="0" y="0" width="60" height="8400" class="wall"/>
 <rect x="3336" y="0" width="60" height="3008" class="wall"/>
 <rect x="3336" y="4278" width="60" height="4122" class="wall"/>
@@ -266,8 +280,9 @@
 </svg>
   </div>
   <button class="zbtn" id="zb" type="button">Zoom in</button>
-  <div class="key"><span><i style="background:var(--green)"></i>block</span><span><i style="background:var(--sec);opacity:.5"></i>walls below</span><span><i style="background:var(--red);opacity:.5"></i>roof beam (for reference)</span><span><i style="border:2px dashed var(--blue)"></i>panels, later</span></div>
+  <div class="key"><span><i style="background:var(--green)"></i>block</span><span><i style="background:var(--sec);opacity:.5"></i>walls below</span><span><i style="background:var(--red);opacity:.5"></i>roof beam (for reference)</span><span><i style="border:2px dashed var(--blue)"></i>panels A: 7 in a row</span><span><i style="background:var(--amber);opacity:.6"></i>panels B: 3 pairs, ridge in amber</span></div>
   <p class="note">Numbers <b>down the right</b> are measured <b>from the plant-end edge</b>. Numbers <b>along the bottom</b> are measured <b>back from the front edge</b>. Every number is a block <b>centre</b>. The green dashed lines are the centre lines.</p>
+  <p class="note">The panels come later and Neil hasn't picked the layout yet. <b>The blocks go in the same place for both.</b> More in <a href="#options">section 6</a>.</p>
 </div>
 
 <div class="part" id="pos">2. Positions</div>
@@ -416,6 +431,26 @@
     <li><b class="n">8</b><span><b>Screws</b>, six per block: 40 to 50 into the CLT, so at least 10 left.</span></li>
   </ol>
   <p class="note">* Drawn with 80 of insulation. Yours will be 50 to 110, depending on where the block sits on the taper.</p>
+</div>
+
+<div class="part" id="options">6. Panel options</div>
+<p class="partsub">For Neil: nothing to fit here. Two ways the panels could go on later, both on the same blocks.</p>
+<div class="card">
+  <table class="opt">
+    <tr><th></th><th>A: one row</th><th>B: east-west pairs</th></tr>
+    <tr><td>Panels</td><td>7, all facing south</td><td>6, in 3 pairs facing east and west</td></tr>
+    <tr><td>Tilt</td><td>10° to the south</td><td>10° east and west, no south lean</td></tr>
+    <tr><td>Length</td><td>8058, 171 clear of each end</td><td>7088, 656 clear of each end</td></tr>
+    <tr><td>Front to back</td><td>300 to 2646 from the front edge (the tilt shortens it), 750 clear of the back</td><td>300 to 2682 from the front edge, 714 clear of the back</td></tr>
+    <tr><td>Gaps</td><td>20 between panels</td><td>20 at each ridge, 163 at the two valleys</td></tr>
+    <tr><td>On the blocks</td><td>Frame lines on the block lines</td><td>Each ridge sits right on a block line (1783, 4200, 6617)</td></tr>
+  </table>
+  <p class="note">B in plan: each panel tilted 10° covers 1134 × cos 10° = <b>1117</b> and rises <b>197</b>. A pair is 1117 + 20 + 1117 = <b>2254</b>. The block lines are 2417 apart, so a <b>163</b> valley gap puts every ridge on a block line.</p>
+</div>
+<div class="card">
+  <h2>B drawn out: plan, front view, one pair</h2>
+  <a class="shot" href="po-solar-ew.png" target="_blank" rel="noopener"><img src="po-solar-ew.png" alt="Option B: three east-west pairs on the block lines, plan, front view and one pair" loading="lazy"></a>
+  <p class="note">Tap the drawing to open it full size, then pinch to zoom.</p>
 </div>
 
 <button class="reset" id="reset" type="button">Clear all ticks</button>
