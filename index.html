@@ -89,7 +89,11 @@
   .circle.done{border:0; background:var(--done); color:#fff;}
   .body{flex:1; min-width:0; cursor:pointer;}
   .task{font-size:19px; line-height:1.35;}
+  /* A titled task: one bold line (cut with … if it ever overflows), the description underneath. */
+  .task.ttl{font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .desc{font-size:16px; line-height:1.35; color:var(--sec); margin-top:2px;}
   .row.is-done .task{color:var(--done-ink); text-decoration:line-through;}
+  .row.is-done .desc{color:var(--done-ink);}
   .meta{display:flex; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;}
   .pill{font-size:15px; font-weight:500; color:var(--prog); background:var(--prog-soft); padding:2px 8px; border-radius:5px;}
   .chip{display:inline-flex; align-items:center; gap:5px; font-size:16px; color:var(--sec);}
@@ -237,11 +241,11 @@ function api(body) {
 // ---------- local cache + seed (offline fallback / pre-deploy demo) ----------
 const KEY = "lodge-todo-v1";
 const SEED = [
-  {id:1, task:"Run MVHR duct to bedroom 2 terminal", area:"MVHR", status:"In progress", priority:"High", added_by:"Neil/AI", notes:"", photo:"", deadline:"2026-07-03"},
+  {id:1, title:"Bedroom 2 MVHR duct", task:"Run the MVHR duct from the manifold to the bedroom 2 terminal, clipped every 1 m and taped at both ends.", area:"MVHR", status:"In progress", priority:"High", added_by:"Neil/AI", notes:"", photo:"", deadline:"2026-07-03"},
   {id:2, task:"Seal AVCL penetration at plant room", area:"MVHR", status:"Open", priority:"Med", added_by:"Neil/AI", notes:"", photo:"x"},
   {id:3, task:"Order more duct clips - running short", area:"MVHR", status:"Open", priority:"Low", added_by:"Wayne", notes:"", photo:""},
-  {id:4, task:"Torque-check goal-post base bolts", area:"Foundations", status:"Open", priority:"High", added_by:"Neil/AI", notes:"", photo:"", deadline:"2026-06-28"},
-  {id:5, task:"Confirm CLT delivery slot with Schilliger", area:"CLT", status:"Done", priority:"Med", added_by:"Neil/AI", notes:"", photo:""},
+  {id:4, title:"Torque-check base bolts", task:"Torque-check goal-post base bolts", area:"Foundations", status:"Open", priority:"High", added_by:"Neil/AI", notes:"", photo:"", deadline:"2026-06-28"},
+  {id:5, title:"CLT delivery slot", task:"Confirm CLT delivery slot with Schilliger", area:"CLT", status:"Done", priority:"Med", added_by:"Neil/AI", notes:"", photo:""},
   {id:6, task:"Photo of column baseplates for Neil", area:"Foundations", status:"Done", priority:"Low", added_by:"Wayne", notes:"", photo:""}
 ];
 const Data = {
@@ -468,7 +472,9 @@ function rowHTML(t){
     <div class="row ${inactive?'is-done':''}" data-id="${t.id}">
       ${circle}
       <div class="body" data-act="edit" data-id="${t.id}">
-        <div class="task">${esc(t.task)}</div>
+        ${t.title
+          ? `<div class="task ttl">${esc(t.title)}</div>${t.task?`<div class="desc">${esc(t.task)}</div>`:''}`
+          : `<div class="task">${esc(t.task)}</div>`}
         ${meta?`<div class="meta">${meta}</div>`:''}
       </div>
     </div>
@@ -684,7 +690,9 @@ function openEdit(id){
   const draft = {status:t.status, priority:t.priority, area:t.area};
   sheet.innerHTML = `
     <h2>Edit task</h2>
-    <label>Task</label>
+    <label>Title</label>
+    <input type="text" id="f-title" maxlength="40" placeholder="Short name, e.g. Cut 4x1 battens" value="${esc(t.title||'')}">
+    <label>Description</label>
     <textarea id="f-task" class="grow" rows="2">${esc(t.task)}</textarea>
     <label>Status</label>${segGroup(STAT, t.status, "status")}
     <label>Priority</label>${segGroup(PRIOS, t.priority, "priority")}
@@ -704,7 +712,8 @@ function openEdit(id){
   wireSeg(draft);
   const linksOut = wireLinks(parseLinks(t.links));
   $("#f-save").onclick = async ()=>{
-    t.task = $("#f-task").value.trim() || t.task;
+    t.title = $("#f-title").value.trim();
+    t.task = $("#f-task").value.trim() || (t.title ? "" : t.task);
     t.links = linksOut();
     t.notes = $("#f-notes").value.trim();
     t.deadline = $("#f-deadline").value || "";
@@ -722,8 +731,10 @@ function openAdd(){
   const draft = {status:"Open", priority:"Med", area:(areas()[0]||"Site")};
   sheet.innerHTML = `
     <h2>New task</h2>
-    <label>Task</label>
-    <textarea id="f-task" rows="2" placeholder="What needs doing?"></textarea>
+    <label>Title</label>
+    <input type="text" id="f-title" maxlength="40" placeholder="Short name, e.g. Cut 4x1 battens">
+    <label>Description</label>
+    <textarea id="f-task" rows="2" placeholder="What needs doing? (optional)"></textarea>
     <label>Priority</label>${segGroup(PRIOS, draft.priority, "priority")}
     <label>Deadline</label>
     <input type="date" id="f-deadline" value="">
@@ -733,8 +744,9 @@ function openAdd(){
   wireSeg(draft);
   const linksOut = wireLinks([]);
   $("#f-add").onclick = ()=>{
-    const text = $("#f-task").value.trim(); if(!text) return;
-    const t = {id:Data.nextId(tasks), task:text, area:draft.area, status:"Open",
+    const title = $("#f-title").value.trim(), text = $("#f-task").value.trim();
+    if(!title && !text) return;
+    const t = {id:Data.nextId(tasks), title, task:text, area:draft.area, status:"Open",
       priority:draft.priority, added_by:ACTOR, links:linksOut(), notes:"", photo:"", deadline:$("#f-deadline").value||""};
     stamp(t,"create"); tasks.push(t); save(t); render(); closeSheet();
   };
