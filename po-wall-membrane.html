@@ -93,6 +93,17 @@
   .key{display:flex; gap:14px; flex-wrap:wrap; font-size:15px; color:var(--sec);}
   .key i{display:inline-block; width:14px; height:14px; border-radius:3px; vertical-align:-2px; margin-right:5px;}
 
+  table.ht{width:100%; border-collapse:collapse; font-size:17px; font-variant-numeric:tabular-nums;}
+  table.ht th, table.ht td{padding:7px 4px; border-top:0.5px solid var(--divider); text-align:left; vertical-align:top;}
+  table.ht th{font-size:13px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.3px; border-top:0;}
+  table.ht .r{text-align:right;} table.ht td.r{font-weight:700;}
+  table.ht tr.lap td{color:var(--red); font-weight:700;}
+  .bat{fill:#C9A46A; stroke:#7A5C2E; stroke-width:8;}
+  .dat{stroke:var(--ink); stroke-width:10; stroke-dasharray:40 25;}
+  .lapb{stroke:var(--red); stroke-width:14; fill:none;}
+  .hl{font-size:180px; font-weight:700; fill:var(--ink);} .hs{font-size:130px; fill:var(--sec);}
+  .hr{font-size:180px; font-weight:700; fill:var(--red);}
+
   .reset{display:block; margin:26px auto 0; background:none; border:1px solid var(--divider); color:var(--sec);
     font-size:15px; border-radius:20px; padding:8px 16px; font-family:inherit;}
   .sig{margin:30px 4px 0; font-size:17px; color:var(--sec);}
@@ -119,8 +130,8 @@
 <header>
   <h1>Plant room walls: Traspir</h1>
   <div class="sub">Six pieces, frame to frame round the corners</div>
-  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 05/11/2026.</div>
-  <div class="jump"><a href="#rules">Before you cut</a><a href="#cuts">Cut list</a><a href="#plan">Plan</a><a href="#way">Which way round</a><a href="#reroll">Rerolling</a></div>
+  <div class="meta">All lengths in mm. Tap a row to tick it off (it remembers on this phone). Set out 06/11/2026 (heights added).</div>
+  <div class="jump"><a href="#rules">Before you cut</a><a href="#cuts">Cut list</a><a href="#plan">Plan</a><a href="#way">Which way round</a><a href="#reroll">Rerolling</a><a href="#heights">Heights</a></div>
 </header>
 
 <div class="card">
@@ -251,6 +262,58 @@
 <div class="row" data-k="R-B1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Reroll B1</div><div class="cut">Bottom row: writing edge away from you.</div><div class="gets">START, corner ticks (1282 and 9802) and UP marked.</div></div></div>
 <div class="row" data-k="R-B2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Reroll B2</div><div class="cut">Top row: writing edge near you.</div><div class="gets">START, corner ticks (1282 and 9802) and UP marked.</div></div></div>
   <p class="note"><b>A and C</b> are short enough to carry flat. If you'd rather roll them, use the same steps.</p>
+</div>
+
+<div class="part" id="heights">5. Heights on the wall</div>
+<p class="partsub">Measure <b>up from the underside of the floor joists</b> (the bottom of the wood fibre). The battens are given by the <b>bottom</b> of each batten.</p>
+<div class="card rules">
+  <h2>Before you start</h2>
+  <ul>
+    <li><b>Check the wall:</b> underside of the joists to the top of the roof panel should be <b class="num">2780</b>. If it's out by more than 10, <b>message Neil</b> before marking anything.</li>
+    <li>Mark the lines all the way round at the same heights, so the rows meet at the corners.</li>
+    <li><b>Staple only where a batten will cover it.</b> The top row's top edge is stapled between <b class="num">2640</b> and <b class="num">2680</b> (R5 covers it). No tape on the top edge.</li>
+    <li><b>The top row goes over the roof's silver flap</b> and under the roof rubber. If the silver flap isn't down the wall yet, staple the top row only under the R3 and R4 lines and leave its top 150 free.</li>
+    <li>If the tarp frame posts are still on the front or back wall, they come off first.</li>
+  </ul>
+</div>
+<div class="card">
+<svg viewBox="0 0 3400 4520" class="fig" role="img" aria-label="Wall section: membrane rows and batten heights from the underside of the joists">
+<rect x="1080" y="300" width="620" height="3892" class="fib"/>
+<rect x="1100" y="2120" width="540" height="2100" class="memb"/>
+<rect x="1140" y="440" width="540" height="2100" class="memb2"/>
+<line x1="900" y1="300" x2="1880" y2="300" class="dat"/>
+<line x1="900" y1="4192" x2="1880" y2="4192" class="dat"/>
+<text x="1390" y="240" class="t hs" text-anchor="middle">top of the roof panel · 2780</text>
+<text x="1390" y="4452" class="t hs" text-anchor="middle">underside of the joists · 0</text>
+<rect x="1020" y="4100" width="740" height="78" class="bat"/><rect x="1020" y="3204" width="740" height="78" class="bat"/><rect x="1020" y="2308" width="740" height="78" class="bat"/><rect x="1020" y="1370" width="740" height="78" class="bat"/><rect x="1020" y="432" width="740" height="78" class="bat"/>
+<path d="M 1790 2540 L 1840 2540 L 1840 2120 L 1790 2120" class="lapb"/>
+<text x="980" y="4199" class="t hl" text-anchor="end">R1 · 10</text><text x="980" y="3303" class="t hl" text-anchor="end">R2 · 650</text><text x="980" y="2407" class="t hl" text-anchor="end">R3 · 1290</text><text x="980" y="1469" class="t hl" text-anchor="end">R4 · 1960</text><text x="980" y="531" class="t hl" text-anchor="end">R5 · 2630</text><text x="980" y="2557" class="t hs" text-anchor="end">hides writing</text>
+<text x="1900" y="500" class="t hl">top row 2680</text><text x="1900" y="2180" class="t hl">bottom row 1480</text><text x="1900" y="2390" class="t hr">lap 300</text><text x="1900" y="2600" class="t hl">top row 1180</text><text x="1900" y="4280" class="t hl">bottom row −20</text>
+</svg>
+  <table class="ht">
+    <tr><th>What</th><th class="r">Up from the joists</th><th class="r">Down from the roof panel</th></tr>
+<tr><td>Top row, top edge</td><td class="r">2680</td><td class="r">100</td></tr>
+<tr><td>R5 (bottom of batten)</td><td class="r">2630</td><td class="r">150</td></tr>
+<tr><td>R4</td><td class="r">1960</td><td class="r">820</td></tr>
+<tr><td>Bottom row, top edge</td><td class="r">1480</td><td class="r">1300</td></tr>
+<tr><td>R3 (covers the writing)</td><td class="r">1290</td><td class="r">1490</td></tr>
+<tr><td>Top row, bottom edge</td><td class="r">1180</td><td class="r">1600</td></tr>
+<tr class="lap"><td>Lap</td><td class="r">300</td><td class="r"></td></tr>
+<tr><td>R2</td><td class="r">650</td><td class="r">2130</td></tr>
+<tr><td>R1</td><td class="r">10</td><td class="r">2770</td></tr>
+<tr><td>Bottom row, bottom edge</td><td class="r">−20</td><td class="r">2800</td></tr>
+  </table>
+  <p class="note">The battens aren't evenly spaced (640, 640, 670, 670) because R3 has to sit over the writing. That's intended.</p>
+</div>
+<div class="card" data-group="up">
+  <h2>Putting it up</h2>
+<div class="row" data-k="H-1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Bottom row up</div><div class="cut">Bottom edge <b>20 below the joists</b>; top edge at <b>1480</b>.</div><div class="gets">Writing along the top edge, facing out.</div></div></div>
+<div class="row" data-k="H-R1"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">R1 on · 10</div><div class="cut">Bottom of the batten 10 above the underside of the joists, as the Lodge.</div><div class="gets"></div></div></div>
+<div class="row" data-k="H-R2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">R2 on · 650</div><div class="cut">On the bottom row only.</div><div class="gets"></div></div></div>
+<div class="row" data-k="H-2"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">Top row up</div><div class="cut">Top edge <b>100 below the top of the roof panel</b> (2680 up); bottom edge at <b>1180</b>.</div><div class="gets">Writing along the bottom edge, facing out. It laps the bottom row by 300.</div></div></div>
+<div class="row" data-k="H-R3"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">R3 on · 1290</div><div class="cut">Bottom of the batten <b>110 above the top row's bottom edge</b>, so it covers the writing.</div><div class="gets">It clamps both rows.</div></div></div>
+<div class="row" data-k="H-R4"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">R4 on · 1960</div><div class="cut">On the top row only.</div><div class="gets"></div></div></div>
+<div class="row" data-k="H-R5"><div class="tick"><svg viewBox="0 0 14 14"><path d="M2 7.5l3.2 3L12 3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="what"><div class="hd">R5 on · 2630 — later</div><div class="cut"><b>Only after the roof rubber (EPDM) is dressed down the wall.</b> Bottom of the batten 150 below the top of the roof panel.</div><div class="gets">Neil measures the rubber first: it may come up short on the front wall and the front ends of the gables.</div></div></div>
 </div>
 
 <button class="reset" id="reset" type="button">Clear all ticks</button>
